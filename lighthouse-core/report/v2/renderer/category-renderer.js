@@ -111,12 +111,12 @@ class CategoryRenderer {
     const element = this._populateScore(
         tmpl, score, 'numeric', category.name, category.description);
 
-    if (certDefinitions && category.certification && category.certified) {
+    if (certDefinitions && category.certification && category.isCertified) {
       const certDefinition = certDefinitions[category.certification];
       const titleEl = element.querySelector('.lh-score__title');
       const link = /** @type {!Element} */ (titleEl.appendChild(this._dom.createSpanFromMarkdown(
           `[✔](${certDefinition.url})`)));
-      link.classList.add('lh-score__certified');
+      link.classList.add('lh-score__isCertified');
       link.title = certDefinition.description;
     }
 

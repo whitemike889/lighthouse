@@ -120,17 +120,17 @@ class ReportGeneratorV2 {
       const categoryScore = ReportGeneratorV2.arithmeticMean(audits);
 
       // Check certification (if any).
-      let certified;
+      let isCertified;
       if (category.certification) {
         // Certification and required audits existence checked by Config.
         const certification = config.certifications[category.certification];
-        certified = certification.audits.reduce((result, certAudit) => {
+        isCertified = certification.audits.reduce((result, certAudit) => {
           const auditResult = audits.find(audit => audit.id === certAudit.id);
           return result && auditResult.score >= certAudit.minScore;
         }, true);
       }
 
-      return Object.assign({}, category, {audits, score: categoryScore, certified});
+      return Object.assign({}, category, {audits, score: categoryScore, isCertified});
     });
 
     const overallScore = ReportGeneratorV2.arithmeticMean(categories);
