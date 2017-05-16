@@ -151,7 +151,8 @@ class ReportRenderer {
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
     for (const category of report.reportCategories) {
       scoreHeader.appendChild(this._categoryRenderer.renderScoreGauge(category));
-      categories.appendChild(this._categoryRenderer.render(category, report.reportGroups));
+      categories.appendChild(this._categoryRenderer.render(category, report.reportGroups,
+          report.reportCertifications));
     }
 
     reportSection.appendChild(this._renderReportFooter(report));
@@ -197,6 +198,8 @@ ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
  *     weight: number,
  *     score: number,
  *     description: string,
+ *     certified: (boolean|undefined),
+ *     certification: (string|undefined),
  *     audits: !Array<!ReportRenderer.AuditJSON>
  * }}
  */
@@ -212,6 +215,16 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
 
 /**
  * @typedef {{
+ *     name: string,
+ *     url: string,
+ *     description: string,
+ *     audits: !Array<{id: string, minScore: string}>
+ * }}
+ */
+ReportRenderer.CertificationJSON; // eslint-disable-line no-unused-expressions
+
+/**
+ * @typedef {{
  *     lighthouseVersion: string,
  *     userAgent: string,
  *     generatedTime: string,
@@ -221,6 +234,7 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
  *     artifacts: {traces: !Object},
  *     reportCategories: !Array<!ReportRenderer.CategoryJSON>,
  *     reportGroups: !Object<string, !ReportRenderer.GroupJSON>,
+ *     reportCertifications: !Object<string, !ReportRenderer.CertificationJSON>,
  *     runtimeConfig: {
  *       blockedUrlPatterns: !Array<string>,
  *       environment: !Array<{description: string, enabled: boolean, name: string}>

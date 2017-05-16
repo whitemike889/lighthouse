@@ -646,11 +646,32 @@ module.exports = {
           "not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually."
     },
   },
+  "certifications": {
+    "is-pwa": {
+      "name": "isPWA",
+      "url": "https://developers.google.com/web/progressive-web-apps/checklist#baseline",
+      "description": "Passed the items in the Baseline PWA Checklist.",
+      "audits": [
+        {"id": "service-worker", "minScore": 100},
+        {"id": "works-offline", "minScore": 100},
+        {"id": "without-javascript", "minScore": 100},
+        {"id": "is-on-https", "minScore": 100},
+        {"id": "redirects-http", "minScore": 100},
+        {"id": "load-fast-enough-for-pwa", "minScore": 100},
+        {"id": "webapp-install-banner", "minScore": 100},
+        {"id": "splash-screen", "minScore": 100},
+        {"id": "themed-omnibox", "minScore": 100},
+        {"id": "viewport", "minScore": 100},
+        {"id": "content-width", "minScore": 100},
+      ]
+    }
+  },
   "categories": {
     "pwa": {
       "name": "Progressive Web App",
       "weight": 1,
       "description": "These audits validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
+      "certification": "is-pwa",
       "audits": [
         {"id": "service-worker", "weight": 1},
         {"id": "works-offline", "weight": 1},

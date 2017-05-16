@@ -684,7 +684,7 @@ span.lh-node:hover {
   margin-bottom: calc(var(--default-padding) * 2);
 }
 
-.lh-category > .lh-score .lh-score__isPWA a {
+.lh-category > .lh-score .lh-score__certified a {
   font-size: smaller;
   color: var(--pass-color);
   margin-left: var(--default-padding);

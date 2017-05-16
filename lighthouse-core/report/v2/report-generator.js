@@ -118,21 +118,25 @@ class ReportGeneratorV2 {
       });
 
       const categoryScore = ReportGeneratorV2.arithmeticMean(audits);
-      return Object.assign({}, category, {audits, score: categoryScore});
-    });
 
-    // Add isPWA signal for PWA category.
-    let isPWA = false;
-    const pwaCategory = categories.find(cat => cat.id === 'pwa');
-    if (pwaCategory) {
-      isPWA = pwaCategory.score === 100;
-      pwaCategory.isPWA = isPWA;
-    }
+      // Check certification (if any).
+      let certified;
+      if (category.certification) {
+        // Certification and required audits existence checked by Config.
+        const certification = config.certifications[category.certification];
+        certified = certification.audits.reduce((result, certAudit) => {
+          const auditResult = audits.find(audit => audit.id === certAudit.id);
+          return result && auditResult.score >= certAudit.minScore;
+        }, true);
+      }
+
+      return Object.assign({}, category, {audits, score: categoryScore, certified});
+    });
 
     const overallScore = ReportGeneratorV2.arithmeticMean(categories);
     // TODO: remove aggregations when old report is fully replaced
     const aggregations = ReportGeneratorV2._getAggregations(categories);
-    return {score: overallScore, categories, aggregations, isPWA};
+    return {score: overallScore, categories, aggregations};
   }
 
   /**

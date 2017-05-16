@@ -97,9 +97,10 @@ class CategoryRenderer {
 
   /**
    * @param {!ReportRenderer.CategoryJSON} category
+   * @param {!Object<string, !ReportRenderer.CertificationJSON>=} certDefinitions
    * @return {!Element}
    */
-  _renderCategoryScore(category) {
+  _renderCategoryScore(category, certDefinitions) {
     const tmpl = this._dom.cloneTemplate('#tmpl-lh-category-score', this._templateContext);
     const score = Math.round(category.score);
 
@@ -109,13 +110,16 @@ class CategoryRenderer {
 
     const element = this._populateScore(
         tmpl, score, 'numeric', category.name, category.description);
-    if (category.isPWA) {
+
+    if (certDefinitions && category.certification && category.certified) {
+      const certDefinition = certDefinitions[category.certification];
       const titleEl = element.querySelector('.lh-score__title');
-      const link = titleEl.appendChild(this._dom.createSpanFromMarkdown(
-          '[✔](https://developers.google.com/web/progressive-web-apps/checklist#baseline)'));
-      link.classList.add('lh-score__isPWA');
-      link.title = 'Passed the items in the Baseline PWA Checklist.';
+      const link = /** @type {!Element} */ (titleEl.appendChild(this._dom.createSpanFromMarkdown(
+          `[✔](${certDefinition.url})`)));
+      link.classList.add('lh-score__certified');
+      link.title = certDefinition.description;
     }
+
     return element;
   }
 
@@ -329,28 +333,30 @@ class CategoryRenderer {
   /**
    * @param {!ReportRenderer.CategoryJSON} category
    * @param {!Object<string, !ReportRenderer.GroupJSON>} groups
+   * @param {!Object<string, !ReportRenderer.CertificationJSON>} certifications
    * @return {!Element}
    */
-  render(category, groups) {
+  render(category, groups, certifications) {
     switch (category.id) {
       case 'performance':
         return this._renderPerformanceCategory(category, groups);
       case 'accessibility':
         return this._renderAccessibilityCategory(category, groups);
       default:
-        return this._renderDefaultCategory(category, groups);
+        return this._renderDefaultCategory(category, groups, certifications);
     }
   }
 
   /**
    * @param {!ReportRenderer.CategoryJSON} category
    * @param {!Object<string, !ReportRenderer.GroupJSON>} groupDefinitions
+   * @param {!Object<string, !ReportRenderer.CertificationJSON>} certDefinitions
    * @return {!Element}
    */
-  _renderDefaultCategory(category, groupDefinitions) {
+  _renderDefaultCategory(category, groupDefinitions, certDefinitions) {
     const element = this._dom.createElement('div', 'lh-category');
     element.id = category.id;
-    element.appendChild(this._renderCategoryScore(category));
+    element.appendChild(this._renderCategoryScore(category, certDefinitions));
 
     const manualAudits = category.audits.filter(audit => audit.result.manual);
     const nonManualAudits = category.audits.filter(audit => !manualAudits.includes(audit));

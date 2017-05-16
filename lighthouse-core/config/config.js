@@ -149,7 +149,7 @@ function validatePasses(passes, audits, rootPath) {
   });
 }
 
-function validateCategories(categories, audits, auditResults, groups) {
+function validateCategories(categories, audits, auditResults, groups, certifications) {
   if (!categories) {
     return;
   }
@@ -158,7 +158,9 @@ function validateCategories(categories, audits, auditResults, groups) {
       audits.map(audit => audit.meta.name) :
       auditResults.map(audit => audit.name);
   Object.keys(categories).forEach(categoryId => {
-    categories[categoryId].audits.forEach((audit, index) => {
+    const category = categories[categoryId];
+
+    category.audits.forEach((audit, index) => {
       if (!audit.id) {
         throw new Error(`missing an audit id at ${categoryId}[${index}]`);
       }
@@ -175,6 +177,31 @@ function validateCategories(categories, audits, auditResults, groups) {
         throw new Error(`${audit.id} references unknown group ${audit.group}`);
       }
     });
+
+    // Validate certification (if any).
+    if (category.certification) {
+      const certificationId = category.certification;
+      const certification = certifications[certificationId];
+      if (!certification) {
+        throw new Error(`${categoryId} references unknown certification ${certificationId}`);
+      }
+
+      certification.audits.forEach((certAudit, index) => {
+        if (!certAudit.id) {
+          throw new Error(`missing an audit id at certification ${certificationId}[${index}]`);
+        }
+
+        if (!certAudit.minScore) {
+          throw new Error(
+              `missing a minScore for '${certAudit.id}' in certification ${certificationId}`);
+        }
+
+        if (!category.audits.find(audit => audit.id === certAudit.id)) {
+          throw new Error(`certification ${certificationId} requires audit '${certAudit.id}', ` +
+              `but no such audit exists in ${categoryId}`);
+        }
+      });
+    }
   });
 }
 
@@ -325,10 +352,12 @@ class Config {
     this._artifacts = expandArtifacts(configJSON.artifacts);
     this._categories = configJSON.categories;
     this._groups = configJSON.groups;
+    this._certifications = configJSON.certifications;
 
     // validatePasses must follow after audits are required
     validatePasses(configJSON.passes, this._audits, this._configDir);
-    validateCategories(configJSON.categories, this._audits, this._auditResults, this._groups);
+    validateCategories(configJSON.categories, this._audits, this._auditResults, this._groups,
+        this._certifications);
   }
 
   /**
@@ -590,6 +619,11 @@ class Config {
   /** @type {Object<string, {title: string, description: string}>|undefined} */
   get groups() {
     return this._groups;
+  }
+
+  /** @type {Object<string, {title: string, description: string}>|undefined} */
+  get certifications() {
+    return this._certifications;
   }
 }
 
