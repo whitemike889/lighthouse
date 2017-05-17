@@ -606,6 +606,7 @@ span.lh-node:hover {
   margin-left: var(--report-menu-width);
   width: var(--report-width);
   background-color: #fff;
+  padding-top: var(--report-header-height);
 }
 
 .lh-exception {
@@ -624,7 +625,6 @@ span.lh-node:hover {
 
 .lh-scores-header {
   display: flex;
-  margin: var(--report-header-height) 0 0 0;
   padding: calc(var(--default-padding) * 2) var(--default-padding);
   border-bottom: 1px solid var(--report-border-color);
 }
