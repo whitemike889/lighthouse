@@ -672,7 +672,7 @@ class Config {
     return this._groups;
   }
 
-  /** @type {Object<string, {title: string, description: string}>|undefined} */
+  /** @type {Object<string, {name: string, url: string, description: string, audits: !Array<{id: string, minScore: number}>}>|undefined} */
   get certifications() {
     return this._certifications;
   }

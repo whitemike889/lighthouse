@@ -122,7 +122,26 @@ describe('CategoryRenderer', () => {
     assert.ok(!categoryDOM2.querySelector('.lh-audit-group__summary--manual'));
   });
 
-  describe('pwa category', () => {
+  it('renders a certification badge if section is passing', () => {
+    const certifications = {
+      'is-super': {
+        isCertified: true,
+        description: 'Is really super',
+        url: 'https://example.com',
+        audits: []
+      }
+    };
+    const categories = {
+      super: {description: '', certification: 'is-super', audits: []},
+      super2: {description: '', score: 30, audits: []},
+      categoryB: {description: '', audits: []}
+    };
+    assert.ok(renderer.render(categories.super, {}, certifications)
+        .querySelector('.lh-score__isCertified'), 'good pwa renders a badge');
+    assert.ok(!renderer.render(categories.super2, {}, certifications)
+        .querySelector('.lh-score__isCertified'), 'bad pwa does not render a badge');
+    assert.ok(!renderer._renderCategoryScore(categories.categoryB, {}, certifications)
+        .querySelector('.lh-score__isCertified'), 'other category does not render a pwa badge');
   });
 
   describe('performance category', () => {
