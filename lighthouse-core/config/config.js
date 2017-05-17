@@ -429,7 +429,7 @@ class Config {
     // 5. Filter out certifications that can no longer apply.
     const oldCertifications = config.certifications || {};
     config.certifications = Config.filterCertifications(oldCertifications, config.categories,
-        config.audits);
+        requestedAuditNames);
 
     return config;
   }
@@ -487,14 +487,14 @@ class Config {
    * Filter out any certifications with required audits not in auditIds.
    * @param {!Object<string, {audits: !Array<{id: string}>}>} oldCertifications
    * @param {!Object<string, {audits: !Array<{id: string}>}>} categories
-   * @param {!Array<string>} auditIds
+   * @param {!Set<string>} auditIds
    * @return {!Object<string, {audits: !Array<{id: string}>}>}
    */
   static filterCertifications(oldCertifications, categories, auditIds) {
     const certifications = {};
     Object.keys(oldCertifications).filter(certificationId => {
       const certification = oldCertifications[certificationId];
-      return certification.audits.every(audit => auditIds.includes(audit.id));
+      return certification.audits.every(audit => auditIds.has(audit.id));
     }).forEach(certificationId => {
       certifications[certificationId] = oldCertifications[certificationId];
     });
