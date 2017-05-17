@@ -198,7 +198,6 @@ ReportRenderer.AuditJSON; // eslint-disable-line no-unused-expressions
  *     weight: number,
  *     score: number,
  *     description: string,
- *     isCertified: (boolean|undefined),
  *     certification: (string|undefined),
  *     audits: !Array<!ReportRenderer.AuditJSON>
  * }}
@@ -218,6 +217,7 @@ ReportRenderer.GroupJSON; // eslint-disable-line no-unused-expressions
  *     name: string,
  *     url: string,
  *     description: string,
+ *     isCertified: boolean,
  *     audits: !Array<{id: string, minScore: string}>
  * }}
  */

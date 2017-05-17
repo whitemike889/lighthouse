@@ -97,10 +97,10 @@ class CategoryRenderer {
 
   /**
    * @param {!ReportRenderer.CategoryJSON} category
-   * @param {!Object<string, !ReportRenderer.CertificationJSON>=} certDefinitions
+   * @param {!Object<string, !ReportRenderer.CertificationJSON>=} certifications
    * @return {!Element}
    */
-  _renderCategoryScore(category, certDefinitions) {
+  _renderCategoryScore(category, certifications) {
     const tmpl = this._dom.cloneTemplate('#tmpl-lh-category-score', this._templateContext);
     const score = Math.round(category.score);
 
@@ -111,13 +111,16 @@ class CategoryRenderer {
     const element = this._populateScore(
         tmpl, score, 'numeric', category.name, category.description);
 
-    if (certDefinitions && category.certification && category.isCertified) {
-      const certDefinition = certDefinitions[category.certification];
-      const titleEl = element.querySelector('.lh-score__title');
-      const link = /** @type {!Element} */ (titleEl.appendChild(this._dom.createSpanFromMarkdown(
-          `[✔](${certDefinition.url})`)));
-      link.classList.add('lh-score__isCertified');
-      link.title = certDefinition.description;
+    // If category wants a certification and the certification has passed, add a checkmark.
+    if (certifications && category.certification) {
+      const certification = certifications[category.certification];
+      if (certification.isCertified) {
+        const titleEl = element.querySelector('.lh-score__title');
+        const link = /** @type {!Element} */ (titleEl.appendChild(this._dom.createSpanFromMarkdown(
+            `[✔](${certification.url})`)));
+        link.classList.add('lh-score__isCertified');
+        link.title = certification.description;
+      }
     }
 
     return element;
@@ -350,13 +353,13 @@ class CategoryRenderer {
   /**
    * @param {!ReportRenderer.CategoryJSON} category
    * @param {!Object<string, !ReportRenderer.GroupJSON>} groupDefinitions
-   * @param {!Object<string, !ReportRenderer.CertificationJSON>} certDefinitions
+   * @param {!Object<string, !ReportRenderer.CertificationJSON>} certifications
    * @return {!Element}
    */
-  _renderDefaultCategory(category, groupDefinitions, certDefinitions) {
+  _renderDefaultCategory(category, groupDefinitions, certifications) {
     const element = this._dom.createElement('div', 'lh-category');
     element.id = category.id;
-    element.appendChild(this._renderCategoryScore(category, certDefinitions));
+    element.appendChild(this._renderCategoryScore(category, certifications));
 
     const manualAudits = category.audits.filter(audit => audit.result.manual);
     const nonManualAudits = category.audits.filter(audit => !manualAudits.includes(audit));

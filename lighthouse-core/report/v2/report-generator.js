@@ -96,6 +96,23 @@ class ReportGeneratorV2 {
   }
 
   /**
+   * Extracts error, binary, and numeric scores into a purely numeric score on a
+   * scale of 0-100.
+   * @param {{score: (?number|boolean|undefined)}} auditResult
+   * @return {number}
+   * @private
+   */
+  static _getCanonicalizedScore(auditResult) {
+    // Cast to number to catch `null` and undefined when audits error
+    let auditScore = Number(auditResult.score) || 0;
+    if (typeof auditResult.score === 'boolean') {
+      auditScore = auditResult.score ? 100 : 0;
+    }
+
+    return auditScore;
+  }
+
+  /**
    * Returns the report JSON object with computed scores.
    * @param {{categories: !Object<{audits: !Array}>}} config
    * @param {!Object<{score: ?number|boolean|undefined}>} resultsByAuditId
@@ -108,35 +125,32 @@ class ReportGeneratorV2 {
 
       const audits = category.audits.map(audit => {
         const result = resultsByAuditId[audit.id];
-        // Cast to number to catch `null` and undefined when audits error
-        let auditScore = Number(result.score) || 0;
-        if (typeof result.score === 'boolean') {
-          auditScore = result.score ? 100 : 0;
-        }
+        const auditScore = ReportGeneratorV2._getCanonicalizedScore(result);
 
         return Object.assign({}, audit, {result, score: auditScore});
       });
 
       const categoryScore = ReportGeneratorV2.arithmeticMean(audits);
 
-      // Check certification (if any).
-      let isCertified;
-      if (category.certification) {
-        // Certification and required audits existence checked by Config.
-        const certification = config.certifications[category.certification];
-        isCertified = certification.audits.reduce((result, certAudit) => {
-          const auditResult = audits.find(audit => audit.id === certAudit.id);
-          return result && auditResult.score >= certAudit.minScore;
-        }, true);
-      }
+      return Object.assign({}, category, {audits, score: categoryScore});
+    });
 
-      return Object.assign({}, category, {audits, score: categoryScore, isCertified});
+    const certifications = {};
+    Object.keys(config.certifications || {}).forEach(certificationId => {
+      const certification = config.certifications[certificationId];
+      const isCertified = certification.audits.every(certAudit => {
+        const auditResult = resultsByAuditId[certAudit.id];
+        const auditScore = ReportGeneratorV2._getCanonicalizedScore(auditResult);
+        return auditScore >= certAudit.minScore;
+      });
+
+      certifications[certificationId] = Object.assign({}, certification, {isCertified});
     });
 
     const overallScore = ReportGeneratorV2.arithmeticMean(categories);
     // TODO: remove aggregations when old report is fully replaced
     const aggregations = ReportGeneratorV2._getAggregations(categories);
-    return {score: overallScore, categories, aggregations};
+    return {score: overallScore, categories, aggregations, certifications};
   }
 
   /**

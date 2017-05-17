@@ -178,30 +178,47 @@ function validateCategories(categories, audits, auditResults, groups, certificat
       }
     });
 
-    // Validate certification (if any).
-    if (category.certification) {
-      const certificationId = category.certification;
-      const certification = certifications[certificationId];
-      if (!certification) {
-        throw new Error(`${categoryId} references unknown certification ${certificationId}`);
+    if (category.certification && !certifications[category.certification]) {
+      throw new Error(`${categoryId} references unknown certification '${category.certification}'`);
+    }
+  });
+}
+
+function validateCertifications(certifications, audits, auditResults) {
+  if (!certifications) {
+    return;
+  }
+
+  const auditIds = audits ?
+      audits.map(audit => audit.meta.name) :
+      auditResults.map(audit => audit.name);
+
+  Object.keys(certifications).forEach(certificationId => {
+    const certification = certifications[certificationId];
+
+    if (!certification.url) {
+      throw new Error(`certification ${certificationId} must have a url`);
+    }
+
+    if (!certification.description) {
+      throw new Error(`certification ${certificationId} must have a description`);
+    }
+
+    certification.audits.forEach((certAudit, index) => {
+      if (!certAudit.id) {
+        throw new Error(`missing an audit id at certification ${certificationId}[${index}]`);
       }
 
-      certification.audits.forEach((certAudit, index) => {
-        if (!certAudit.id) {
-          throw new Error(`missing an audit id at certification ${certificationId}[${index}]`);
-        }
+      if (!auditIds.includes(certAudit.id)) {
+        throw new Error(
+            `could not find ${certAudit.id} audit for certification ${certificationId}`);
+      }
 
-        if (!certAudit.minScore) {
-          throw new Error(
-              `missing a minScore for '${certAudit.id}' in certification ${certificationId}`);
-        }
-
-        if (!category.audits.find(audit => audit.id === certAudit.id)) {
-          throw new Error(`certification ${certificationId} requires audit '${certAudit.id}', ` +
-              `but no such audit exists in ${categoryId}`);
-        }
-      });
-    }
+      if (!certAudit.minScore) {
+        throw new Error(
+            `missing a minScore for '${certAudit.id}' in certification ${certificationId}`);
+      }
+    });
   });
 }
 
@@ -358,6 +375,7 @@ class Config {
     validatePasses(configJSON.passes, this._audits, this._configDir);
     validateCategories(configJSON.categories, this._audits, this._auditResults, this._groups,
         this._certifications);
+    validateCertifications(this._certifications, this._audits, this._auditResults);
   }
 
   /**
@@ -407,12 +425,18 @@ class Config {
 
     // 4. Filter to only the neccessary passes
     config.passes = Config.generatePassesNeededByGatherers(config.passes, requiredGatherers);
+
+    // 5. Filter out certifications that can no longer apply.
+    const oldCertifications = config.certifications || {};
+    config.certifications = Config.filterCertifications(oldCertifications, config.categories,
+        config.audits);
+
     return config;
   }
 
   /**
    * Filter out any unrequested categories or audits from the categories object.
-   * @param {!Object<string, {audits: !Array<{id: string}>}>} categories
+   * @param {!Object<string, {audits: !Array<{id: string}>}>} oldCategories
    * @param {!Array<string>=} categoryIds
    * @param {!Array<string>=} auditIds
    * @return {!Object<string, {audits: !Array<{id: string}>}>}
@@ -457,6 +481,33 @@ class Config {
     });
 
     return categories;
+  }
+
+  /**
+   * Filter out any certifications with required audits not in auditIds.
+   * @param {!Object<string, {audits: !Array<{id: string}>}>} oldCertifications
+   * @param {!Object<string, {audits: !Array<{id: string}>}>} categories
+   * @param {!Array<string>} auditIds
+   * @return {!Object<string, {audits: !Array<{id: string}>}>}
+   */
+  static filterCertifications(oldCertifications, categories, auditIds) {
+    const certifications = {};
+    Object.keys(oldCertifications).filter(certificationId => {
+      const certification = oldCertifications[certificationId];
+      return certification.audits.every(audit => auditIds.includes(audit.id));
+    }).forEach(certificationId => {
+      certifications[certificationId] = oldCertifications[certificationId];
+    });
+
+    // Remove references to deleted certifications.
+    Object.keys(categories).forEach(categoryId => {
+      const category = categories[categoryId];
+      if (category.certification && !certifications[category.certification]) {
+        category.certification = undefined;
+      }
+    });
+
+    return certifications;
   }
 
   /**

@@ -141,12 +141,14 @@ class Runner {
         let aggregations = [];
         let reportCategories = [];
         let score = 0;
+        let certifications = {};
         if (config.categories) {
           const reportGenerator = new ReportGeneratorV2();
           const report = reportGenerator.generateReportJson(config, resultsById);
           reportCategories = report.categories;
           aggregations = report.aggregations;
           score = report.score;
+          certifications = report.certifications;
         }
 
         return {
@@ -161,7 +163,7 @@ class Runner {
           score,
           reportCategories,
           reportGroups: config.groups,
-          reportCertifications: config.certifications,
+          reportCertifications: certifications,
           aggregations,
         };
       });
