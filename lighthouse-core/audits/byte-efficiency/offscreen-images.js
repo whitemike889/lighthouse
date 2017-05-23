@@ -41,7 +41,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       informative: true,
       helpText: 'Images that are not above the fold should be lazily loaded after the page is ' +
         'interactive. Consider using the [IntersectionObserver](https://developers.google.com/web/updates/2016/04/intersectionobserver) API.',
-      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'traces', 'networkRecords']
+      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'traces', 'devtoolsLogs']
     };
   }
 
@@ -68,7 +68,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * @return {?Object}
    */
   static computeWaste(image, viewportDimensions) {
-    const url = URL.getDisplayName(image.src, {preserveQuery: true});
+    const url = URL.getURLDisplayName(image.src, {preserveQuery: true});
     const totalPixels = image.clientWidth * image.clientHeight;
     const visiblePixels = this.computeVisiblePixels(image.clientRect, viewportDimensions);
     // Treat images with 0 area as if they're offscreen. See https://github.com/GoogleChrome/lighthouse/issues/1914

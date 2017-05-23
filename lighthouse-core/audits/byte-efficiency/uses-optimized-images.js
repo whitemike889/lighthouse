@@ -16,21 +16,14 @@
  */
 /*
  * @fileoverview This audit determines if the images used are sufficiently larger
- * than Lighthouse optimized versions of the images (as determined by the gatherer).
- * Audit will fail if one of the conditions are met:
- *   * There is at least one JPEG or bitmap image that was >10KB larger than canvas encoded JPEG.
- *   * There is at least one image that would have saved more than 100KB by using WebP.
- *   * The savings of moving all images to WebP is greater than 1MB.
+ * than JPEG compressed images without metadata at quality 85.
  */
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit');
 const URL = require('../../lib/url-shim');
 
-const IGNORE_THRESHOLD_IN_BYTES = 2048;
-const TOTAL_WASTED_BYTES_THRESHOLD = 1000 * 1024;
-const JPEG_ALREADY_OPTIMIZED_THRESHOLD_IN_BYTES = 25 * 1024;
-const WEBP_ALREADY_OPTIMIZED_THRESHOLD_IN_BYTES = 100 * 1024;
+const IGNORE_THRESHOLD_IN_BYTES = 4096;
 
 class UsesOptimizedImages extends ByteEfficiencyAudit {
   /**
@@ -40,13 +33,12 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
     return {
       category: 'Images',
       name: 'uses-optimized-images',
-      description: 'Unoptimized images',
+      description: 'Optimize images',
       informative: true,
-      helpText: 'Images should be optimized to save network bytes. ' +
-        'The following images could have smaller file sizes when compressed with ' +
-        '[WebP](https://developers.google.com/speed/webp/) or JPEG at 80 quality. ' +
+      helpText: 'Optimized images take less time to download and save cellular data. ' +
+        'The identified images could have smaller file sizes when compressed as JPEG (q=85). ' +
         '[Learn more about image optimization](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization).',
-      requiredArtifacts: ['OptimizedImages', 'networkRecords']
+      requiredArtifacts: ['OptimizedImages', 'devtoolsLogs']
     };
   }
 
@@ -69,54 +61,31 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
     const images = artifacts.OptimizedImages;
 
     const failedImages = [];
-    let totalWastedBytes = 0;
-    let hasAllEfficientImages = true;
-
-    const results = images.reduce((results, image) => {
+    const results = [];
+    images.forEach(image => {
       if (image.failed) {
         failedImages.push(image);
-        return results;
-      } else if (image.originalSize < Math.max(IGNORE_THRESHOLD_IN_BYTES, image.webpSize)) {
-        return results;
+        return;
+      } else if (/(jpeg|bmp)/.test(image.mimeType) === false ||
+                 image.originalSize < image.jpegSize + IGNORE_THRESHOLD_IN_BYTES) {
+        return;
       }
 
-      const url = URL.getDisplayName(image.url);
-      const webpSavings = UsesOptimizedImages.computeSavings(image, 'webp');
-
-      if (webpSavings.bytes > WEBP_ALREADY_OPTIMIZED_THRESHOLD_IN_BYTES) {
-        hasAllEfficientImages = false;
-      } else if (webpSavings.bytes < IGNORE_THRESHOLD_IN_BYTES) {
-        return results;
-      }
-
-      let jpegSavingsLabel;
-      if (/(jpeg|bmp)/.test(image.mimeType)) {
-        const jpegSavings = UsesOptimizedImages.computeSavings(image, 'jpeg');
-        if (jpegSavings.bytes > JPEG_ALREADY_OPTIMIZED_THRESHOLD_IN_BYTES) {
-          hasAllEfficientImages = false;
-        }
-        if (jpegSavings.bytes > IGNORE_THRESHOLD_IN_BYTES) {
-          jpegSavingsLabel = this.toSavingsString(jpegSavings.bytes, jpegSavings.percent);
-        }
-      }
-
-      totalWastedBytes += webpSavings.bytes;
+      const url = URL.getURLDisplayName(image.url);
+      const jpegSavings = UsesOptimizedImages.computeSavings(image, 'jpeg');
 
       results.push({
         url,
         isCrossOrigin: !image.isSameOrigin,
         preview: {url: image.url, mimeType: image.mimeType, type: 'thumbnail'},
         totalBytes: image.originalSize,
-        wastedBytes: webpSavings.bytes,
-        webpSavings: this.toSavingsString(webpSavings.bytes, webpSavings.percent),
-        jpegSavings: jpegSavingsLabel
+        wastedBytes: jpegSavings.bytes,
       });
-      return results;
-    }, []);
+    });
 
     let debugString;
     if (failedImages.length) {
-      const urls = failedImages.map(image => URL.getDisplayName(image.url));
+      const urls = failedImages.map(image => URL.getURLDisplayName(image.url));
       debugString = `Lighthouse was unable to decode some of your images: ${urls.join(', ')}`;
     }
 
@@ -124,12 +93,10 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       {key: 'preview', itemType: 'thumbnail', text: ''},
       {key: 'url', itemType: 'url', text: 'URL'},
       {key: 'totalKb', itemType: 'text', text: 'Original'},
-      {key: 'webpSavings', itemType: 'text', text: 'Savings as WebP'},
-      {key: 'jpegSavings', itemType: 'text', text: 'Savings as JPEG'},
+      {key: 'potentialSavings', itemType: 'text', text: 'Potential Savings'},
     ];
 
     return {
-      passes: hasAllEfficientImages && totalWastedBytes < TOTAL_WASTED_BYTES_THRESHOLD,
       debugString,
       results,
       headings

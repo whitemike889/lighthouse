@@ -20,6 +20,7 @@ const fs = require('fs');
 const jsdom = require('jsdom');
 const URL = require('../../../../lib/url-shim');
 const DOM = require('../../../../report/v2/renderer/dom.js');
+const Util = require('../../../../report/v2/renderer/util.js');
 const DetailsRenderer = require('../../../../report/v2/renderer/details-renderer.js');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname + '/../../../../report/v2/templates.html', 'utf8');
@@ -31,6 +32,7 @@ describe('DetailsRenderer', () => {
 
   before(() => {
     global.URL = URL;
+    global.Util = Util;
     const document = jsdom.jsdom(TEMPLATE_FILE);
     const dom = new DOM(document);
     renderer = new DetailsRenderer(dom);
@@ -38,6 +40,7 @@ describe('DetailsRenderer', () => {
 
   after(() => {
     global.URL = undefined;
+    global.Util = undefined;
   });
 
   describe('render', () => {
@@ -107,6 +110,88 @@ describe('DetailsRenderer', () => {
           'target: 1,500 nodes', 'fills target');
       assert.equal(cards[1].getAttribute('title'), 'snippet', 'adds title attribute for snippet');
       assert.ok(!cards[1].querySelector('.lh-scorecard__target'), 'handles missing target');
+    });
+
+    it('renders code', () => {
+      const el = renderer.render({
+        type: 'code',
+        text: 'code snippet',
+        lineNumber: 123,
+        source: 'deprecation',
+        url: 'https://example.com/feature'
+      });
+
+      assert.ok(el.localName === 'pre');
+      assert.ok(el.classList.contains('lh-code'));
+      assert.equal(el.textContent, 'code snippet');
+    });
+
+    it('renders thumbnails', () => {
+      const el = renderer.render({
+        type: 'thumbnail',
+        url: 'http://example.com/my-image.jpg',
+        mimeType: 'image/jpeg',
+      });
+
+      assert.ok(el.localName === 'img');
+      assert.ok(el.classList.contains('lh-thumbnail'));
+      assert.equal(el.src, 'http://example.com/my-image.jpg');
+    });
+
+    it('renders filmstrips', () => {
+      const el = renderer.render({
+        type: 'filmstrip',
+        items: [
+          {timing: 1020, data: 'foobar'},
+          {timing: 3030, data: 'foobaz'},
+        ],
+      });
+
+      assert.ok(el.localName === 'div');
+      assert.ok(el.classList.contains('lh-filmstrip'));
+
+      const frames = [...el.querySelectorAll('.lh-filmstrip__frame')];
+      assert.equal(frames.length, 2);
+      assert.equal(frames[0].textContent, '1 s');
+      assert.equal(frames[1].textContent, '3 s');
+
+      const thumbnails = [...el.querySelectorAll('.lh-filmstrip__thumbnail')];
+      assert.equal(thumbnails.length, 2);
+      assert.equal(thumbnails[0].src, 'data:image/jpeg;base64,foobar');
+      assert.ok(thumbnails[0].alt, 'did not set alt text');
+    });
+
+    it('renders tables', () => {
+      const el = renderer.render({
+        type: 'table',
+        header: 'View Items',
+        itemHeaders: [
+          {type: 'text', text: 'First'},
+          {type: 'text', text: 'Second'},
+          {type: 'text', text: 'Preview', itemType: 'thumbnail'},
+        ],
+        items: [
+          [
+            {type: 'text', text: 'value A.1'},
+            {type: 'text', text: 'value A.2'},
+            {type: 'thumbnail', url: 'http://example.com/image.jpg', mimeType: 'image/jpeg'},
+          ],
+          [
+            {type: 'text', text: 'value B.1'},
+            {type: 'text', text: 'value B.2'},
+            {type: 'thumbnail', url: 'unknown'},
+          ],
+        ],
+      });
+
+      assert.equal(el.localName, 'details');
+      assert.ok(el.querySelector('table'), 'did not render table');
+      assert.ok(el.querySelector('img'), 'did not render recursive items');
+      assert.equal(el.querySelectorAll('th').length, 3, 'did not render header items');
+      assert.equal(el.querySelectorAll('td').length, 6, 'did not render table cells');
+      assert.equal(el.querySelectorAll('.lh-table-column--text').length, 6, '--text not set');
+      assert.equal(el.querySelectorAll('.lh-table-column--thumbnail').length, 3,
+          '--thumbnail not set');
     });
   });
 });

@@ -38,13 +38,13 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     return {
       category: 'Images',
       name: 'uses-responsive-images',
-      description: 'Oversized images',
+      description: 'Properly size images',
       informative: true,
       helpText:
-        'Image sizes served should be based on the device display size to save network bytes. ' +
-        'Learn more about [responsive images](https://developers.google.com/web/fundamentals/design-and-ui/media/images) ' +
-        'and [client hints](https://developers.google.com/web/updates/2015/09/automating-resource-selection-with-client-hints).',
-      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'networkRecords']
+        'Serve images that are appropriately-sized to save cellular data ' +
+        'and improve load time. ' +
+        '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).',
+      requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'devtoolsLogs']
     };
   }
 
@@ -54,7 +54,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
    * @return {?Object}
    */
   static computeWaste(image, DPR) {
-    const url = URL.getDisplayName(image.src);
+    const url = URL.getURLDisplayName(image.src);
     const actualPixels = image.naturalWidth * image.naturalHeight;
     const usedPixels = image.clientWidth * image.clientHeight * Math.pow(DPR, 2);
     const wastedRatio = 1 - (usedPixels / actualPixels);
@@ -88,26 +88,25 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     const DPR = artifacts.ViewportDimensions.devicePixelRatio;
 
     let debugString;
-    const resultsMap = images.reduce((results, image) => {
+    const resultsMap = new Map();
+    images.forEach(image => {
       // TODO: give SVG a free pass until a detail per pixel metric is available
       if (!image.networkRecord || image.networkRecord.mimeType === 'image/svg+xml') {
-        return results;
+        return;
       }
 
       const processed = UsesResponsiveImages.computeWaste(image, DPR);
       if (processed instanceof Error) {
         debugString = processed.message;
-        return results;
+        return;
       }
 
       // Don't warn about an image that was later used appropriately
-      const existing = results.get(processed.preview.url);
+      const existing = resultsMap.get(processed.preview.url);
       if (!existing || existing.wastedBytes > processed.wastedBytes) {
-        results.set(processed.preview.url, processed);
+        resultsMap.set(processed.preview.url, processed);
       }
-
-      return results;
-    }, new Map());
+    });
 
     const results = Array.from(resultsMap.values())
         .filter(item => item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES);
@@ -121,7 +120,6 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
     return {
       debugString,
-      passes: !results.find(item => item.isWasteful),
       results,
       headings,
     };

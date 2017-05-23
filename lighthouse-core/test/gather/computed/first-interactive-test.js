@@ -43,7 +43,7 @@ describe('FirstInteractive computed artifact:', () => {
 
   it('should compute firstInteractive', () => {
     return computedArtifacts.requestFirstInteractive(acceptableTrace).then(output => {
-      assert.equal(Math.round(output.timeInMs), 1052);
+      assert.equal(Math.round(output.timeInMs), 1587);
       assert.ok(output.timestamp, 'output is missing timestamp');
     });
   });
@@ -284,7 +284,7 @@ describe('FirstInteractive computed artifact:', () => {
       const longTasks = [{start: 4000, end: 5700}];
       assert.throws(() => {
         FirstInteractive.findQuietWindow(200, 6000, longTasks);
-      }, /trace was busy/);
+      }, /main thread was busy/);
     });
   });
 });

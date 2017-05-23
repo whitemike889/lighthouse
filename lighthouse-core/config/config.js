@@ -18,7 +18,6 @@
 
 const defaultConfigPath = './default.js';
 const defaultConfig = require('./default.js');
-const recordsFromLogs = require('../lib/network-recorder').recordsFromLogs;
 
 const GatherRunner = require('../gather/gather-runner');
 const log = require('../lib/log');
@@ -200,6 +199,12 @@ function assertValidAudit(auditDefinition, auditPath) {
     );
   }
 
+  if (typeof auditDefinition.meta.helpText !== 'string') {
+    throw new Error(
+      `${auditName} has no meta.helpText property, or the property is not a string.`
+    );
+  }
+
   if (!Array.isArray(auditDefinition.meta.requiredArtifacts)) {
     throw new Error(
       `${auditName} has no meta.requiredArtifacts property, or the property is not an array.`
@@ -230,20 +235,10 @@ function expandArtifacts(artifacts) {
     });
   }
 
-  if (artifacts.performanceLog) {
-    if (typeof artifacts.performanceLog === 'string') {
-      // Support older format of a single performance log.
-      const log = require(artifacts.performanceLog);
-      artifacts.networkRecords = {
-        [Audit.DEFAULT_PASS]: recordsFromLogs(log)
-      };
-    } else {
-      artifacts.networkRecords = {};
-      Object.keys(artifacts.performanceLog).forEach(key => {
-        const log = require(artifacts.performanceLog[key]);
-        artifacts.networkRecords[key] = recordsFromLogs(log);
-      });
-    }
+  if (artifacts.devtoolsLogs) {
+    Object.keys(artifacts.devtoolsLogs).forEach(key => {
+      artifacts.devtoolsLogs[key] = require(artifacts.devtoolsLogs[key]);
+    });
   }
 
   return artifacts;

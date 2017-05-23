@@ -40,7 +40,7 @@ class WebappInstallBanner extends MultiCheckAudit {
       name: 'webapp-install-banner',
       description: 'User can be prompted to Install the Web App',
       helpText: 'While users can manually add your site to their homescreen, the [prompt (aka app install banner)](https://developers.google.com/web/fundamentals/engage-and-retain/app-install-banners/) will proactively prompt the user to install the app if the various requirements are met and the user has moderate engagement with your site.',
-      requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest']
+      requiredArtifacts: ['URL', 'ServiceWorker', 'Manifest', 'StartUrl']
     };
   }
 
@@ -70,7 +70,14 @@ class WebappInstallBanner extends MultiCheckAudit {
   static assessServiceWorker(artifacts, failures) {
     const hasServiceWorker = SWAudit.audit(artifacts).rawValue;
     if (!hasServiceWorker) {
-      failures.push('Site registers a Service Worker');
+      failures.push('Site does not register a Service Worker');
+    }
+  }
+
+  static assessOfflineStartUrl(artifacts, failures) {
+    const hasOfflineStartUrl = artifacts.StartUrl === 200;
+    if (!hasOfflineStartUrl) {
+      failures.push('Manifest start_url is not cached by a Service Worker');
     }
   }
 
@@ -80,6 +87,7 @@ class WebappInstallBanner extends MultiCheckAudit {
     return artifacts.requestManifestValues(artifacts.Manifest).then(manifestValues => {
       WebappInstallBanner.assessManifest(manifestValues, failures);
       WebappInstallBanner.assessServiceWorker(artifacts, failures);
+      WebappInstallBanner.assessOfflineStartUrl(artifacts, failures);
 
       return {
         failures,

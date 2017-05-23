@@ -22,10 +22,10 @@
 
 'use strict';
 
-const Audit = require('../audit');
+const ViolationAudit = require('../violation-audit');
 const Formatter = require('../../report/formatter');
 
-class NotificationOnStart extends Audit {
+class NotificationOnStart extends ViolationAudit {
   /**
    * @return {!AuditMeta}
    */
@@ -37,7 +37,7 @@ class NotificationOnStart extends Audit {
       helpText: 'Users are mistrustful of or confused by sites that request to send ' +
           'notifications without context. Consider tying the request to user gestures ' +
           'instead. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/notifications-on-load).',
-      requiredArtifacts: ['NotificationOnStart']
+      requiredArtifacts: ['ChromeConsoleMessages']
     };
   }
 
@@ -46,18 +46,21 @@ class NotificationOnStart extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    const results = artifacts.NotificationOnStart.map(err => {
-      return Object.assign({
-        label: `line: ${err.line}, col: ${err.col}`
-      }, err);
-    });
+    const results = ViolationAudit.getViolationResults(artifacts, /notification permission/);
+
+    const headings = [
+      {key: 'url', itemType: 'url', text: 'URL'},
+      {key: 'label', itemType: 'text', text: 'Location'},
+    ];
+    const details = ViolationAudit.makeV2TableDetails(headings, results);
 
     return {
       rawValue: results.length === 0,
       extendedInfo: {
         formatter: Formatter.SUPPORTED_FORMATS.URL_LIST,
         value: results
-      }
+      },
+      details,
     };
   }
 

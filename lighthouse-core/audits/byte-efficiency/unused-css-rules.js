@@ -34,7 +34,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       helpText: 'Remove unused rules from stylesheets to reduce unnecessary ' +
           'bytes consumed by network activity. ' +
           '[Learn more](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery)',
-      requiredArtifacts: ['CSSUsage', 'Styles', 'URL', 'networkRecords']
+      requiredArtifacts: ['CSSUsage', 'Styles', 'URL', 'devtoolsLogs']
     };
   }
 
@@ -141,7 +141,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
       const contentPreview = UnusedCSSRules.determineContentPreview(stylesheetInfo.content);
       url = '*inline*```' + contentPreview + '```';
     } else {
-      url = URL.getDisplayName(url);
+      url = URL.getURLDisplayName(url);
     }
 
     // If we don't know for sure how many bytes this sheet used on the network,
@@ -170,26 +170,27 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     const styles = artifacts.Styles;
     const usage = artifacts.CSSUsage;
     const pageUrl = artifacts.URL.finalUrl;
-    const networkRecords = artifacts.networkRecords[ByteEfficiencyAudit.DEFAULT_PASS];
 
-    const indexedSheets = UnusedCSSRules.indexStylesheetsById(styles, networkRecords);
-    UnusedCSSRules.countUnusedRules(usage, indexedSheets);
-    const results = Object.keys(indexedSheets).map(sheetId => {
-      return UnusedCSSRules.mapSheetToResult(indexedSheets[sheetId], pageUrl);
-    }).filter(sheet => sheet && sheet.wastedBytes > 1024);
+    const devtoolsLogs = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
+    return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
+      const indexedSheets = UnusedCSSRules.indexStylesheetsById(styles, networkRecords);
+      UnusedCSSRules.countUnusedRules(usage, indexedSheets);
+      const results = Object.keys(indexedSheets).map(sheetId => {
+        return UnusedCSSRules.mapSheetToResult(indexedSheets[sheetId], pageUrl);
+      }).filter(sheet => sheet && sheet.wastedBytes > 1024);
 
+      const headings = [
+        {key: 'url', itemType: 'url', text: 'URL'},
+        {key: 'numUnused', itemType: 'url', text: 'Unused Rules'},
+        {key: 'totalKb', itemType: 'text', text: 'Original'},
+        {key: 'potentialSavings', itemType: 'text', text: 'Potential Savings'},
+      ];
 
-    const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'numUnused', itemType: 'url', text: 'Unused Rules'},
-      {key: 'totalKb', itemType: 'text', text: 'Original'},
-      {key: 'potentialSavings', itemType: 'text', text: 'Potential Savings'},
-    ];
-
-    return {
-      results,
-      headings
-    };
+      return {
+        results,
+        headings
+      };
+    });
   }
 }
 

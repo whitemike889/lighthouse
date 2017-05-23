@@ -77,7 +77,7 @@ class Audit {
     const tableRows = results.map(item => {
       return headings.map(heading => {
         const value = item[heading.key];
-        if (typeof value === 'object' && value.type) return value;
+        if (typeof value === 'object' && value && value.type) return value;
 
         return {
           type: heading.itemType,
@@ -95,6 +95,7 @@ class Audit {
   static makeV2TableHeaders(headings) {
     return headings.map(heading => ({
       type: 'text',
+      itemType: heading.itemType,
       text: heading.text
     }));
   }
@@ -146,6 +147,7 @@ class Audit {
       extendedInfo: result.extendedInfo,
       scoringMode: audit.meta.scoringMode || Audit.SCORING_MODES.BINARY,
       informative: audit.meta.informative,
+      manual: audit.meta.manual,
       name: audit.meta.name,
       category: audit.meta.category,
       description: audit.meta.description,

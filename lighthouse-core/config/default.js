@@ -4,7 +4,9 @@ module.exports = {
   "passes": [{
     "passName": "defaultPass",
     "recordTrace": true,
-    "pauseBeforeTraceEndMs": 5000,
+    "pauseAfterLoadMs": 5250,
+    "networkQuietThresholdMs": 5000,
+    "pauseAfterNetworkQuietMs": 2500,
     "useThrottling": true,
     "gatherers": [
       "url",
@@ -12,45 +14,41 @@ module.exports = {
       "viewport-dimensions",
       "theme-color",
       "manifest",
+      "chrome-console-messages",
       "image-usage",
-      "accessibility"
+      // "css-usage",
+      "accessibility",
+      "dobetterweb/all-event-listeners",
+      "dobetterweb/anchors-with-no-rel-noopener",
+      "dobetterweb/appcache",
+      "dobetterweb/domstats",
+      "dobetterweb/optimized-images",
+      "dobetterweb/response-compression",
+      "dobetterweb/tags-blocking-first-paint",
+      "dobetterweb/websql",
     ]
   },
   {
     "passName": "offlinePass",
     "useThrottling": false,
+    // Just wait for onload
+    "networkQuietThresholdMs": 0,
     "gatherers": [
       "service-worker",
-      "offline"
+      "offline",
+      "start-url",
     ]
   },
   {
     "passName": "redirectPass",
     "useThrottling": false,
+    // Just wait for onload
+    "networkQuietThresholdMs": 0,
+    // Speed up the redirect pass by blocking stylesheets, fonts, and images
+    "blockedUrlPatterns": ["*.css", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.svg", "*.ttf", "*.woff", "*.woff2"],
     "gatherers": [
       "http-redirect",
-      "html-without-javascript"
-    ]
-  }, {
-    "passName": "dbw",
-    "useThrottling": false,
-    "gatherers": [
-      "chrome-console-messages",
-      "styles",
-      // "css-usage",
-      "dobetterweb/all-event-listeners",
-      "dobetterweb/anchors-with-no-rel-noopener",
-      "dobetterweb/appcache",
-      "dobetterweb/console-time-usage",
-      "dobetterweb/datenow",
-      "dobetterweb/document-write",
-      "dobetterweb/geolocation-on-start",
-      "dobetterweb/notification-on-start",
-      "dobetterweb/domstats",
-      "dobetterweb/optimized-images",
-      "dobetterweb/response-compression",
-      "dobetterweb/tags-blocking-first-paint",
-      "dobetterweb/websql"
+      "html-without-javascript",
     ]
   }],
 
@@ -64,8 +62,11 @@ module.exports = {
     "first-meaningful-paint",
     "load-fast-enough-for-pwa",
     "speed-index-metric",
+    "screenshot-thumbnails",
     "estimated-input-latency",
+    // "time-to-firstbyte",
     "first-interactive",
+    "consistently-interactive",
     "time-to-interactive",
     "user-timings",
     "critical-request-chains",
@@ -75,6 +76,9 @@ module.exports = {
     "manifest-short-name-length",
     "content-width",
     "deprecations",
+    "manual/pwa-cross-browser",
+    "manual/pwa-page-transitions",
+    "manual/pwa-each-page-has-url",
     "accessibility/accesskeys",
     "accessibility/aria-allowed-attr",
     "accessibility/aria-required-attr",
@@ -113,6 +117,7 @@ module.exports = {
     "byte-efficiency/total-byte-weight",
     // "byte-efficiency/unused-css-rules",
     "byte-efficiency/offscreen-images",
+    "byte-efficiency/uses-webp-images",
     "byte-efficiency/uses-optimized-images",
     "byte-efficiency/uses-request-compression",
     "byte-efficiency/uses-responsive-images",
@@ -121,11 +126,9 @@ module.exports = {
     "dobetterweb/external-anchors-use-rel-noopener",
     "dobetterweb/geolocation-on-start",
     "dobetterweb/link-blocking-first-paint",
-    "dobetterweb/no-console-time",
-    "dobetterweb/no-datenow",
     "dobetterweb/no-document-write",
     "dobetterweb/no-mutation-events",
-    "dobetterweb/no-old-flexbox",
+    // "dobetterweb/no-old-flexbox",
     "dobetterweb/no-websql",
     "dobetterweb/notification-on-start",
     "dobetterweb/script-blocking-first-paint",
@@ -136,7 +139,7 @@ module.exports = {
   "aggregations": [{
     "name": "Progressive Web App",
     "id": "pwa",
-    "description": "These audits validate the aspects of a Progressive Web App. They are a subset of the [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
+    "description": "These audits validate the aspects of a Progressive Web App. They are a subset of the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
     "scored": true,
     "categorizable": true,
     "items": [{
@@ -172,6 +175,10 @@ module.exports = {
           "expectedValue": 100,
           "weight": 1
         },
+        // "time-to-firstbyte": {
+        //   "expectedValue": true,
+        //   "weight": 1
+        // },
         "time-to-interactive": {
           "expectedValue": 100,
           "weight": 1
@@ -588,44 +595,62 @@ module.exports = {
     }]
   }],
   "groups": {
+    "perf-metric": {
+      "title": "Metrics",
+      "description": "These metrics encapsulate your app's performance across a number of dimensions."
+    },
+    "perf-hint": {
+      "title": "Opportunities",
+      "description": "These are opportunities to speed up your application by optimizing the following resources."
+    },
+    "perf-info": {
+      "title": "Diagnostics",
+      "description": "More information about the performance of your application."
+    },
     "a11y-color-contrast": {
       "title": "Color Contrast Is Satisfactory",
-      "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
+      "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-describe-contents": {
       "title": "Elements Describe Contents Well",
-      "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
+      "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-well-structured": {
       "title": "Elements Are Well Structured",
-      "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
+      "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-aria": {
       "title": "ARIA Attributes Follow Best Practices",
-      "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
+      "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-correct-attributes": {
       "title": "Elements Use Attributes Correctly",
-      "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
+      "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-element-names": {
       "title": "Elements Have Discernable Names",
-      "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
+      "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-language": {
       "title": "Page Specifies Valid Language",
-      "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
+      "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
     },
     "a11y-meta": {
       "title": "Meta Tags Used Properly",
-      "description": "Screen readers and other assitive technologies require annotations to understand otherwise ambiguous content."
+      "description": "Screen readers and other assistive technologies require annotations to understand otherwise ambiguous content."
+    },
+    "manual-pwa-checks": {
+      "title": "Manual checks to verify",
+      "description": "These audits are required by the baseline " +
+          "[PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are " +
+          "not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually."
     },
   },
   "categories": {
     "pwa": {
       "name": "Progressive Web App",
       "weight": 1,
-      "description": "These audits validate the aspects of a Progressive Web App. They are a subset of the [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
+      "description": "These audits validate the aspects of a Progressive Web App, as specified by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist).",
       "audits": [
         {"id": "service-worker", "weight": 1},
         {"id": "works-offline", "weight": 1},
@@ -637,28 +662,36 @@ module.exports = {
         {"id": "splash-screen", "weight": 1},
         {"id": "themed-omnibox", "weight": 1},
         {"id": "viewport", "weight": 1},
-        {"id": "content-width", "weight": 1}
+        {"id": "content-width", "weight": 1},
+        {"id": "pwa-cross-browser", "weight": 0, "group": "manual-pwa-checks"},
+        {"id": "pwa-page-transitions", "weight": 0, "group": "manual-pwa-checks"},
+        {"id": "pwa-each-page-has-url", "weight": 0, "group": "manual-pwa-checks"}
       ]
     },
     "performance": {
       "name": "Performance",
       "description": "These encapsulate your app's performance.",
       "audits": [
-        {"id": "first-meaningful-paint", "weight": 5},
-        {"id": "speed-index-metric", "weight": 1},
-        {"id": "estimated-input-latency", "weight": 1},
-        {"id": "time-to-interactive", "weight": 5},
-        {"id": "first-interactive", "weight": 5},
-        {"id": "link-blocking-first-paint", "weight": 0},
-        {"id": "script-blocking-first-paint", "weight": 0},
+        {"id": "first-meaningful-paint", "weight": 5, "group": "perf-metric"},
+        {"id": "first-interactive", "weight": 5, "group": "perf-metric"},
+        {"id": "consistently-interactive", "weight": 5, "group": "perf-metric"},
+        {"id": "speed-index-metric", "weight": 1, "group": "perf-metric"},
+        {"id": "estimated-input-latency", "weight": 1, "group": "perf-metric"},
+        {"id": "link-blocking-first-paint", "weight": 0, "group": "perf-hint"},
+        {"id": "script-blocking-first-paint", "weight": 0, "group": "perf-hint"},
         // {"id": "unused-css-rules", "weight": 0},
-        {"id": "uses-optimized-images", "weight": 0},
-        {"id": "uses-request-compression", "weight": 0},
-        {"id": "uses-responsive-images", "weight": 0},
-        {"id": "total-byte-weight", "weight": 0},
-        {"id": "dom-size", "weight": 0},
-        {"id": "critical-request-chains", "weight": 0},
-        {"id": "user-timings", "weight": 0}
+        {"id": "uses-responsive-images", "weight": 0, "group": "perf-hint"},
+        {"id": "offscreen-images", "weight": 0, "group": "perf-hint"},
+        {"id": "uses-optimized-images", "weight": 0, "group": "perf-hint"},
+        {"id": "uses-webp-images", "weight": 0, "group": "perf-hint"},
+        {"id": "uses-request-compression", "weight": 0, "group": "perf-hint"},
+        // {"id": "time-to-firstbyte", "weight": 0, "group": "perf-hint"},
+        {"id": "total-byte-weight", "weight": 0, "group": "perf-info"},
+        {"id": "dom-size", "weight": 0, "group": "perf-info"},
+        {"id": "critical-request-chains", "weight": 0, "group": "perf-info"},
+        {"id": "user-timings", "weight": 0, "group": "perf-info"},
+
+        {"id": "screenshot-thumbnails", "weight": 0},
       ]
     },
     "accessibility": {
@@ -710,7 +743,7 @@ module.exports = {
         {"id": "no-websql", "weight": 1},
         {"id": "is-on-https", "weight": 1},
         {"id": "uses-http2", "weight": 1},
-        {"id": "no-old-flexbox", "weight": 1},
+        // {"id": "no-old-flexbox", "weight": 1},
         {"id": "uses-passive-event-listeners", "weight": 1},
         {"id": "no-mutation-events", "weight": 1},
         {"id": "no-document-write", "weight": 1},

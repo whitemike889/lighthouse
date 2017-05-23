@@ -231,9 +231,11 @@ class Runner {
   static getAuditList() {
     const ignoredFiles = [
       'audit.js',
+      'violation-audit.js',
       'accessibility/axe-audit.js',
       'multi-check-audit.js',
-      'byte-efficiency/byte-efficiency-audit.js'
+      'byte-efficiency/byte-efficiency-audit.js',
+      'manual/manual-audit.js'
     ];
 
     const fileList = [
@@ -242,7 +244,8 @@ class Runner {
       ...fs.readdirSync(path.join(__dirname, './audits/accessibility'))
           .map(f => `accessibility/${f}`),
       ...fs.readdirSync(path.join(__dirname, './audits/byte-efficiency'))
-          .map(f => `byte-efficiency/${f}`)
+          .map(f => `byte-efficiency/${f}`),
+      ...fs.readdirSync(path.join(__dirname, './audits/manual')).map(f => `manual/${f}`)
     ];
     return fileList.filter(f => {
       return /\.js$/.test(f) && !ignoredFiles.includes(f);

@@ -44,43 +44,55 @@ $ lighthouse --help
 lighthouse <url>
 
 Logging:
-  --verbose  Displays verbose logging                                                      [boolean]
-  --quiet    Displays no progress or debug logs                                            [boolean]
+  --verbose  Displays verbose logging                                                                                                      [boolean]
+  --quiet    Displays no progress, debug logs or errors                                                                                    [boolean]
 
 Configuration:
-  --disable-device-emulation    Disable device emulation                                   [boolean]
-  --disable-cpu-throttling      Disable cpu throttling                                     [boolean]
-  --disable-network-throttling  Disable network throttling                                 [boolean]
-  --save-assets                 Save the trace contents & screenshots to disk              [boolean]
-  --save-artifacts              Save all gathered artifacts to disk                        [boolean]
-  --list-all-audits             Prints a list of all available audits and exits            [boolean]
-  --list-trace-categories       Prints a list of all required trace categories and exits   [boolean]
-  --config-path                 The path to the config JSON.
-  --perf                        Use a performance-test-only configuration                  [boolean]
-  --port                        The port to use for the debugging protocol. Use 0 for a
-                                random port.                                         [default: 9222]
-  --max-wait-for-load           The timeout (in milliseconds) to wait before the page is
-                                considered done loading and the run should continue.
-                                WARNING: Very high values can lead to large traces and
-                                instability.                                        [default: 25000]
+  --save-assets                  Save the trace contents & screenshots to disk                                                             [boolean]
+  --save-artifacts               Save all gathered artifacts to disk                                                                       [boolean]
+  --list-all-audits              Prints a list of all available audits and exits                                                           [boolean]
+  --list-trace-categories        Prints a list of all required trace categories and exits                                                  [boolean]
+  --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).
+  --config-path                  The path to the config JSON.
+  --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see
+                                 http://peter.sh/experiments/chromium-command-line-switches/.                                          [default: ""]
+  --perf                         Use a performance-test-only configuration                                                                 [boolean]
+  --port                         The port to use for the debugging protocol. Use 0 for a random port                                 [default: 9222]
+  --max-wait-for-load            The timeout (in milliseconds) to wait before the page is considered done loading and the run should continue.
+                                 WARNING: Very high values can lead to large traces and instability                                 [default: 25000]
 
 Output:
-  --output       Reporter for the results, supports multiple values
-                                    [choices: "json", "html"]                      [default: "html"]
-  --output-path  The file path to output the results. Use 'stdout' to write to
-                 stdout.
+  --output       Reporter for the results, supports multiple values                           [choices: "json", "html", "domhtml"] [default: "html"]
+  --output-path  The file path to output the results. Use 'stdout' to write to stdout.
                  If using JSON output, default is stdout.
-                 If using HTML output, default is a file in the working
-                 directory with a name based on the test URL and date.
+                 If using HTML output, default is a file in the working directory with a name based on the test URL and date.
                  If using multiple outputs, --output-path is ignored.
-                 Example: --output-path=./lighthouse-results.html                [default: "stdout"]
+                 Example: --output-path=./lighthouse-results.html
+  --view         Open HTML report in your browser                                                                                          [boolean]
 
 Options:
-  --help             Show help                                                             [boolean]
-  --version          Show version number                                                   [boolean]
-  --skip-autolaunch  Skip autolaunch of Chrome when accessing port 9222 fails              [boolean]
-  --select-chrome    Interactively choose version of Chrome to use when multiple
-                     installations are found                                               [boolean]
+  --help                        Show help                                                                                                  [boolean]
+  --version                     Show version number                                                                                        [boolean]
+  --disable-storage-reset       Disable clearing the browser cache and other storage APIs before a run                                     [boolean]
+  --disable-device-emulation    Disable Nexus 5X emulation                                                                                 [boolean]
+  --disable-cpu-throttling      Disable CPU throttling                                                                    [boolean] [default: false]
+  --disable-network-throttling  Disable network throttling                                                                                 [boolean]
+  --skip-autolaunch             Skip autolaunch of Chrome when already running instance is not found                                       [boolean]
+  --select-chrome               Interactively choose version of Chrome to use when multiple installations are found                        [boolean]
+  --interactive                 Open Lighthouse in interactive mode                                                                        [boolean]
+
+Examples:
+  lighthouse <url> --view                                                   Opens the HTML report in a browser after the run completes
+  lighthouse <url> --config-path=./myconfig.js                              Runs Lighthouse with your own configuration: custom audits, report
+                                                                            generation, etc.
+  lighthouse <url> --output=json --output-path=./report.json --save-assets  Save trace, screenshots, and named JSON report.
+  lighthouse <url> --disable-device-emulation --disable-network-throttling  Disable device emulation
+  lighthouse <url> --chrome-flags="--window-size=412,732"                   Launch Chrome with a specific window size
+  lighthouse <url> --quiet --chrome-flags="--headless"                      Launch Headless Chrome, turn off logging
+
+For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.
+
+
 ```
 
 ##### Output Examples
@@ -148,42 +160,21 @@ assumes you've installed Lighthouse as a dependency (`yarn add --dev lighthouse`
 
 ```javascript
 const lighthouse = require('lighthouse');
-const ChromeLauncher = require('lighthouse/lighthouse-cli/chrome-launcher.js').ChromeLauncher;
-const Printer = require('lighthouse/lighthouse-cli/printer');
+const chromeLauncher = require('lighthouse/chrome-launcher/chrome-launcher');
 
-function launchChromeAndRunLighthouse(url, flags, config) {
-  const launcher = new ChromeLauncher({port: 9222, autoSelectChrome: true});
-
-  return launcher.run() // Launch Chrome.
-    .then(() => lighthouse(url, flags, config)) // Run Lighthouse.
-    .then(results => launcher.kill().then(() => results)) // Kill Chrome and return results.
-    .catch(err => {
-      // Kill Chrome if there's an error.
-      return launcher.kill().then(() => {
-        throw err;
-      });
-    });
+function launchChromeAndRunLighthouse(url, flags, config = null) {
+  return chromeLauncher.launch().then(chrome => {
+    flags.port = chrome.port;
+    return lighthouse(url, flags, config).then(results =>
+      chrome.kill().then(() => results)
+    );
+  });
 }
 
-// Use an existing config or create a custom one.
-const config = require('lighthouse/lighthouse-core/config/perf.json');
-const url = 'https://example.com';
-const flags = {output: 'html'};
-
-launchChromeAndRunLighthouse(url, flags, config).then(lighthouseResults => {
-  lighthouseResults.artifacts = undefined; // You can save the artifacts separately if so desired
-  return Printer.write(lighthouseResults, flags.output);
-}).catch(err => console.error(err));
-```
-
-**Example** - extracting an overall score from all scored audits
-
-```javascript
-function getOverallScore(lighthouseResults) {
-  const scoredAggregations = lighthouseResults.aggregations.filter(a => a.scored);
-  const total = scoredAggregations.reduce((sum, aggregation) => sum + aggregation.total, 0);
-  return (total / scoredAggregations.length) * 100;
-}
+// In use:
+const flags = {output: 'json'};
+launchChromeAndRunLighthouse('https://example.com', flags)
+	.then(results => console.log(results));
 ```
 
 ### Recipes
@@ -223,6 +214,7 @@ right corner and signing in to GitHub.
 * [pwmetrics](https://github.com/paulirish/pwmetrics/) - gather performance metrics
 * [lighthouse-hue](https://github.com/ebidel/lighthouse-hue) - Lighthouse score setting the color of Philips Hue lights
 * [lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch) - Run Lighthouse over a number of sites in sequence and generating a summary report including all of their scores.
+* [lighthouse-cron](https://github.com/thearegee/lighthouse-cron) - Cron multiple batch Lighthouse audits and emit results for sending to remote server.
 
 ## Develop
 
@@ -322,7 +314,7 @@ yarn compile-devtools
 
 ## Lighthouse as trace processor
 
-Lighthouse can be used to analyze trace and performance data collected from other tools (like WebPageTest and ChromeDriver). The `traces` and `performanceLog` artifact items can be provided using a string for the absolute path on disk. The perf log is captured from the Network domain (a la ChromeDriver's [`enableNetwork` option](https://sites.google.com/a/chromium.org/chromedriver/capabilities#TOC-perfLoggingPrefs-object)) and reformatted slightly. As an example, here's a trace-only run that's reporting on user timings and critical request chains:
+Lighthouse can be used to analyze trace and performance data collected from other tools (like WebPageTest and ChromeDriver). The `traces` and `devtoolsLogs` artifact items can be provided using a string for the absolute path on disk. The devtoolsLogs array is captured from the Network domain (a la ChromeDriver's [`enableNetwork` option](https://sites.google.com/a/chromium.org/chromedriver/capabilities#TOC-perfLoggingPrefs-object)) and reformatted slightly. As an example, here's a trace-only run that's reporting on user timings and critical request chains:
 
 ### `config.json`
 
@@ -337,7 +329,9 @@ Lighthouse can be used to analyze trace and performance data collected from othe
     "traces": {
       "defaultPass": "/User/me/lighthouse/lighthouse-core/test/fixtures/traces/trace-user-timings.json"
     },
-    "performanceLog": "/User/me/lighthouse/lighthouse-core/test/fixtures/traces/perflog.json"
+    "devtoolsLogs": {
+      "defaultPass": "/User/me/lighthouse/lighthouse-core/test/fixtures/traces/perflog.json"
+    }
   },
 
   "aggregations": [{
@@ -379,6 +373,16 @@ If you'd like to contribute, check the [list of issues](https://github.com/Googl
 
 Nope. Lighthouse runs locally, auditing a page using a local version of the Chrome browser installed the
 machine. Report results are never processed or beaconed to a remote server.
+
+### Videos
+
+Our session from Google I/O 2017: architecture, writing custom audits, Github/Travis/CI integration, and more:
+
+[![Lighthouse @ Google I/O](https://img.youtube.com/vi/NoRYn6gOtVo/0.jpg)](https://www.youtube.com/watch?v=NoRYn6gOtVo)
+
+_click to watch the video_
+
+---
 
 <p align="center">
   <img src="https://cloud.githubusercontent.com/assets/39191/22478294/23f662f6-e79e-11e6-8de3-ffd7be7bf628.png" alt="Lighthouse logo" height="150">

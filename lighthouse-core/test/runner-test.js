@@ -95,7 +95,7 @@ describe('Runner', () => {
     return Runner.run({}, {url, config}).then(results => {
       const audits = results.audits;
       assert.equal(audits['user-timings'].displayValue, 2);
-      assert.equal(audits['user-timings'].rawValue, true);
+      assert.equal(audits['user-timings'].rawValue, false);
     });
   });
 
@@ -197,6 +197,7 @@ describe('Runner', () => {
       category: 'ThrowThrow',
       name: 'throwy-audit',
       description: 'Always throws',
+      helpText: 'Test for always throwing',
       requiredArtifacts: []
     };
 
@@ -260,7 +261,9 @@ describe('Runner', () => {
       ],
 
       artifacts: {
-        performanceLog: path.join(__dirname, '/fixtures/perflog.json')
+        devtoolsLogs: {
+          defaultPass: path.join(__dirname, '/fixtures/perflog.json')
+        }
       }
     });
 
@@ -459,14 +462,17 @@ describe('Runner', () => {
         assert.ok(results.artifacts.hasOwnProperty(method));
       }
 
-      // Verify a computed artifact. driverMock will include networkRecords
-      // built from fixtures/perflog.json.
-      const networkRecords = results.artifacts.networkRecords.firstPass;
-      const p = results.artifacts.requestCriticalRequestChains(networkRecords);
-      return p.then(chains => {
-        assert.ok(chains['93149.1']);
-        assert.ok(chains['93149.1'].request);
-        assert.ok(chains['93149.1'].children);
+      // Verify a computed artifact
+      const artifacts = results.artifacts;
+      const devtoolsLogs = artifacts.devtoolsLogs['firstPass'];
+      assert.equal(Array.isArray(devtoolsLogs), true, 'devtoolsLogs is not an array');
+
+      return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
+        return artifacts.requestCriticalRequestChains(networkRecords).then(chains => {
+          assert.ok(chains['93149.1']);
+          assert.ok(chains['93149.1'].request);
+          assert.ok(chains['93149.1'].children);
+        });
       });
     });
   });

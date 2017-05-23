@@ -33,15 +33,17 @@ class CriticalRequestChains extends ComputedArtifact {
    * @param  {any} request
    */
   isCritical(request) {
-    // XHRs are fetched at High priority, but we exclude them, as they are unlikely to be critical
     const resourceTypeCategory = request._resourceType && request._resourceType._category;
-    if (resourceTypeCategory === WebInspector.resourceTypes.XHR._category) {
-      return false;
-    }
 
-    // Treat favicons as non-critical resources
-    if (request.mimeType === 'image/x-icon' ||
-        (request.parsedURL && request.parsedURL.lastPathComponent === 'favicon.ico')) {
+    // XHRs are fetched at High priority, but we exclude them, as they are unlikely to be critical
+    // Images are also non-critical.
+    // Treat any images missed by category, primarily favicons, as non-critical resources
+    const nonCriticalResourceTypes = [
+      WebInspector.resourceTypes.Image._category,
+      WebInspector.resourceTypes.XHR._category
+    ];
+    if (nonCriticalResourceTypes.includes(resourceTypeCategory) ||
+        request.mimeType && request.mimeType.startsWith('image/')) {
       return false;
     }
 
@@ -49,6 +51,8 @@ class CriticalRequestChains extends ComputedArtifact {
   }
 
   compute_(networkRecords) {
+    networkRecords = networkRecords.filter(req => req.finished);
+
     // Build a map of requestID -> Node.
     const requestIdToRequests = new Map();
     for (const request of networkRecords) {

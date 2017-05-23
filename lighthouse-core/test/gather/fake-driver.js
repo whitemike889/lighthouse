@@ -16,8 +16,6 @@
 
 'use strict';
 
-const recordsFromLogs = require('../../lib/network-recorder').recordsFromLogs;
-
 module.exports = {
   getUserAgent() {
     return Promise.resolve('Fake user agent');
@@ -29,7 +27,7 @@ module.exports = {
     return Promise.resolve();
   },
   gotoURL() {
-    return Promise.resolve();
+    return Promise.resolve('https://example.com');
   },
   beginEmulation() {
     return Promise.resolve();
@@ -52,7 +50,7 @@ module.exports = {
   evaluateScriptOnLoad() {
     return Promise.resolve();
   },
-  cleanAndDisableBrowserCaches() {},
+  cleanBrowserCaches() {},
   clearDataForOrigin() {},
   cacheNatives() {
     return Promise.resolve();
@@ -65,11 +63,9 @@ module.exports = {
       require('../fixtures/traces/progressive-app.json')
     );
   },
-  beginNetworkCollect() {},
-  endNetworkCollect() {
-    return Promise.resolve(
-      recordsFromLogs(require('../fixtures/perflog.json'))
-    );
+  beginDevtoolsLog() {},
+  endDevtoolsLog() {
+    return require('../fixtures/perflog.json');
   },
   getSecurityState() {
     return Promise.resolve({

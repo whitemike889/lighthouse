@@ -33,6 +33,25 @@ If you have a contribution for our [documentation](https://developers.google.com
 1. Ensure that your code adheres to the existing style in the sample to which you are contributing.
 1. Submit a pull request.
 
+## helpText guidelines
+
+Keep the `helpText` of an audit as short as possible. When a reference doc for the audit exists on
+developers.google.com/web, the `helpText` should only explain *why* the user should care
+about the audit, not *how* to fix it.
+
+Do:
+
+    Serve images that are smaller than the user's viewport to save cellular data and
+    improve load time. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/oversized-images).
+
+Don't:
+
+    Serve images that are smaller than the user's viewport to save cellular data and
+    improve load time. Consider using responsive images and client hints.
+
+If no reference doc exists yet, then you can use the `helpText` as a stopgap for explaining
+both why the audit is important and how to fix it.
+
 # For Maintainers
 
 ## Updating traceviewer source
@@ -102,4 +121,34 @@ echo "Generate the release notes, and update the release page"
 
 # * Tell the world!!! *
 echo "Inform various peoples"
+```
+
+### Canary release
+
+```sh
+# Pull latest in a clean non-dev clone.
+
+yarn install-all
+
+# Update manifest_canary.json w/ version bumps.
+
+# branch and commit
+git commmit -m "bump extension canary to 2.0.0.X"
+
+npm version prerelease # this will commit
+
+
+# overwrite extension's manifest w/ manifest_canary.
+
+yarn build-all
+
+cd lighthouse-extension/
+gulp package
+# upload zip to CWS and publish
+
+# verify you build-all'd for the typescript compile
+# ...
+
+# publish to canary tag!
+npm publish --tag canary
 ```

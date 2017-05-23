@@ -24,6 +24,7 @@
 const Audit = require('../audit');
 const URL = require('../../lib/url-shim');
 const Formatter = require('../../report/formatter');
+const scoreForWastedMs = require('../byte-efficiency/byte-efficiency-audit').scoreForWastedMs;
 
 // Because of the way we detect blocking stylesheets, asynchronously loaded
 // CSS with link[rel=preload] and an onload handler (see https://github.com/filamentgroup/loadCSS)
@@ -40,38 +41,43 @@ class LinkBlockingFirstPaintAudit extends Audit {
     return {
       category: 'Performance',
       name: 'link-blocking-first-paint',
-      description: 'Render-blocking stylesheets',
+      description: 'Reduce render-blocking stylesheets',
       informative: true,
       helpText: 'Link elements are blocking the first paint of your page. Consider ' +
           'inlining critical links and deferring non-critical ones. ' +
           '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/blocking-resources).',
-      requiredArtifacts: ['TagsBlockingFirstPaint']
+      requiredArtifacts: ['TagsBlockingFirstPaint', 'traces']
     };
   }
 
   /**
    * @param {!Artifacts} artifacts
    * @param {string} tagFilter The tagName to filter on
-   * @param {number=} loadThreshold Filter to resources that took at least this
+   * @param {number=} endTimeMax The trace milisecond timestamp that offending tags must have ended
+   *    before (typically first contentful paint).
+   * @param {number=} loadDurationThreshold Filter to resources that took at least this
    *    many milliseconds to load.
    * @return {!AuditResult} The object to pass to `generateAuditResult`
    */
-  static computeAuditResultForTags(artifacts, tagFilter, loadThreshold = 0) {
+  static computeAuditResultForTags(artifacts, tagFilter, endTimeMax = Infinity,
+      loadDurationThreshold = 0) {
     const artifact = artifacts.TagsBlockingFirstPaint;
 
     const filtered = artifact.filter(item => {
       return item.tag.tagName === tagFilter &&
-        (item.endTime - item.startTime) * 1000 >= loadThreshold;
+        (item.endTime - item.startTime) * 1000 >= loadDurationThreshold &&
+        item.endTime * 1000 < endTimeMax;
     });
 
-    const startTime = filtered.reduce((t, item) => Math.min(t, item.startTime), Number.MAX_VALUE);
+    const startTime = filtered.length === 0 ? 0 :
+        filtered.reduce((t, item) => Math.min(t, item.startTime), Number.MAX_VALUE);
     let endTime = 0;
 
     const results = filtered.map(item => {
       endTime = Math.max(item.endTime, endTime);
 
       return {
-        url: URL.getDisplayName(item.tag.url),
+        url: URL.getURLDisplayName(item.tag.url),
         totalKb: `${Math.round(item.transferSize / 1024)} KB`,
         totalMs: `${Math.round((item.endTime - startTime) * 1000)}ms`
       };
@@ -96,10 +102,12 @@ class LinkBlockingFirstPaintAudit extends Audit {
 
     return {
       displayValue,
-      rawValue: results.length === 0,
+      score: scoreForWastedMs(delayTime),
+      rawValue: delayTime,
       extendedInfo: {
         formatter: Formatter.SUPPORTED_FORMATS.TABLE,
         value: {
+          wastedMs: delayTime,
           results,
           tableHeadings: v1TableHeadings
         }
@@ -113,7 +121,11 @@ class LinkBlockingFirstPaintAudit extends Audit {
    * @return {!AuditResult}
    */
   static audit(artifacts) {
-    return this.computeAuditResultForTags(artifacts, 'LINK', LOAD_THRESHOLD_IN_MS);
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    return artifacts.requestTraceOfTab(trace).then(traceOfTab => {
+      const fcp = traceOfTab.timestamps.firstContentfulPaint;
+      return this.computeAuditResultForTags(artifacts, 'LINK', fcp, LOAD_THRESHOLD_IN_MS);
+    });
   }
 }
 

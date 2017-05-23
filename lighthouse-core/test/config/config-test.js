@@ -22,6 +22,7 @@ const defaultConfig = require('../../config/default.js');
 const log = require('../../lib/log');
 const Gatherer = require('../../gather/gatherers/gatherer');
 const Audit = require('../../audits/audit');
+const Runner = require('../../runner');
 
 /* eslint-env mocha */
 
@@ -47,6 +48,7 @@ describe('Config', () => {
           name: 'MyAudit',
           category: 'mine',
           description: 'My audit',
+          helpText: '',
           requiredArtifacts: []
         };
       }
@@ -235,6 +237,10 @@ describe('Config', () => {
     }), /meta.description property/);
 
     assert.throws(_ => new Config({
+      audits: [basePath + '/missing-help-text']
+    }), /meta.helpText property/);
+
+    assert.throws(_ => new Config({
       audits: [basePath + '/missing-required-artifacts']
     }), /meta.requiredArtifacts property/);
   });
@@ -372,7 +378,7 @@ describe('Config', () => {
 
     assert.ok(config.audits.length, 'inherited audits by extension');
     assert.equal(config.audits.length, origConfig.categories.performance.audits.length + 1);
-    assert.equal(config.passes.length, 2, 'filtered out passes');
+    assert.equal(config.passes.length, 1, 'filtered out passes');
   });
 
   it('warns for invalid filters', () => {
@@ -399,12 +405,21 @@ describe('Config', () => {
           traces: {
             defaultPass: path.resolve(__dirname, '../fixtures/traces/trace-user-timings.json')
           },
-          performanceLog: path.resolve(__dirname, '../fixtures/perflog.json')
+          devtoolsLogs: {
+            defaultPass: path.resolve(__dirname, '../fixtures/perflog.json')
+          }
         }
       });
+      const computed = Runner.instantiateComputedArtifacts();
+
       const traceUserTimings = require('../fixtures/traces/trace-user-timings.json');
       assert.deepStrictEqual(config.artifacts.traces.defaultPass.traceEvents, traceUserTimings);
-      assert.equal(config.artifacts.networkRecords.defaultPass.length, 76);
+      const devtoolsLogs = config.artifacts.devtoolsLogs.defaultPass;
+      assert.equal(devtoolsLogs.length, 555);
+
+      return computed.requestNetworkRecords(devtoolsLogs).then(records => {
+        assert.equal(records.length, 76);
+      });
     });
 
     it('expands artifacts with multiple named passes', () => {
@@ -414,7 +429,7 @@ describe('Config', () => {
             defaultPass: path.resolve(__dirname, '../fixtures/traces/trace-user-timings.json'),
             otherPass: path.resolve(__dirname, '../fixtures/traces/trace-user-timings.json')
           },
-          performanceLog: {
+          devtoolsLogs: {
             defaultPass: path.resolve(__dirname, '../fixtures/perflog.json'),
             otherPass: path.resolve(__dirname, '../fixtures/perflog.json')
           }
@@ -423,8 +438,8 @@ describe('Config', () => {
       const traceUserTimings = require('../fixtures/traces/trace-user-timings.json');
       assert.deepStrictEqual(config.artifacts.traces.defaultPass.traceEvents, traceUserTimings);
       assert.deepStrictEqual(config.artifacts.traces.otherPass.traceEvents, traceUserTimings);
-      assert.equal(config.artifacts.networkRecords.defaultPass.length, 76);
-      assert.equal(config.artifacts.networkRecords.otherPass.length, 76);
+      assert.equal(config.artifacts.devtoolsLogs.defaultPass.length, 555);
+      assert.equal(config.artifacts.devtoolsLogs.otherPass.length, 555);
     });
 
     it('handles traces with no TracingStartedInPage events', () => {
@@ -434,7 +449,9 @@ describe('Config', () => {
             defaultPass: path.resolve(__dirname,
                             '../fixtures/traces/trace-user-timings-no-tracingstartedinpage.json')
           },
-          performanceLog: path.resolve(__dirname, '../fixtures/perflog.json')
+          devtoolsLogs: {
+            defaultPass: path.resolve(__dirname, '../fixtures/perflog.json')
+          }
         }
       });
 
@@ -487,7 +504,7 @@ describe('Config', () => {
     it('should merge other values', () => {
       const artifacts = {
         traces: {defaultPass: '../some/long/path'},
-        performanceLog: 'path/to/performance/log',
+        devtoolsLogs: {defaultPass: 'path/to/devtools/log'},
       };
       const configA = {};
       const configB = {extends: true, artifacts};
@@ -519,7 +536,7 @@ describe('Config', () => {
       const totalAuditCount = origConfig.audits.length;
       const config = Config.generateNewFilteredConfig(origConfig, ['performance']);
       assert.equal(Object.keys(config.categories).length, 1, 'other categories are present');
-      assert.equal(config.passes.length, 2, 'incorrect # of passes');
+      assert.equal(config.passes.length, 1, 'incorrect # of passes');
       assert.ok(config.audits.length < totalAuditCount, 'audit filtering probably failed');
     });
 
@@ -534,7 +551,7 @@ describe('Config', () => {
       const totalAuditCount = origConfig.audits.length;
       const config = Config.generateNewFilteredConfig(origConfig, ['best-practices']);
       assert.equal(Object.keys(config.categories).length, 1, 'other categories are present');
-      assert.equal(config.passes.length, 2, 'incorrect # of passes');
+      assert.equal(config.passes.length, 1, 'incorrect # of passes');
       assert.ok(config.audits.length < totalAuditCount, 'audit filtering probably failed');
     });
 
@@ -553,7 +570,8 @@ describe('Config', () => {
     });
 
     it('should combine audits and categories additively', () => {
-      const config = Config.generateNewFilteredConfig(origConfig, ['performance'], ['is-on-https']);
+      const config = Config.generateNewFilteredConfig(origConfig, ['performance'],
+          ['works-offline']);
       const selectedCategory = origConfig.categories.performance;
       const auditCount = Object.keys(selectedCategory.audits).length + 1;
       assert.equal(config.passes.length, 2, 'incorrect # of passes');

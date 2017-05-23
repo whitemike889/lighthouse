@@ -20,13 +20,26 @@ const Audit = require('../audit');
 const Formatter = require('../../report/formatter');
 
 const KB_IN_BYTES = 1024;
-const WASTEFUL_THRESHOLD_IN_BYTES = 20 * KB_IN_BYTES;
+
+const WASTED_MS_FOR_AVERAGE = 300;
+const WASTED_MS_FOR_POOR = 750;
 
 /**
  * @overview Used as the base for all byte efficiency audits. Computes total bytes
  *    and estimated time saved. Subclass and override `audit_` to return results.
  */
 class UnusedBytes extends Audit {
+  /**
+   * @param {number} wastedMs
+   * @return {number}
+   */
+  static scoreForWastedMs(wastedMs) {
+    if (wastedMs === 0) return 100;
+    else if (wastedMs < WASTED_MS_FOR_AVERAGE) return 90;
+    else if (wastedMs < WASTED_MS_FOR_POOR) return 65;
+    else return 0;
+  }
+
   /**
    * @param {number} bytes
    * @return {string}
@@ -43,7 +56,7 @@ class UnusedBytes extends Audit {
   static toSavingsString(bytes = 0, percent = 0) {
     const kbDisplay = this.bytesToKbString(bytes);
     const percentDisplay = Math.round(percent).toLocaleString() + '%';
-    return `${kbDisplay} _${percentDisplay}_`;
+    return `${kbDisplay} (${percentDisplay})`;
   }
 
   /**
@@ -60,11 +73,13 @@ class UnusedBytes extends Audit {
    * @return {!Promise<!AuditResult>}
    */
   static audit(artifacts) {
-    const networkRecords = artifacts.networkRecords[Audit.DEFAULT_PASS];
-    return artifacts.requestNetworkThroughput(networkRecords).then(networkThroughput => {
-      return Promise.resolve(this.audit_(artifacts, networkRecords)).then(result => {
-        return this.createAuditResult(result, networkThroughput);
-      });
+    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    return artifacts.requestNetworkRecords(devtoolsLogs).then(networkRecords => {
+      return artifacts.requestNetworkThroughput(networkRecords).then(networkThroughput =>
+        Promise.resolve(this.audit_(artifacts, networkRecords)).then(result =>
+          this.createAuditResult(result, networkThroughput)
+        )
+      );
     });
   }
 
@@ -77,16 +92,19 @@ class UnusedBytes extends Audit {
     const debugString = result.debugString;
     const results = result.results
         .map(item => {
+          const wastedPercent = 100 * item.wastedBytes / item.totalBytes;
           item.wastedKb = this.bytesToKbString(item.wastedBytes);
           item.wastedMs = this.bytesToMsString(item.wastedBytes, networkThroughput);
           item.totalKb = this.bytesToKbString(item.totalBytes);
           item.totalMs = this.bytesToMsString(item.totalBytes, networkThroughput);
-          item.potentialSavings = this.toSavingsString(item.wastedBytes, item.wastedPercent);
+          item.potentialSavings = this.toSavingsString(item.wastedBytes, wastedPercent);
           return item;
         })
         .sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
+    const wastedKb = Math.round(wastedBytes / KB_IN_BYTES);
+    const wastedMs = Math.round(wastedBytes / networkThroughput * 100) * 10;
 
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {
@@ -101,12 +119,16 @@ class UnusedBytes extends Audit {
     return {
       debugString,
       displayValue,
-      rawValue: typeof result.passes === 'undefined' ?
-          wastedBytes < WASTEFUL_THRESHOLD_IN_BYTES :
-          !!result.passes,
+      rawValue: wastedMs,
+      score: UnusedBytes.scoreForWastedMs(wastedMs),
       extendedInfo: {
         formatter: Formatter.SUPPORTED_FORMATS.TABLE,
-        value: {results, tableHeadings: v1TableHeadings}
+        value: {
+          wastedMs,
+          wastedKb,
+          results,
+          tableHeadings: v1TableHeadings,
+        },
       },
       details: v2TableDetails
     };

@@ -23,7 +23,6 @@ const GatherRunner = require('../../gather/gather-runner');
 const assert = require('assert');
 const Config = require('../../config/config');
 const path = require('path');
-const recordsFromLogs = require('../../lib/network-recorder').recordsFromLogs;
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 
 class TestGatherer extends Gatherer {
@@ -59,7 +58,7 @@ function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn, blo
     cacheNatives() {
       return Promise.resolve();
     }
-    cleanAndDisableBrowserCaches() {}
+    cleanBrowserCaches() {}
     clearDataForOrigin() {}
     getUserAgent() {
       return Promise.resolve('Fake user agent');
@@ -78,7 +77,7 @@ function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn, blo
         case 'Emulation.setDeviceMetricsOverride':
           fn = emulationFn;
           break;
-        case 'Network.addBlockedURL':
+        case 'Network.setBlockedURLs':
           fn = blockUrlFn;
           break;
         default:
@@ -92,21 +91,23 @@ function getMockedEmulationDriver(emulationFn, netThrottleFn, cpuThrottleFn, blo
 }
 
 describe('GatherRunner', function() {
-  it('loads a page', () => {
+  it('loads a page and updates URL on redirect', () => {
+    const url1 = 'https://example.com';
+    const url2 = 'https://example.com/interstitial';
     const driver = {
       gotoURL() {
-        return Promise.resolve(true);
+        return Promise.resolve(url2);
       },
-      beginNetworkCollect() {
-        return Promise.resolve();
-      }
     };
 
-    return GatherRunner.loadPage(driver, {
+    const options = {
+      url: url1,
       flags: {},
       config: {}
-    }).then(res => {
-      assert.equal(res, true);
+    };
+
+    return GatherRunner.loadPage(driver, options).then(_ => {
+      assert.equal(options.url, url2);
     });
   });
 
@@ -241,10 +242,10 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('clears the network cache and origin storage', () => {
+  it('clears origin storage', () => {
     const asyncFunc = () => Promise.resolve();
     const tests = {
-      calledDisableNetworkCache: false,
+      calledCleanBrowserCaches: false,
       calledClearStorage: false,
     };
     const createCheck = variable => () => {
@@ -258,22 +259,50 @@ describe('GatherRunner', function() {
       dismissJavaScriptDialogs: asyncFunc,
       enableRuntimeEvents: asyncFunc,
       cacheNatives: asyncFunc,
-      cleanAndDisableBrowserCaches: createCheck('calledDisableNetworkCache'),
+      cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
       getUserAgent: asyncFunc,
     };
 
     return GatherRunner.setupDriver(driver, {}, {flags: {}}).then(_ => {
-      assert.equal(tests.calledDisableNetworkCache, true);
+      assert.equal(tests.calledCleanBrowserCaches, false);
       assert.equal(tests.calledClearStorage, true);
     });
   });
 
-  it('does not clear the cache & storage when disable-storage-reset flag is set', () => {
+  it('clears the disk & memory cache on a perf run', () => {
     const asyncFunc = () => Promise.resolve();
     const tests = {
-      calledDisableNetworkCache: false,
+      calledCleanBrowserCaches: false
+    };
+    const createCheck = variable => () => {
+      tests[variable] = true;
+      return Promise.resolve();
+    };
+    const driver = {
+      beginDevtoolsLog: asyncFunc,
+      beginTrace: asyncFunc,
+      gotoURL: asyncFunc,
+      cleanBrowserCaches: createCheck('calledCleanBrowserCaches')
+    };
+    const config = {
+      recordTrace: true,
+      useThrottling: true,
+      gatherers: []
+    };
+    const flags = {
+      disableStorageReset: false
+    };
+    return GatherRunner.pass({driver, config, flags}, {TestGatherer: []}).then(_ => {
+      assert.equal(tests.calledCleanBrowserCaches, true);
+    });
+  });
+
+  it('does not clear origin storage with flag --disable-storage-reset', () => {
+    const asyncFunc = () => Promise.resolve();
+    const tests = {
+      calledCleanBrowserCaches: false,
       calledClearStorage: false,
     };
     const createCheck = variable => () => {
@@ -287,7 +316,7 @@ describe('GatherRunner', function() {
       dismissJavaScriptDialogs: asyncFunc,
       enableRuntimeEvents: asyncFunc,
       cacheNatives: asyncFunc,
-      cleanAndDisableBrowserCaches: createCheck('calledDisableNetworkCache'),
+      cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
       clearDataForOrigin: createCheck('calledClearStorage'),
       blockUrlPatterns: asyncFunc,
       getUserAgent: asyncFunc,
@@ -296,31 +325,43 @@ describe('GatherRunner', function() {
     return GatherRunner.setupDriver(driver, {}, {
       flags: {disableStorageReset: true}
     }).then(_ => {
-      assert.equal(tests.calledDisableNetworkCache, false);
+      assert.equal(tests.calledCleanBrowserCaches, false);
       assert.equal(tests.calledClearStorage, false);
     });
   });
 
   it('tells the driver to block given URL patterns when blockedUrlPatterns is given', () => {
-    const receivedUrlPatterns = [];
-    const urlPatterns = ['http://*.evil.com', '.jpg', '.woff2'];
+    let receivedUrlPatterns = null;
     const driver = getMockedEmulationDriver(null, null, null, params => {
-      receivedUrlPatterns.push(params.url);
+      receivedUrlPatterns = params.urls;
     });
 
-    return GatherRunner.setupDriver(driver, {}, {flags: {blockedUrlPatterns: urlPatterns.slice()}})
-      .then(() => assert.deepStrictEqual(receivedUrlPatterns.sort(), urlPatterns.sort()));
+    return GatherRunner.beforePass({
+      driver,
+      flags: {
+        blockedUrlPatterns: ['http://*.evil.com', '.jpg', '.woff2'],
+      },
+      config: {
+        blockedUrlPatterns: ['*.jpeg'],
+        gatherers: [],
+      },
+    }).then(() => assert.deepStrictEqual(
+      receivedUrlPatterns.sort(),
+      ['*.jpeg', '.jpg', '.woff2', 'http://*.evil.com']
+    ));
   });
 
   it('does not throw when blockedUrlPatterns is not given', () => {
-    const receivedUrlPatterns = [];
+    let receivedUrlPatterns = null;
     const driver = getMockedEmulationDriver(null, null, null, params => {
-      receivedUrlPatterns.push(params.url);
+      receivedUrlPatterns = params.urls;
     });
 
-    return GatherRunner.setupDriver(driver, {}, {flags: {}})
-      .then(() => assert.equal(receivedUrlPatterns.length, 0))
-      .catch(() => assert.ok(false));
+    return GatherRunner.beforePass({
+      driver,
+      flags: {},
+      config: {gatherers: []},
+    }).then(() => assert.deepStrictEqual(receivedUrlPatterns, []));
   });
 
   it('tells the driver to begin tracing', () => {
@@ -330,20 +371,23 @@ describe('GatherRunner', function() {
         calledTrace = true;
         return Promise.resolve();
       },
+      beginDevtoolsLog() {
+        return Promise.resolve();
+      },
       gotoURL() {
         return Promise.resolve();
       },
-      beginNetworkCollect() {
-        return Promise.resolve();
-      }
     };
 
     const config = {
       recordTrace: true,
-      gatherers: [{}]
+      gatherers: [
+        new TestGatherer()
+      ]
     };
+    const flags = {};
 
-    return GatherRunner.loadPage(driver, {config}).then(_ => {
+    return GatherRunner.pass({driver, config, flags}, {TestGatherer: []}).then(_ => {
       assert.equal(calledTrace, true);
     });
   });
@@ -373,11 +417,11 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('tells the driver to begin network collection', () => {
-    let calledNetworkCollect = false;
+  it('tells the driver to begin devtoolsLog collection', () => {
+    let calledDevtoolsLogCollect = false;
     const driver = {
-      beginNetworkCollect() {
-        calledNetworkCollect = true;
+      beginDevtoolsLog() {
+        calledDevtoolsLogCollect = true;
         return Promise.resolve();
       },
       gotoURL() {
@@ -386,26 +430,28 @@ describe('GatherRunner', function() {
     };
 
     const config = {
-      gatherers: [{}]
+      gatherers: [
+        new TestGatherer()
+      ]
     };
+    const flags = {};
 
-    return GatherRunner.loadPage(driver, {config}).then(_ => {
-      assert.equal(calledNetworkCollect, true);
+    return GatherRunner.pass({driver, config, flags}, {TestGatherer: []}).then(_ => {
+      assert.equal(calledDevtoolsLogCollect, true);
     });
   });
 
-  it('tells the driver to end network collection', () => {
+  it('tells the driver to end devtoolsLog collection', () => {
     const url = 'https://example.com';
-    let calledNetworkCollect = false;
+    let calledDevtoolsLogCollect = false;
 
+    const fakeDevtoolsMessage = {method: 'Network.FakeThing', params: {}};
     const driver = Object.assign({}, fakeDriver, {
-      endNetworkCollect() {
-        calledNetworkCollect = true;
-        return fakeDriver.endNetworkCollect()
-          .then(records => {
-            records.marker = 'mocked';
-            return records;
-          });
+      endDevtoolsLog() {
+        calledDevtoolsLogCollect = true;
+        return [
+          fakeDevtoolsMessage
+        ];
       }
     });
 
@@ -416,8 +462,8 @@ describe('GatherRunner', function() {
     };
 
     return GatherRunner.afterPass({url, driver, config}, {TestGatherer: []}).then(vals => {
-      assert.equal(calledNetworkCollect, true);
-      assert.strictEqual(vals.networkRecords.marker, 'mocked');
+      assert.equal(calledDevtoolsLogCollect, true);
+      assert.strictEqual(vals.devtoolsLog[0], fakeDevtoolsMessage);
     });
   });
 
@@ -485,11 +531,34 @@ describe('GatherRunner', function() {
     return GatherRunner.run(passes, options)
       .then(artifacts => {
         assert.ok(artifacts.traces.firstPass);
-        assert.ok(artifacts.networkRecords.firstPass);
+        assert.ok(artifacts.devtoolsLogs.firstPass);
         assert.ok(artifacts.traces.secondPass);
-        assert.ok(artifacts.networkRecords.secondPass);
+        assert.ok(artifacts.devtoolsLogs.secondPass);
       });
   });
+
+  it('doesn\'t leave networkRecords as an artifact', () => {
+    const passes = [{
+      blankDuration: 0,
+      recordTrace: true,
+      passName: 'firstPass',
+      gatherers: [new TestGatherer()]
+    }, {
+      blankDuration: 0,
+      recordTrace: true,
+      passName: 'secondPass',
+      gatherers: [new TestGatherer()]
+    }];
+    const options = {driver: fakeDriver, url: 'https://example.com', flags: {}, config: {}};
+
+    return GatherRunner.run(passes, options)
+      .then(artifacts => {
+        // todo, trash these
+        assert.equal(artifacts.networkRecords['firstPass'], undefined);
+        assert.equal(artifacts.networkRecords['secondPass'], undefined);
+      });
+  });
+
 
   it('loads gatherers from custom paths', () => {
     const root = path.resolve(__dirname, '../fixtures');
@@ -804,16 +873,20 @@ describe('GatherRunner', function() {
       }];
 
       // Arrange for driver to return unresolved request.
+      const url = 'http://www.some-non-existing-domain.com/';
       const unresolvedDriver = Object.assign({}, fakeDriver, {
         online: true,
-        endNetworkCollect() {
-          return Promise.resolve(recordsFromLogs(unresolvedPerfLog));
-        }
+        gotoURL() {
+          return Promise.resolve(url);
+        },
+        endDevtoolsLog() {
+          return unresolvedPerfLog;
+        },
       });
 
       return GatherRunner.run(passes, {
         driver: unresolvedDriver,
-        url: 'http://www.some-non-existing-domain.com/',
+        url,
         flags: {},
         config: new Config({})
       })
@@ -834,16 +907,20 @@ describe('GatherRunner', function() {
       }];
 
       // Arrange for driver to return unresolved request.
+      const url = 'http://www.some-non-existing-domain.com/';
       const unresolvedDriver = Object.assign({}, fakeDriver, {
         online: false,
-        endNetworkCollect() {
-          return Promise.resolve(recordsFromLogs(unresolvedPerfLog));
+        gotoURL() {
+          return Promise.resolve(url);
+        },
+        endDevtoolsLog() {
+          return unresolvedPerfLog;
         }
       });
 
       return GatherRunner.run(passes, {
         driver: unresolvedDriver,
-        url: 'http://www.some-non-existing-domain.com/',
+        url,
         flags: {},
         config: new Config({})
       })

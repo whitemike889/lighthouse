@@ -16,6 +16,8 @@
  */
 'use strict';
 
+/* eslint-disable no-console */
+
 const path = require('path');
 const parseURL = require('url').parse;
 
@@ -25,7 +27,7 @@ const constants = require('./constants.js');
 const utils = require('./utils.js');
 const config = require('../lighthouse-core/config/plots.json');
 const lighthouse = require('../lighthouse-core/index.js');
-const ChromeLauncher = require('../lighthouse-cli/chrome-launcher.js').ChromeLauncher;
+const ChromeLauncher = require('../chrome-launcher/chrome-launcher.js');
 const Printer = require('../lighthouse-cli/printer');
 const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
 
@@ -125,23 +127,17 @@ const URLS = [
  */
 function main() {
   if (utils.isDir(constants.OUT_PATH)) {
-    console.log('ERROR: Found output from previous run at: ', constants.OUT_PATH); // eslint-disable-line no-console
-    console.log('Please run: npm run clean'); // eslint-disable-line no-console
+    console.log('ERROR: Found output from previous run at: ', constants.OUT_PATH);
+    console.log('Please run: npm run clean');
     return;
   }
 
-  const launcher = new ChromeLauncher();
-  launcher
-    .isDebuggerReady()
-    .catch(() => launcher.run())
-    .then(() => runAnalysis())
-    .then(() => launcher.kill())
-    .catch(err => launcher.kill().then(
-      () => {
-        throw err;
-      },
-      console.error // eslint-disable-line no-console
-    ));
+  return ChromeLauncher.launch({port: 9222})
+    .then(launcher => {
+      return runAnalysis()
+        .catch(err => console.error(err))
+        .then(() => launcher.kill());
+    });
 }
 
 main();
@@ -177,7 +173,7 @@ function runAnalysis() {
  * @return {!Promise}
  */
 function singleRunAnalysis(url, id, {ignoreRun}) {
-  console.log('Measuring site:', url, 'run:', id); // eslint-disable-line no-console
+  console.log('Measuring site:', url, 'run:', id);
   const parsedURL = parseURL(url);
   const urlBasedFilename = sanitizeURL(`${parsedURL.host}-${parsedURL.pathname}`);
   const runPath = path.resolve(constants.OUT_PATH, urlBasedFilename, id);
@@ -203,6 +199,7 @@ function analyzeWithLighthouse(url, outputPath, assetsPath, {ignoreRun}) {
   return lighthouse(url, flags, config)
     .then(lighthouseResults => {
       if (ignoreRun) {
+        console.log('First load of site. Results not being saved to disk.');
         return;
       }
       return assetSaver
@@ -212,7 +209,7 @@ function analyzeWithLighthouse(url, outputPath, assetsPath, {ignoreRun}) {
           return Printer.write(lighthouseResults, flags.output, outputPath);
         });
     })
-    .catch(err => console.error(err)); // eslint-disable-line no-console
+    .catch(err => console.error(err));
 }
 
 /**
