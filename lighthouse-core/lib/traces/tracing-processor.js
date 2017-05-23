@@ -48,11 +48,6 @@ global.HTMLImportsLoader.hrefToAbsolutePath = function(path) {
 
 require('../../third_party/traceviewer-js/');
 const traceviewer = global.tr;
-if (typeof atob === 'undefined') {
-  // Node doesn't have base64 encode/decode functions available globally so polyfill with buffer
-  traceviewer.b.Base64.atob = input => new Buffer(input).toString('base64');
-  traceviewer.b.Base64.btoa = input => new Buffer(input, 'base64').toString();
-}
 
 class TraceProcessor {
 
@@ -134,12 +129,16 @@ class TraceProcessor {
    * @return {!Array<{percentile: number, time: number}>}
    */
   static getRiskToResponsiveness(tabTrace, startTime, endTime, percentiles) {
-    const events = tabTrace.processEvents.filter(e => e.ts !== 0);
-    const lastEvent = events[events.length - 1];
+    const navStart = tabTrace.navigationStartEvt.ts;
+    const traceStart = tabTrace.processEvents
+        .filter(evt => evt.ts !== 0)
+        .reduce((min, evt) => Math.min(evt.ts, min), Infinity);
+    const traceEnd = tabTrace.processEvents.reduce((max, evt) => Math.max(evt.ts, max), -Infinity);
 
     // Range of responsiveness we care about. Default to bounds of model.
-    startTime = startTime === undefined ? 0 : startTime;
-    endTime = endTime === undefined ? lastEvent.ts : endTime;
+    startTime = startTime === undefined ? (traceStart - navStart) / 1000 : startTime;
+    endTime = endTime === undefined ? (traceEnd - navStart) / 1000 : endTime;
+
     const totalTime = endTime - startTime;
     if (percentiles) {
       percentiles.sort((a, b) => a - b);
@@ -153,7 +152,7 @@ class TraceProcessor {
   }
 
   /**
-   * Provides durations of all main thread top-level events
+   * Provides durations in ms of all main thread top-level events
    * @param {!TraceOfTabArtifact} tabTrace
    * @param {number} startTime Optional start time (in ms) of range of interest. Defaults to trace start.
    * @param {number} endTime Optional end time (in ms) of range of interest. Defaults to trace end.
@@ -167,29 +166,20 @@ class TraceProcessor {
     let clippedLength = 0;
 
     topLevelTasks.forEach(event => {
-      const eventStart = event.ts;
-      const eventDuration = event.dur;
-      const eventEnd = eventStart + eventDuration;
-
-      // Discard events outside range.
-      if (eventEnd <= startTime || eventStart >= endTime) {
-        return;
-      }
-
-      // Clip any at edges of range.
-      let adjEventStart = eventStart;
-      let duration = eventDuration;
-      if (adjEventStart < startTime) {
+      let duration = event.duration;
+      let eventStart = event.start;
+      if (eventStart < startTime) {
         // Any part of task before window can be discarded.
-        adjEventStart = startTime;
-        duration = eventEnd - adjEventStart;
-      }
-      if (eventEnd > endTime) {
-        // Any part of task after window must be clipped but accounted for.
-        clippedLength = duration - (endTime - adjEventStart);
+        eventStart = startTime;
+        duration = event.end - startTime;
       }
 
-      durations.push(duration / 1000);
+      if (event.end > endTime) {
+        // Any part of task after window must be clipped but accounted for.
+        clippedLength = duration - (endTime - eventStart);
+      }
+
+      durations.push(duration);
     });
     durations.sort((a, b) => a - b);
 
@@ -200,22 +190,44 @@ class TraceProcessor {
   }
 
   /**
-   * Provides the top level events on the main thread.
+   * Provides the top level events on the main thread with timestamps in ms relative to navigation
+   * start.
    * @param {!TraceOfTabArtifact} tabTrace
    * @param {number=} startTime Optional start time (in ms) of range of interest. Defaults to trace start.
    * @param {number=} endTime Optional end time (in ms) of range of interest. Defaults to trace end.
    * @return {!Array<{start: number, end: number, duration: number}>}
    */
   static getMainThreadTopLevelEvents(tabTrace, startTime = -Infinity, endTime = Infinity) {
-    // Find the main thread via the first TracingStartedInPage event in the trace
-    const startEvent = tabTrace.startedInPageEvt;
-    const mainThreadEvents = tabTrace.processEvents.filter(e => e.tid === startEvent.tid);
+    let lastEvt = {start: -Infinity, end: -Infinity};
+    return tabTrace.processEvents.reduce((events, event) => {
+      if (event.name !== SCHEDULABLE_TASK_TITLE || !event.dur) return events;
 
-    return mainThreadEvents.filter(event => {
-      return event.name === SCHEDULABLE_TASK_TITLE &&
-          (event.ts + event.dur) > startTime &&
-          event.ts < endTime;
-    });
+      const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
+      const end = (event.ts + event.dur - tabTrace.navigationStartEvt.ts) / 1000;
+      if (start > endTime || end < startTime) return events;
+
+      const currentEvt = {
+        start,
+        end,
+        duration: event.dur / 1000,
+        events: [event],
+      };
+
+      if (currentEvt.end < lastEvt.end) {
+        // The current event is completely inside the previous event, add to previous
+        lastEvt.events.push(event);
+      } else if (currentEvt.start < lastEvt.end) {
+        // The current event overlaps with the previous event, extend the duration and add to previous
+        lastEvt.events.push(event);
+        lastEvt.end = currentEvt.end;
+        lastEvt.duration = currentEvt.end - currentEvt.start;
+      } else {
+        events.push(currentEvt);
+        lastEvt = currentEvt;
+      }
+
+      return events;
+    }, []);
   }
 
   /**

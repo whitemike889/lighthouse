@@ -47,25 +47,6 @@ describe('TracingProcessor lib', () => {
     });
   });
 
-  it('doesn\'t throw when user_timing events have a colon', () => {
-    assert.doesNotThrow(_ => {
-      new TracingProcessor().init([
-        {
-          'pid': 15256,
-          'tid': 1295,
-          'ts': 668545368880,
-          'ph': 'e',
-          'id': 'fake-event',
-          'cat': 'blink.user_timing',
-          'name': 'Zone:ZonePromise',
-          'dur': 64,
-          'tdur': 61,
-          'tts': 881373
-        },
-      ]);
-    });
-  });
-
   describe('riskPercentiles calculation', () => {
     it('correctly calculates percentiles of no tasks', () => {
       const results = TracingProcessor._riskPercentiles([], 100, defaultPercentiles);
@@ -207,7 +188,18 @@ describe('TracingProcessor lib', () => {
     });
   });
 
-  describe('risk to responsiveness', () => {
+  describe('getMainThreadTopLevelEvents', () => {
+    it('gets durations of top-level tasks', () => {
+      TracingProcessor = require('../../../lib/traces/tracing-processor');
+      const trace = {traceEvents: pwaTrace};
+      const tabTrace = new TraceOfTab().compute_(trace);
+      const ret = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
+
+      assert.equal(ret.length, 637);
+    });
+  });
+
+  describe('getMainThreadTopLevelEventDurations', () => {
     it('gets durations of top-level tasks', () => {
       TracingProcessor = require('../../../lib/traces/tracing-processor');
       const trace = {traceEvents: pwaTrace};
@@ -220,11 +212,11 @@ describe('TracingProcessor lib', () => {
       }
 
       assert.equal(durations.filter(dur => isNaN(dur)).length, 0, 'NaN found');
-      assert.equal(durations.length, 652);
+      assert.equal(durations.length, 637);
 
       assert.equal(getDurationFromIndex(50), 0.01);
       assert.equal(getDurationFromIndex(300), 0.04);
-      assert.equal(getDurationFromIndex(400), 0.07);
+      assert.equal(getDurationFromIndex(400), 0.08);
       assert.equal(getDurationFromIndex(durations.length - 3), 26.01);
       assert.equal(getDurationFromIndex(durations.length - 2), 36.9);
       assert.equal(getDurationFromIndex(durations.length - 1), 38.53);
@@ -233,7 +225,7 @@ describe('TracingProcessor lib', () => {
 
   describe('risk to responsiveness', () => {
     let oldFn;
-    // monkeypatch _riskPercentiles to deal with gRtR solo
+    // monkeypatch _riskPercentiles to test just getRiskToResponsiveness
     beforeEach(() => {
       TracingProcessor = require('../../../lib/traces/tracing-processor');
       oldFn = TracingProcessor._riskPercentiles;
@@ -244,22 +236,14 @@ describe('TracingProcessor lib', () => {
       };
     });
 
-    it('gets durations of top-level tasks', () => {
+    it('compute correct defaults', () => {
       const trace = {traceEvents: pwaTrace};
       const tabTrace = new TraceOfTab().compute_(trace);
-
       const ret = TracingProcessor.getRiskToResponsiveness(tabTrace);
-      const durations = ret.durations;
-
-      assert.equal(durations.filter(dur => isNaN(dur)).length, 0, 'NaN found');
-      assert.equal(durations.filter(dur => dur === Infinity).length, 0, 'Infinity found');
-      assert.equal(durations.length, 291, 'count of durations is unexpected');
-      assert.equal(durations[50], 0.019);
-      assert.equal(durations[100], 0.072);
-      assert.equal(durations[200], 0.768);
-      assert.equal(durations[durations.length - 3].toFixed(2), '26.32');
-      assert.equal(durations[durations.length - 2].toFixed(2), '37.61');
-      assert.equal(durations[durations.length - 1].toFixed(2), '40.10');
+      assert.equal(ret.durations.length, 637);
+      assert.equal(Math.round(ret.totalTime), 2157);
+      assert.equal(ret.clippedLength, 0);
+      assert.deepEqual(ret.percentiles, [0.5, 0.75, 0.9, 0.99, 1]);
     });
 
     afterEach(() => {

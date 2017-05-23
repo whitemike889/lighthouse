@@ -46,8 +46,8 @@ describe('Performance: consistently-interactive audit', () => {
 
     return ConsistentlyInteractive.audit(artifacts).then(output => {
       assert.equal(output.score, 99);
-      assert.equal(Math.round(output.rawValue), 1587);
-      assert.equal(output.displayValue, '1,590\xa0ms');
+      assert.equal(Math.round(output.rawValue), 1582);
+      assert.equal(output.displayValue, '1,580\xa0ms');
     });
   });
 
