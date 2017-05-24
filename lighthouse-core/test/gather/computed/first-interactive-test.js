@@ -51,7 +51,7 @@ describe('FirstInteractive computed artifact:', () => {
 
   it('should compute firstInteractive on pages with redirect', () => {
     return computedArtifacts.requestFirstInteractive(redirectTrace).then(output => {
-      assert.equal(Math.round(output.timeInMs), 2712);
+      assert.equal(Math.round(output.timeInMs), 6274);
       assert.ok(output.timestamp, 'output is missing timestamp');
     });
   });
