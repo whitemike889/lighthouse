@@ -75,19 +75,19 @@ describe('Performance: first-meaningful-paint audit', () => {
     it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
       return FMPAudit.audit(generateArtifactsWithTrace(lateTracingStartedTrace)).then(result => {
         assert.equal(result.displayValue, '530\xa0ms');
-        assert.equal(result.rawValue, 530.7);
-        assert.equal(result.extendedInfo.value.timestamps.navStart, 29343540184);
-        assert.equal(result.extendedInfo.value.timings.fCP, 80.821);
+        assert.equal(result.rawValue, 529.9);
+        assert.equal(result.extendedInfo.value.timestamps.navStart, 29343540951);
+        assert.equal(result.extendedInfo.value.timings.fCP, 80.054);
         assert.ok(!result.debugString);
       });
     });
 
     it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
       return FMPAudit.audit(generateArtifactsWithTrace(badNavStartTrace)).then(result => {
-        assert.equal(result.displayValue, '770\xa0ms');
-        assert.equal(result.rawValue, 773.6);
-        assert.equal(result.extendedInfo.value.timestamps.navStart, 8885283274);
-        assert.equal(result.extendedInfo.value.timings.fCP, 773.612);
+        assert.equal(result.displayValue, '630\xa0ms');
+        assert.equal(result.rawValue, 632.4);
+        assert.equal(result.extendedInfo.value.timestamps.navStart, 8885424467);
+        assert.equal(result.extendedInfo.value.timings.fCP, 632.419);
         assert.ok(!result.debugString);
       });
     });

@@ -45,15 +45,15 @@ describe('Trace of Tab computed artifact:', () => {
   it('computes timings of each event', () => {
     const trace = traceOfTab.compute_(lateTracingStartedTrace);
     assert.equal(Math.round(trace.timings.navigationStart), 0);
-    assert.equal(Math.round(trace.timings.firstPaint), 81);
-    assert.equal(Math.round(trace.timings.firstContentfulPaint), 81);
-    assert.equal(Math.round(trace.timings.firstMeaningfulPaint), 531);
-    assert.equal(Math.round(trace.timings.traceEnd), 650);
+    assert.equal(Math.round(trace.timings.firstPaint), 80);
+    assert.equal(Math.round(trace.timings.firstContentfulPaint), 80);
+    assert.equal(Math.round(trace.timings.firstMeaningfulPaint), 530);
+    assert.equal(Math.round(trace.timings.traceEnd), 649);
   });
 
   it('computes timestamps of each event', () => {
     const trace = traceOfTab.compute_(lateTracingStartedTrace);
-    assert.equal(Math.round(trace.timestamps.navigationStart), 29343540);
+    assert.equal(Math.round(trace.timestamps.navigationStart), 29343541);
     assert.equal(Math.round(trace.timestamps.firstPaint), 29343621);
     assert.equal(Math.round(trace.timestamps.firstContentfulPaint), 29343621);
     assert.equal(Math.round(trace.timestamps.firstMeaningfulPaint), 29344071);
@@ -64,7 +64,7 @@ describe('Trace of Tab computed artifact:', () => {
     it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
       const trace = traceOfTab.compute_(lateTracingStartedTrace);
       assert.equal(trace.startedInPageEvt.ts, 29343544280);
-      assert.equal(trace.navigationStartEvt.ts, 29343540184);
+      assert.equal(trace.navigationStartEvt.ts, 29343540951);
       assert.equal(trace.firstContentfulPaintEvt.ts, 29343621005);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 29344070867);
     });
@@ -72,7 +72,7 @@ describe('Trace of Tab computed artifact:', () => {
     it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
       const trace = traceOfTab.compute_(badNavStartTrace);
       assert.equal(trace.startedInPageEvt.ts, 8885435611);
-      assert.equal(trace.navigationStartEvt.ts, 8885283274);
+      assert.equal(trace.navigationStartEvt.ts, 8885424467);
       assert.equal(trace.firstContentfulPaintEvt.ts, 8886056886);
       assert.equal(trace.firstMeaningfulPaintEvt.ts, 8886056891);
     });
