@@ -92,7 +92,7 @@ class Connection {
     const object = JSON.parse(message);
     // Remote debugging protocol is JSON RPC 2.0 compiant. In terms of that transport,
     // responses to the commands carry "id" property, while notifications do not.
-    if (object.id) {
+    if (this._callbacks.has(object.id)) {
       const callback = this._callbacks.get(object.id);
       this._callbacks.delete(object.id);
 
