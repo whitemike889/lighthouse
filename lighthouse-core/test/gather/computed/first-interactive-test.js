@@ -22,6 +22,7 @@ const Runner = require('../../../runner.js');
 
 const tooShortTrace = require('../../fixtures/traces/progressive-app.json');
 const acceptableTrace = require('../../fixtures/traces/progressive-app-m60.json');
+const redirectTrace = require('../../fixtures/traces/site-with-redirect.json');
 
 const assert = require('assert');
 
@@ -44,6 +45,13 @@ describe('FirstInteractive computed artifact:', () => {
   it('should compute firstInteractive', () => {
     return computedArtifacts.requestFirstInteractive(acceptableTrace).then(output => {
       assert.equal(Math.round(output.timeInMs), 1582);
+      assert.ok(output.timestamp, 'output is missing timestamp');
+    });
+  });
+
+  it('should compute firstInteractive on pages with redirect', () => {
+    return computedArtifacts.requestFirstInteractive(redirectTrace).then(output => {
+      assert.equal(Math.round(output.timeInMs), 2712);
       assert.ok(output.timestamp, 'output is missing timestamp');
     });
   });
