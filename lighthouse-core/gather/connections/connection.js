@@ -106,11 +106,15 @@ class Connection {
           {method: callback.method, params: object.result}, 'verbose');
         return object.result;
       }));
+    } else if (object.id) {
+      const error = object.error && object.error.message;
+      log.formatProtocol(`disowned method <= browser ${error ? 'ERR' : 'OK'}`,
+          {method: object.method, params: error || object.result}, 'verbose');
+    } else {
+      log.formatProtocol('<= event',
+          {method: object.method, params: object.params}, 'verbose');
+      this.emitNotification(object.method, object.params);
     }
-
-    log.formatProtocol('<= event',
-        {method: object.method, params: object.params}, 'verbose');
-    this.emitNotification(object.method, object.params);
   }
 
   /**
