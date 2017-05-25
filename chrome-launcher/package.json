@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@types/mkdirp": "^0.3.29",
-    "@types/node": "6.0.66"
+    "@types/node": "6.0.66",
+    "lighthouse": "^2.0.0"
   },
   "version": "0.0.1",
   "description": "Launch latest Chrome with the devtools-protocol port open",
