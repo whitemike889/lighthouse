@@ -22,8 +22,9 @@
 'use strict';
 
 const Gatherer = require('./gatherer');
+const DOMHelpers = require('../../lib/dom-helpers.js');
 
-/* global window, document, Image */
+/* global window, getElementsInDocument, Image */
 
 /* istanbul ignore next */
 function collectImageElementInfo() {
@@ -38,7 +39,10 @@ function collectImageElementInfo() {
     };
   }
 
-  const htmlImages = [...document.querySelectorAll('img')].map(element => {
+  const allElements = getElementsInDocument();
+  const allImageElements = allElements.filter(element => element.localName === 'img');
+
+  const htmlImages = allImageElements.map(element => {
     return {
       // currentSrc used over src to get the url as determined by the browser
       // after taking into account srcset/media/sizes/etc.
@@ -58,7 +62,8 @@ function collectImageElementInfo() {
   const CSS_URL_REGEX = /^url\("([^"]+)"\)$/;
   // Only find images that aren't specifically scaled
   const CSS_SIZE_REGEX = /(auto|contain|cover)/;
-  const cssImages = [...document.querySelectorAll('html /deep/ *')].reduce((images, element) => {
+
+  const cssImages = allElements.reduce((images, element) => {
     const style = window.getComputedStyle(element);
     if (!CSS_URL_REGEX.test(style.backgroundImage) ||
         !CSS_SIZE_REGEX.test(style.backgroundSize)) {
@@ -139,7 +144,12 @@ class ImageUsage extends Gatherer {
       return map;
     }, {});
 
-    return driver.evaluateAsync(`(${collectImageElementInfo.toString()})()`)
+    const expression = `(function() {
+      ${DOMHelpers.getElementsInDocument.toString()};
+      return (${collectImageElementInfo.toString()})();
+    })()`;
+
+    return driver.evaluateAsync(expression)
       .then(elements => {
         return elements.reduce((promise, element) => {
           return promise.then(collector => {
