@@ -130,10 +130,8 @@ class TraceProcessor {
    */
   static getRiskToResponsiveness(tabTrace, startTime, endTime, percentiles) {
     const navStart = tabTrace.navigationStartEvt.ts;
-    const traceStart = tabTrace.processEvents
-        .filter(evt => evt.ts !== 0)
-        .reduce((min, evt) => Math.min(evt.ts, min), Infinity);
-    const traceEnd = tabTrace.processEvents.reduce((max, evt) => Math.max(evt.ts, max), -Infinity);
+    const traceStart = tabTrace.earliestTraceEvt.ts;
+    const traceEnd = tabTrace.latestTraceEvt.ts;
 
     // Range of responsiveness we care about. Default to bounds of model.
     startTime = startTime === undefined ? (traceStart - navStart) / 1000 : startTime;
@@ -200,6 +198,7 @@ class TraceProcessor {
   static getMainThreadTopLevelEvents(tabTrace, startTime = -Infinity, endTime = Infinity) {
     let lastEvt = {start: -Infinity, end: -Infinity};
     const topLevelEvents = [];
+    // note: processEvents is already sorted by event start
     for (const event of tabTrace.processEvents) {
       if (event.name !== SCHEDULABLE_TASK_TITLE || !event.dur) continue;
 

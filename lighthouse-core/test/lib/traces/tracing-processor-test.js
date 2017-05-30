@@ -241,7 +241,7 @@ describe('TracingProcessor lib', () => {
       const tabTrace = new TraceOfTab().compute_(trace);
       const ret = TracingProcessor.getRiskToResponsiveness(tabTrace);
       assert.equal(ret.durations.length, 637);
-      assert.equal(Math.round(ret.totalTime), 2157);
+      assert.equal(Math.round(ret.totalTime), 2159);
       assert.equal(ret.clippedLength, 0);
       assert.deepEqual(ret.percentiles, [0.5, 0.75, 0.9, 0.99, 1]);
     });
