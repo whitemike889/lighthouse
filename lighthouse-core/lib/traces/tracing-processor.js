@@ -199,12 +199,13 @@ class TraceProcessor {
    */
   static getMainThreadTopLevelEvents(tabTrace, startTime = -Infinity, endTime = Infinity) {
     let lastEvt = {start: -Infinity, end: -Infinity};
-    return tabTrace.processEvents.reduce((events, event) => {
-      if (event.name !== SCHEDULABLE_TASK_TITLE || !event.dur) return events;
+    const topLevelEvents = [];
+    for (const event of tabTrace.processEvents) {
+      if (event.name !== SCHEDULABLE_TASK_TITLE || !event.dur) continue;
 
       const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
       const end = (event.ts + event.dur - tabTrace.navigationStartEvt.ts) / 1000;
-      if (start > endTime || end < startTime) return events;
+      if (start > endTime || end < startTime) continue;
 
       const currentEvt = {
         start,
@@ -222,12 +223,11 @@ class TraceProcessor {
         lastEvt.end = currentEvt.end;
         lastEvt.duration = currentEvt.end - currentEvt.start;
       } else {
-        events.push(currentEvt);
+        topLevelEvents.push(currentEvt);
         lastEvt = currentEvt;
       }
-
-      return events;
-    }, []);
+    }
+    return topLevelEvents;
   }
 
   /**
