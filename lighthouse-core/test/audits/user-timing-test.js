@@ -59,20 +59,25 @@ describe('Performance: user-timings audit', () => {
   });
 
   it('doesn\'t throw when user_timing events have a colon', () => {
-    return Audit.audit(generateArtifactsWithTrace([
+    const extraTraceEvents = traceEvents.concat([
       {
-        'pid': 15256,
+        'pid': 41904,
         'tid': 1295,
-        'ts': 668545368880,
-        'ph': 'e',
+        'ts': 1676836141,
+        'ph': 'R',
         'id': 'fake-event',
         'cat': 'blink.user_timing',
         'name': 'Zone:ZonePromise',
         'dur': 64,
         'tdur': 61,
-        'tts': 881373
+        'tts': 881373,
+        'args': {},
       },
-    ]));
-  });
+    ]);
 
+    return Audit.audit(generateArtifactsWithTrace(extraTraceEvents)).then(result => {
+      const fakeEvt = result.extendedInfo.value.find(item => item.name === 'Zone:ZonePromise');
+      assert.ok(fakeEvt, 'failed to find user timing item with colon');
+    });
+  });
 });
