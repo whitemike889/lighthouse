@@ -57,4 +57,22 @@ describe('Performance: user-timings audit', () => {
       assert.equal(auditResult.details.items[0][2].text, '1,000.965 ms');
     });
   });
+
+  it('doesn\'t throw when user_timing events have a colon', () => {
+    return Audit.audit(generateArtifactsWithTrace([
+      {
+        'pid': 15256,
+        'tid': 1295,
+        'ts': 668545368880,
+        'ph': 'e',
+        'id': 'fake-event',
+        'cat': 'blink.user_timing',
+        'name': 'Zone:ZonePromise',
+        'dur': 64,
+        'tdur': 61,
+        'tts': 881373
+      },
+    ]));
+  });
+
 });
