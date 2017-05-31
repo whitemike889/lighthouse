@@ -225,6 +225,38 @@ describe('TracingProcessor lib', () => {
       assert.equal(ret[1].end, 34);
       assert.equal(ret[1].duration, 4);
     });
+
+    it('filters events based on start and end times', () => {
+      TracingProcessor = require('../../../lib/traces/tracing-processor');
+      const baseTime = 20000 * 1000;
+      const name = 'TaskQueueManager::ProcessTaskFromWorkQueue';
+      const tabTrace = {
+        navigationStartEvt: {ts: baseTime},
+        processEvents: [
+          // 15ms to 25ms
+          {ts: baseTime + 15 * 1000, dur: 10 * 1000, name},
+          // 40ms to 60ms
+          {ts: baseTime + 40 * 1000, dur: 20 * 1000, name},
+          // 1000ms to 2000ms
+          {ts: baseTime + 1000 * 1000, dur: 1000 * 1000, name},
+          // 4000ms to 4020ms
+          {ts: baseTime + 4000 * 1000, dur: 20 * 1000, name},
+        ],
+      };
+
+      const ret = TracingProcessor.getMainThreadTopLevelEvents(
+        tabTrace,
+        50,
+        1500
+      );
+      assert.equal(ret.length, 2);
+      assert.equal(ret[0].start, 40);
+      assert.equal(ret[0].end, 60);
+      assert.equal(ret[0].duration, 20);
+      assert.equal(ret[1].start, 1000);
+      assert.equal(ret[1].end, 2000);
+      assert.equal(ret[1].duration, 1000);
+    });
   });
 
   describe('getMainThreadTopLevelEventDurations', () => {
