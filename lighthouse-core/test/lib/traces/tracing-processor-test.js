@@ -195,35 +195,7 @@ describe('TracingProcessor lib', () => {
       const tabTrace = new TraceOfTab().compute_(trace);
       const ret = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
 
-      assert.equal(ret.length, 637);
-    });
-
-    it('merges overlapping events properly', () => {
-      TracingProcessor = require('../../../lib/traces/tracing-processor');
-      const baseTime = 2 * 1000;
-      const name = 'TaskQueueManager::ProcessTaskFromWorkQueue';
-      const tabTrace = {
-        navigationStartEvt: {ts: baseTime},
-        processEvents: [
-          // 15ms to 25ms
-          {ts: baseTime + 15 * 1000, dur: 10 * 1000, name},
-          // 20ms to 22ms
-          {ts: baseTime + 20 * 1000, dur: 2 * 1000, name},
-          // 30ms to 32ms
-          {ts: baseTime + 30 * 1000, dur: 2 * 1000, name},
-          // 31ms to 34ms
-          {ts: baseTime + 31 * 1000, dur: 3 * 1000, name},
-        ],
-      };
-
-      const ret = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
-      assert.equal(ret.length, 2);
-      assert.equal(ret[0].start, 15);
-      assert.equal(ret[0].end, 25);
-      assert.equal(ret[0].duration, 10);
-      assert.equal(ret[1].start, 30);
-      assert.equal(ret[1].end, 34);
-      assert.equal(ret[1].duration, 4);
+      assert.equal(ret.length, 651);
     });
 
     it('filters events based on start and end times', () => {
@@ -232,7 +204,7 @@ describe('TracingProcessor lib', () => {
       const name = 'TaskQueueManager::ProcessTaskFromWorkQueue';
       const tabTrace = {
         navigationStartEvt: {ts: baseTime},
-        processEvents: [
+        mainThreadEvents: [
           // 15ms to 25ms
           {ts: baseTime + 15 * 1000, dur: 10 * 1000, name},
           // 40ms to 60ms
@@ -272,11 +244,11 @@ describe('TracingProcessor lib', () => {
       }
 
       assert.equal(durations.filter(dur => isNaN(dur)).length, 0, 'NaN found');
-      assert.equal(durations.length, 637);
+      assert.equal(durations.length, 651);
 
       assert.equal(getDurationFromIndex(50), 0.01);
       assert.equal(getDurationFromIndex(300), 0.04);
-      assert.equal(getDurationFromIndex(400), 0.08);
+      assert.equal(getDurationFromIndex(400), 0.07);
       assert.equal(getDurationFromIndex(durations.length - 3), 26.01);
       assert.equal(getDurationFromIndex(durations.length - 2), 36.9);
       assert.equal(getDurationFromIndex(durations.length - 1), 38.53);
@@ -300,7 +272,7 @@ describe('TracingProcessor lib', () => {
       const trace = {traceEvents: pwaTrace};
       const tabTrace = new TraceOfTab().compute_(trace);
       const ret = TracingProcessor.getRiskToResponsiveness(tabTrace);
-      assert.equal(ret.durations.length, 637);
+      assert.equal(ret.durations.length, 651);
       assert.equal(Math.round(ret.totalTime), 2159);
       assert.equal(ret.clippedLength, 0);
       assert.deepEqual(ret.percentiles, [0.5, 0.75, 0.9, 0.99, 1]);
