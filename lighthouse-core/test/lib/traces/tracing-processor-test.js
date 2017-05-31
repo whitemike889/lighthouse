@@ -197,6 +197,34 @@ describe('TracingProcessor lib', () => {
 
       assert.equal(ret.length, 637);
     });
+
+    it('merges overlapping events properly', () => {
+      TracingProcessor = require('../../../lib/traces/tracing-processor');
+      const baseTime = 2 * 1000;
+      const name = 'TaskQueueManager::ProcessTaskFromWorkQueue';
+      const tabTrace = {
+        navigationStartEvt: {ts: baseTime},
+        processEvents: [
+          // 15ms to 25ms
+          {ts: baseTime + 15 * 1000, dur: 10 * 1000, name},
+          // 20ms to 22ms
+          {ts: baseTime + 20 * 1000, dur: 2 * 1000, name},
+          // 30ms to 32ms
+          {ts: baseTime + 30 * 1000, dur: 2 * 1000, name},
+          // 31ms to 34ms
+          {ts: baseTime + 31 * 1000, dur: 3 * 1000, name},
+        ],
+      };
+
+      const ret = TracingProcessor.getMainThreadTopLevelEvents(tabTrace);
+      assert.equal(ret.length, 2);
+      assert.equal(ret[0].start, 15);
+      assert.equal(ret[0].end, 25);
+      assert.equal(ret[0].duration, 10);
+      assert.equal(ret[1].start, 30);
+      assert.equal(ret[1].end, 34);
+      assert.equal(ret[1].duration, 4);
+    });
   });
 
   describe('getMainThreadTopLevelEventDurations', () => {

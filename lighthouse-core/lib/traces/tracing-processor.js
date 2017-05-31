@@ -220,7 +220,7 @@ class TraceProcessor {
         // The current event overlaps with the previous event, extend the duration and add to previous
         lastEvt.events.push(event);
         lastEvt.end = currentEvt.end;
-        lastEvt.duration = currentEvt.end - currentEvt.start;
+        lastEvt.duration = currentEvt.end - lastEvt.start;
       } else {
         topLevelEvents.push(currentEvt);
         lastEvt = currentEvt;
