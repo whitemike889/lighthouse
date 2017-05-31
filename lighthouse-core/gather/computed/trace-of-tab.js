@@ -98,6 +98,9 @@ class TraceOfTab extends ComputedArtifact {
       .filter(e => e.pid === startedInPageEvt.pid)
       .sort((event0, event1) => event0.ts - event1.ts);
 
+    const mainThreadEvents = processEvents
+      .filter(e => e.tid === startedInPageEvt.tid);
+
     const earliestTraceEvt = trace.traceEvents.reduce((min, evt) => {
       return evt.ts === 0 || min.ts <= evt.ts ? min : evt;
     }, {ts: Infinity});
@@ -128,6 +131,7 @@ class TraceOfTab extends ComputedArtifact {
       timings,
       timestamps,
       processEvents,
+      mainThreadEvents,
       earliestTraceEvt,
       latestTraceEvt,
       startedInPageEvt,

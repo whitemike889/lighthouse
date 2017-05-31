@@ -196,35 +196,21 @@ class TraceProcessor {
    * @return {!Array<{start: number, end: number, duration: number}>}
    */
   static getMainThreadTopLevelEvents(tabTrace, startTime = -Infinity, endTime = Infinity) {
-    let lastEvt = {start: -Infinity, end: -Infinity};
     const topLevelEvents = [];
     // note: processEvents is already sorted by event start
-    for (const event of tabTrace.processEvents) {
+    for (const event of tabTrace.mainThreadEvents) {
       if (event.name !== SCHEDULABLE_TASK_TITLE || !event.dur) continue;
 
       const start = (event.ts - tabTrace.navigationStartEvt.ts) / 1000;
       const end = (event.ts + event.dur - tabTrace.navigationStartEvt.ts) / 1000;
       if (start > endTime || end < startTime) continue;
 
-      const currentEvt = {
+      topLevelEvents.push({
         start,
         end,
         duration: event.dur / 1000,
         events: [event],
-      };
-
-      if (currentEvt.end < lastEvt.end) {
-        // The current event is completely inside the previous event, add to previous
-        lastEvt.events.push(event);
-      } else if (currentEvt.start < lastEvt.end) {
-        // The current event overlaps with the previous event, extend the duration and add to previous
-        lastEvt.events.push(event);
-        lastEvt.end = currentEvt.end;
-        lastEvt.duration = currentEvt.end - lastEvt.start;
-      } else {
-        topLevelEvents.push(currentEvt);
-        lastEvt = currentEvt;
-      }
+      });
     }
     return topLevelEvents;
   }
