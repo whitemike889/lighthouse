@@ -20,6 +20,7 @@ const log = require('../lib/log.js');
 const Audit = require('../audits/audit');
 const URL = require('../lib/url-shim');
 const NetworkRecorder = require('../lib/network-recorder.js');
+const Sentry = require('../lib/sentry');
 
 /**
  * @typedef {!Object<string, !Array<!Promise<*>>>}
@@ -132,12 +133,15 @@ class GatherRunner {
    * Test any error output from the promise, absorbing non-fatal errors and
    * throwing on fatal ones so that run is stopped.
    * @param {!Promise<*>} promise
+   * @param {string=} gathererName
    * @return {!Promise<*>}
    */
-  static recoverOrThrow(promise) {
+  static recoverOrThrow(promise, gathererName) {
     return promise.catch(err => {
       if (err.fatal) {
         throw err;
+      } else {
+        Sentry.captureException(err, {tags: {gatherer: gathererName}, level: 'warning'});
       }
     });
   }
@@ -184,7 +188,7 @@ class GatherRunner {
       return chain.then(_ => {
         const artifactPromise = Promise.resolve().then(_ => gatherer.beforePass(options));
         gathererResults[gatherer.name] = [artifactPromise];
-        return GatherRunner.recoverOrThrow(artifactPromise);
+        return GatherRunner.recoverOrThrow(artifactPromise, gatherer.name);
       });
     }, pass);
   }

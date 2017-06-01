@@ -25,6 +25,7 @@ const log = require('./lib/log');
 const fs = require('fs');
 const path = require('path');
 const URL = require('./lib/url-shim');
+const Sentry = require('./lib/sentry');
 
 class Runner {
   static run(connection, opts) {
@@ -32,6 +33,8 @@ class Runner {
     opts.flags = opts.flags || {};
 
     const config = opts.config;
+
+    Sentry.init(opts.flags.disableErrorReporting === false, opts.environmentData || {});
 
     // save the initialUrl provided by the user
     opts.initialUrl = opts.url;
@@ -46,6 +49,17 @@ class Runner {
       const err = new Error('The url provided should have a proper protocol and hostname.');
       return Promise.reject(err);
     }
+
+    Sentry.captureBreadcrumb({
+      message: 'Run started',
+      category: 'lifecycle',
+      data: {
+        url: opts.url,
+        deviceEmulation: !opts.flags.disableDeviceEmulation,
+        networkThrottling: !opts.flags.disableNetworkThrottling,
+        cpuThrottling: !opts.flags.disableCpuThrottling,
+      },
+    });
 
     // If the URL isn't https and is also not localhost complain to the user.
     if (parsedURL.protocol !== 'https:' && parsedURL.hostname !== 'localhost') {
@@ -163,6 +177,10 @@ class Runner {
           reportGroups: config.groups,
           aggregations
         };
+      })
+      .catch(err => {
+        Sentry.captureException(err);
+        throw err;
       });
 
     return run;
@@ -202,8 +220,10 @@ class Runner {
           const artifactError = artifacts[artifactName];
           log.warn('Runner', `${artifactName} gatherer, required by audit ${audit.meta.name},` +
             ` encountered an error: ${artifactError.message}`);
-          throw new Error(
+          const error = new Error(
               `Required ${artifactName} gatherer encountered an error: ${artifactError.message}`);
+          error.expected = artifactError.expected;
+          throw error;
         }
       }
       // all required artifacts are in good shape, so we proceed
@@ -216,6 +236,7 @@ class Runner {
         throw err;
       }
 
+      Sentry.captureException(err, {tags: {audit: audit.meta.name}, level: 'warning'});
       // Non-fatal error become error audit result.
       return Audit.generateErrorAuditResult(audit, 'Audit error: ' + err.message);
     }).then(result => {

@@ -23,6 +23,7 @@
 
 const Gatherer = require('../gatherer');
 const URL = require('../../../lib/url-shim');
+const Sentry = require('../../../lib/sentry');
 
 /* global document, Image, atob */
 
@@ -137,7 +138,14 @@ class OptimizedImages extends Gatherer {
     return imageRecords.reduce((promise, record) => {
       return promise.then(results => {
         return this.calculateImageStats(driver, record)
-          .catch(err => ({failed: true, err}))
+          .catch(err => {
+            Sentry.captureException(err, {
+              tags: {gatherer: 'optimized-images'},
+              extra: {imageUrl: URL.elideDataURI(record.url)},
+              level: 'warning',
+            });
+            return {failed: true, err};
+          })
           .then(stats => {
             if (!stats) {
               return results;

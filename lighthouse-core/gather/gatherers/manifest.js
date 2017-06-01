@@ -39,7 +39,7 @@ class Manifest extends Gatherer {
         return manifestParser(response.data, response.url, options.url);
       })
       .catch(err => {
-        if (err === 'No web app manifest found.') {
+        if (err.message === 'No web app manifest found.') {
           return null;
         }
 

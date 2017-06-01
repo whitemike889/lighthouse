@@ -30,6 +30,7 @@ import * as path from 'path';
 const perfOnlyConfig = require('../lighthouse-core/config/perf.json');
 const performanceXServer = require('./performance-experiment/server');
 import * as Printer from './printer';
+import {askPermission, isDev} from './sentry-prompt';
 import {Results} from './types/types';
 const pkg = require('../package.json');
 
@@ -175,10 +176,22 @@ export async function runLighthouse(
     url: string, flags: Flags, config: Object|null): Promise<{}|void> {
   let launchedChrome: LaunchedChrome|undefined;
 
+  if (typeof flags.disableErrorReporting === 'undefined') {
+    const isErrorReportingEnabled = await askPermission();
+    flags.disableErrorReporting = !isErrorReportingEnabled;
+  }
+
   try {
     launchedChrome = await getDebuggableChrome(flags);
     flags.port = launchedChrome.port;
-    const results = await lighthouse(url, flags, config);
+    const results = await lighthouse(url, flags, config, {
+      environment: isDev() ? 'development' : 'production',
+      serverName: 'redacted',
+      release: pkg.version,
+      tags: {
+        channel: 'cli',
+      }
+    });
 
     const artifacts = results.artifacts;
     delete results.artifacts;

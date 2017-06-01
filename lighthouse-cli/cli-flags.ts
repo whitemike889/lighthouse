@@ -25,7 +25,7 @@ import {GetValidOutputOptions, OutputMode} from './printer';
 export interface Flags {
   skipAutolaunch: boolean, port: number, selectChrome: boolean, chromeFlags: string, output: any,
       outputPath: string, interactive: boolean, saveArtifacts: boolean, saveAssets: boolean,
-      view: boolean, maxWaitForLoad: number
+      view: boolean, maxWaitForLoad: number, disableErrorReporting?: boolean
 }
 
 export function getFlags() {
@@ -67,6 +67,7 @@ export function getFlags() {
           ],
           'Configuration:')
       .describe({
+        'disable-error-reporting': 'Disable error reporting',
         'disable-storage-reset':
             'Disable clearing the browser cache and other storage APIs before a run',
         'disable-device-emulation': 'Disable Nexus 5X emulation',

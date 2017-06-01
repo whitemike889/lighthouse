@@ -27,6 +27,7 @@ const Audit = require('./audit');
 const URL = require('../lib/url-shim');
 const Emulation = require('../lib/emulation');
 const Formatter = require('../report/formatter');
+const Sentry = require('../lib/sentry');
 
 // Maximum TTFI to be considered "fast" for PWA baseline checklist
 //   https://developers.google.com/web/progressive-web-apps/checklist
@@ -122,10 +123,17 @@ class LoadFastEnough4Pwa extends Audit {
         }
 
         if (!areLatenciesAll3G) {
+          // eslint-disable-next-line max-len
+          const debugString = `First Interactive was found at ${timeToFirstInteractive.toLocaleString()}, however, the network request latencies were not sufficiently realistic, so the performance measurements cannot be trusted.`;
+
+          Sentry.captureMessage('Network request latencies were not realistic', {
+            tags: {audit: this.meta.name},
+            level: 'warning',
+          });
+
           return {
             rawValue: true,
-            // eslint-disable-next-line max-len
-            debugString: `First Interactive was found at ${timeToFirstInteractive.toLocaleString()}, however, the network request latencies were not sufficiently realistic, so the performance measurements cannot be trusted.`,
+            debugString,
             extendedInfo,
             details
           };
