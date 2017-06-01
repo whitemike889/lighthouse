@@ -40,7 +40,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       description: 'Offscreen images',
       informative: true,
       helpText: 'Consider lazy-loading offscreen images to improve page load speed ' +
-        'and Time To Interactive (TTI). ' +
+        'and time to interactive. ' +
         '[Learn more](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images).',
       requiredArtifacts: ['ImageUsage', 'ViewportDimensions', 'traces', 'devtoolsLogs']
     };
