@@ -116,7 +116,7 @@ class LoadFastEnough4Pwa extends Audit {
           return {
             rawValue: false,
             // eslint-disable-next-line max-len
-            debugString: `First Interactive was at ${timeToFirstInteractive.toLocaleString()}. More details in the "Performance" section.`,
+            debugString: `First Interactive was at ${timeToFirstInteractive.toLocaleString()}ms. More details in the "Performance" section.`,
             extendedInfo
           };
         }
@@ -125,7 +125,7 @@ class LoadFastEnough4Pwa extends Audit {
           return {
             rawValue: true,
             // eslint-disable-next-line max-len
-            debugString: `First Interactive was found at ${timeToFirstInteractive.toLocaleString()}, however, the network request latencies were not sufficiently realistic, so the performance measurements cannot be trusted.`,
+            debugString: `First Interactive was found at ${timeToFirstInteractive.toLocaleString()}ms, however, the network request latencies were not sufficiently realistic, so the performance measurements cannot be trusted.`,
             extendedInfo,
             details
           };
