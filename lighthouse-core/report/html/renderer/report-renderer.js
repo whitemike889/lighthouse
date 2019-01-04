@@ -26,7 +26,7 @@
 /** @typedef {import('./dom.js')} DOM */
 /** @typedef {import('./details-renderer.js').DetailsJSON} DetailsJSON */
 
-/* globals self, Util, DetailsRenderer, CategoryRenderer, PerformanceCategoryRenderer, PwaCategoryRenderer */
+/* globals self, Util, DetailsRenderer, CategoryRenderer, PerformanceCategoryRenderer, PwaCategoryRenderer, LightWalletRenderer */
 
 class ReportRenderer {
   /**
@@ -194,6 +194,7 @@ class ReportRenderer {
     const specificCategoryRenderers = {
       performance: new PerformanceCategoryRenderer(this._dom, detailsRenderer),
       pwa: new PwaCategoryRenderer(this._dom, detailsRenderer),
+      lightwallet: new LightWalletRenderer(this._dom, detailsRenderer),
     };
     Object.values(specificCategoryRenderers).forEach(renderer => {
       renderer.setTemplateContext(this._templateContext);

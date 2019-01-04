@@ -42,6 +42,7 @@ describe('ReportRenderer', () => {
         require('../../../../report/html/renderer/performance-category-renderer.js');
     global.PwaCategoryRenderer =
         require('../../../../report/html/renderer/pwa-category-renderer.js');
+    global.LightWalletRenderer = require('../../../../report/html/renderer/light-wallet-renderer.js');
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -71,6 +72,7 @@ describe('ReportRenderer', () => {
     global.CategoryRenderer = undefined;
     global.PerformanceCategoryRenderer = undefined;
     global.PwaCategoryRenderer = undefined;
+    global.LightWalletRenderer = undefined;
   });
 
   describe('renderReport', () => {

@@ -44,6 +44,7 @@ describe('ReportUIFeatures', () => {
         require('../../../../report/html/renderer/performance-category-renderer.js');
     global.PwaCategoryRenderer =
         require('../../../../report/html/renderer/pwa-category-renderer.js');
+    global.LightWalletRenderer = require('../../../../report/html/renderer/light-wallet-renderer.js'); 
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -91,6 +92,7 @@ describe('ReportUIFeatures', () => {
     global.PerformanceCategoryRenderer = undefined;
     global.PwaCategoryRenderer = undefined;
     global.window = undefined;
+    global.LightWalletRenderer = undefined;
   });
 
   describe('initFeature', () => {

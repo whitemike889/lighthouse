@@ -700,7 +700,7 @@ describe('Config', () => {
     it('returns the IDs & names of the categories', () => {
       const categories = Config.getCategories(origConfig);
       assert.equal(Array.isArray(categories), true);
-      assert.equal(categories.length, 5, 'Found the correct number of categories');
+      assert.equal(categories.length, 6, 'Found the correct number of categories');
       const haveName = categories.every(cat => cat.title.length);
       const haveID = categories.every(cat => cat.id.length);
       assert.equal(haveName === haveID === true, true, 'they have IDs and titles');

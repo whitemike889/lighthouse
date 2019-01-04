@@ -11,6 +11,11 @@ const constants = require('./constants');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
+  /** Title of the LightWallet category of audits. LightWallet is a tool for performance budgets. Performance budgets are somewhat similar to financial budgets, hence the name ('Lighthouse' + 'Wallet'). */
+  lightWalletCategoryTitle: 'LightWallet',
+  /** Description of the LightWallet category. This section audits that a page meets performance budget(s). */
+  lightWalletCategoryDescription: 'A performance budget sets thresholds for the resource sizes' +
+        ' and/or loading metrics of a page. This helps achieve and maintain performance goals.',
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
   performanceCategoryTitle: 'Performance',
   /** Title of the speed metrics section of the Performance category. Within this section are various speed metrics which quantify the pageload performance into values presented in seconds and milliseconds. */
@@ -144,6 +149,7 @@ const defaultConfig = {
     'metrics/speed-index',
     'screenshot-thumbnails',
     'final-screenshot',
+    'light-wallet',
     'metrics/estimated-input-latency',
     'errors-in-console',
     'time-to-first-byte',
@@ -320,6 +326,13 @@ const defaultConfig = {
     },
   },
   categories: {
+    'lightwallet': {
+      title: str_(UIStrings.lightWalletCategoryTitle),
+      description: str_(UIStrings.lightWalletCategoryDescription),
+      auditRefs: [
+        {id: 'light-wallet', weight: 1},
+      ],
+    },
     'performance': {
       title: str_(UIStrings.performanceCategoryTitle),
       auditRefs: [

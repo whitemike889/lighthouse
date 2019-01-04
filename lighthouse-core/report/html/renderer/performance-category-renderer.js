@@ -129,7 +129,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Metrics
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
-    const metricAuditsEl = this.renderAuditGroup(groups.metrics, {expandable: false});
+    const metricAuditsEl = this.renderAuditGroup(groups.metrics, { expandable: false });
 
     const keyMetrics = metricAudits.filter(a => a.weight >= 3);
     const otherMetrics = metricAudits.filter(a => a.weight < 3);
@@ -148,7 +148,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     // 'Values are estimated and may vary' is used as the category description for PSI
     if (environment !== 'PSI') {
       const estValuesEl = this.dom.createChildOf(metricsColumn2El, 'div',
-          'lh-metrics__disclaimer lh-metrics__disclaimer');
+        'lh-metrics__disclaimer lh-metrics__disclaimer');
       estValuesEl.textContent = Util.UIStrings.varianceDisclaimer;
     }
 
@@ -167,8 +167,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Opportunities
     const opportunityAudits = category.auditRefs
-        .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
-        .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
+      .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
+      .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
 
     if (opportunityAudits.length) {
       // Scale the sparklines relative to savings, minimum 2s to not overstate small savings
@@ -176,7 +176,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const wastedMsValues = opportunityAudits.map(audit => this._getWastedMs(audit));
       const maxWaste = Math.max(...wastedMsValues);
       const scale = Math.max(Math.ceil(maxWaste / 1000) * 1000, minimumScale);
-      const groupEl = this.renderAuditGroup(groups['load-opportunities'], {expandable: false});
+      const groupEl = this.renderAuditGroup(groups['load-opportunities'], { expandable: false });
       const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
 
       this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
@@ -187,22 +187,22 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
       groupEl.appendChild(headerEl);
       opportunityAudits.forEach((item, i) =>
-          groupEl.appendChild(this._renderOpportunity(item, i, scale)));
+        groupEl.appendChild(this._renderOpportunity(item, i, scale)));
       groupEl.classList.add('lh-audit-group--load-opportunities');
       element.appendChild(groupEl);
     }
 
     // Diagnostics
     const diagnosticAudits = category.auditRefs
-        .filter(audit => audit.group === 'diagnostics' && !Util.showAsPassed(audit.result))
-        .sort((a, b) => {
-          const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
-          const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
-          return scoreA - scoreB;
-        });
+      .filter(audit => audit.group === 'diagnostics' && !Util.showAsPassed(audit.result))
+      .sort((a, b) => {
+        const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
+        const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
+        return scoreA - scoreB;
+      });
 
     if (diagnosticAudits.length) {
-      const groupEl = this.renderAuditGroup(groups['diagnostics'], {expandable: false});
+      const groupEl = this.renderAuditGroup(groups['diagnostics'], { expandable: false });
       diagnosticAudits.forEach((item, i) => groupEl.appendChild(this.renderAudit(item, i)));
       groupEl.classList.add('lh-audit-group--diagnostics');
       element.appendChild(groupEl);
@@ -210,8 +210,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Passed audits
     const passedAudits = category.auditRefs
-        .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
-            Util.showAsPassed(audit.result));
+      .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
+        Util.showAsPassed(audit.result));
 
     if (!passedAudits.length) return element;
 

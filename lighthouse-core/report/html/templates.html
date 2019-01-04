@@ -81,6 +81,74 @@ limitations under the License.
   </div>
 </template>
 
+<!-- LightWallet header -->
+<template id="tmpl-lw-header">
+  <div class="lh-lw__lw-header">LightWallet</div>
+</template>
+
+<!-- LightWallet section header -->
+<template id="tmpl-lw-section-header">
+  <div class="lh-lw__section-header"></div>
+</template>
+
+<!-- LightWallet Page Weight / Requests table -->
+<template id="tmpl-lw-resources-table">
+  <div class="lh-lw__resources-header">
+    <div class="lh-lw__resources-header-col lh-lw__resources-header-col--description">Resource Type</div>
+    <div class="lh-lw__resources-header-col lh-lw__resources-header-col--budget">Budget</div>
+    <div class="lh-lw__resources-header-col lh-lw__resources-header-col--actual">Actual</div>
+    <div class="lh-lw__resources-header-col lh-lw__resources-header-col--sparkline"></div>
+    <div class="lh-lw__resources-header-col lh-lw__resources-header-col--difference">Difference</div>
+    <div class="lh-lw__resources-header-col lh-lw__resources-header-col--icon"></div>
+  </div>
+  <div class="lh-metric">
+    <div class="lh-lw__resource-row">
+      <div class="lh-metric__innerwrap tooltip-boundary">
+        <span class="lh-lw__resource-col--description"></span>
+        <div class="lh-lw__resource-col--budget"></div>
+        <div class="lh-lw__resource-col--actual"></div>
+        <div class="lh-lw__resource-col--sparkline lh-load-opportunity__sparkline">
+          <div class="lh-sparkline">
+            <div class="lh-sparkline__bar"></div>
+          </div>
+        </div>
+        <div class="lh-lw__resource-col--difference lh-audit__display-text"></div>
+        <div class="lh-lw__resource-col--icon lh-audit__score-icon"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- LightWallet Timings table -->
+<template id="tmpl-lw-timings-table">
+  <div class="lh-lw__timings-header">
+    <div class="lh-lw__timings-header-col lh-lw__timings-header-col--description">Timing</div>
+    <div class="lh-lw__timings-header-col lh-lw__timings-header-col--budget">Budget</div>
+    <div class="lh-lw__timings-header-col lh-lw__timings-header-col--actual">Actual</div>
+    <div class="lh-lw__timings-header-col lh-lw__timings-header-col--sparkline"></div>
+    <div class="lh-lw__timings-header-col lh-lw__timings-header-col--difference">Difference</div>
+    <div class="lh-lw__timings-header-col lh-lw__timings-header-col--icon"></div>
+  </div>
+  <div class="lh-metric">
+    <div class="lh-metric__innerwrap tooltip-boundary">
+      <span class="lh-lw__timings-col--description"></span>
+      <div class="lh-lw__timings-col--budget">
+        <div class="lh-lw__timings-col--budget-value"></div>
+        <div class="lh-lw__timings-col--budget-tolerance"></div>
+      </div>
+      <div class="lh-lw__timings-col--actual"></div>
+      <div class="lh-lw__timings-col--sparkline lh-load-opportunity__sparkline">
+        <div class="lh-sparkline">
+          <div class="lh-sparkline__bar"></div>
+        </div>
+      </div>
+      <div class="lh-lw__timings-col--difference lh-audit__display-text"></div>
+      <div class="lh-lw__timings-col--icon lh-audit__score-icon"></div>
+    </div>
+  </div>
+</template>
+
 <!-- Lighthouse perf opportunity -->
 <template id="tmpl-lh-opportunity">
   <div class="lh-audit lh-audit--load-opportunity">
@@ -572,6 +640,13 @@ limitations under the License.
   </a>
 </template>
 
+<!-- Light Wallet score gauge -->
+<template id="tmpl-lh-gauge--light-wallet">
+  <a href="#" class="lh-lw__gauge-wrapper">
+    <div class="lh-lw__gauge"></div>
+    <div class="lh-lw__gauge-label lh-gauge__label"></div>
+  </a>
+</template>
 
 <!-- Lighthouse PWA badge gauge -->
 <template id="tmpl-lh-gauge--pwa">

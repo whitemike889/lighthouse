@@ -26,6 +26,57 @@ const throttling = {
   },
 };
 
+const lightWalletThrottling = {
+  slow3G: {
+    rttMs: 400,
+    throughputKbps: 0.4 * 1024,
+    requestLatencyMs: 400 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
+    downloadThroughputKbps: 0.4 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    uploadThroughputKbps: 0.4 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    networkLabel: 'Slow 3G',
+  },
+  regular3G: {
+    rttMs: 300,
+    throughputKbps: 1.6 * 1024,
+    requestLatencyMs: 300 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
+    downloadThroughputKbps: 1.6 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    uploadThroughputKbps: 0.8 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    networkLabel: '3G',
+  },
+  fast3G: {
+    rttMs: 150,
+    throughputKbps: 1.6 * 1024,
+    requestLatencyMs: 150 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
+    downloadThroughputKbps: 1.6 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    uploadThroughputKbps: 0.8 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    networkLabel: 'Fast 3G',
+  },
+  slow4G: {
+    rttMs: 150,
+    throughputKbps: 1.6 * 1024,
+    requestLatencyMs: 150 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
+    downloadThroughputKbps: 1.6 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    uploadThroughputKbps: 0.8 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    networkLabel: 'Slow 4G',
+  },
+  regular4G: {
+    rttMs: 170,
+    throughputKbps: 9 * 1024,
+    requestLatencyMs: 170 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
+    downloadThroughputKbps: 9 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    uploadThroughputKbps: 9 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    networkLabel: '4G',
+  },
+  wifi: {
+    rttMs: 28,
+    throughputKbps: 5 * 1024,
+    requestLatencyMs: 28 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
+    downloadThroughputKbps: 5 * 1024 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    uploadThroughputKbps: 1000 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+    networkLabel: 'Wifi',
+  },
+};
+
 /** @type {LH.Config.Settings} */
 const defaultSettings = {
   output: 'json',
@@ -73,4 +124,5 @@ module.exports = {
   defaultSettings,
   defaultPassConfig,
   nonSimulatedPassConfigOverrides,
+  lightWalletThrottling,
 };

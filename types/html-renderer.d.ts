@@ -15,6 +15,7 @@ import _ReportUIFeatures = require('../lighthouse-core/report/html/renderer/repo
 import _Util = require('../lighthouse-core/report/html/renderer/util.js');
 import _prepareLabData = require('../lighthouse-core/report/html/renderer/psi.js');
 import _FileNamer = require('../lighthouse-core/lib/file-namer.js');
+import _LightWalletRenderer = require('../lighthouse-core/report/html/renderer/light-wallet-renderer.js');
 
 declare global {
   var CategoryRenderer: typeof _CategoryRenderer;
@@ -28,6 +29,7 @@ declare global {
   var ReportUIFeatures: typeof _ReportUIFeatures;
   var Util: typeof _Util;
   var prepareLabData: typeof _prepareLabData;
+  var LightWalletRenderer: typeof _LightWalletRenderer;
 
   interface Window {
     CategoryRenderer: typeof _CategoryRenderer;
@@ -40,6 +42,7 @@ declare global {
     ReportUIFeatures: typeof _ReportUIFeatures;
     Util: typeof _Util;
     prepareLabData: typeof _prepareLabData;
+    LightWalletRenderer: typeof _LightWalletRenderer;
   }
 
   module LH {
