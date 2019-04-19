@@ -1,0 +1,47 @@
+{
+    "budgets": [
+        {
+            "resourceSizes": [
+                {
+                    "resourceType": "script",
+                    "budget": 125
+                },
+                {
+                    "resourceType": "image",
+                    "budget": 300
+                },
+                {
+                    "resourceType": "total",
+                    "budget": 500
+                },
+                {
+                    "resourceType": "thirdParty",
+                    "budget": 200
+                }
+            ],
+            "timings": [
+                {
+                    "metric": "timeToInteractive",
+                    "budget": 5000,
+                    "tolerance": 1000
+                },
+                {
+                    "metric": "firstMeaningfulPaint",
+                    "budget": 2000
+                }
+            ]
+        },
+        {
+            "resourceCounts": [
+                {
+                    "resourceType": "total",
+                    "budget": 100
+                },
+                {
+                    "resourceType": "thirdParty",
+                    "budget": 0
+                }
+            ]
+        }
+    ]
+}
