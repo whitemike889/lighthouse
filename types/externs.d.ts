@@ -119,6 +119,8 @@ declare global {
       channel?: string
       /** Precomputed lantern estimates to use instead of observed analysis. */
       precomputedLanternData?: PrecomputedLanternData | null;
+      // Flag indicating the path to the budgets.json file for LightWallet
+      budgetsPath?: string | null;
     }
 
     /**
