@@ -15,18 +15,18 @@
                     "budget": 500
                 },
                 {
-                    "resourceType": "thirdParty",
+                    "resourceType": "third-party",
                     "budget": 200
                 }
             ],
             "timings": [
                 {
-                    "metric": "timeToInteractive",
+                    "metric": "time-to-interactive",
                     "budget": 5000,
                     "tolerance": 1000
                 },
                 {
-                    "metric": "firstMeaningfulPaint",
+                    "metric": "first-meaningful-paint",
                     "budget": 2000
                 }
             ]
@@ -38,7 +38,7 @@
                     "budget": 100
                 },
                 {
-                    "resourceType": "thirdParty",
+                    "resourceType": "third-party",
                     "budget": 0
                 }
             ]

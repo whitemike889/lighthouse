@@ -27,16 +27,16 @@ describe('Budgets', () => {
           budget: 100,
         },
         {
-          resourceType: 'thirdParty',
+          resourceType: 'third-party',
           budget: 10,
         }],
         timings: [{
-          metric: 'timeToInteractive',
+          metric: 'time-to-interactive',
           budget: 2000,
           tolerance: 1000,
         },
         {
-          metric: 'firstContentfulPaint',
+          metric: 'first-contentful-paint',
           budget: 1000,
           tolerance: 500,
         }],
@@ -67,7 +67,7 @@ describe('Budgets', () => {
 
     // Sets timings correctly
     assert.equal(budgets.budgets[0].timings.length, 2);
-    assert.equal(budgets.budgets[0].timings[1].metric, 'firstContentfulPaint');
+    assert.equal(budgets.budgets[0].timings[1].metric, 'first-contentful-paint');
     assert.equal(budgets.budgets[0].timings[1].budget, 1000);
     assert.equal(budgets.budgets[0].timings[1].tolerance, 500);
 

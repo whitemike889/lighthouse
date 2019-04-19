@@ -37,7 +37,7 @@ class Budgets {
       'media',
       'font',
       'other',
-      'thirdParty',
+      'third-party',
     ];
     if (!validResourceTypes.includes(resourceBudget.resourceType)) {
       throw new Error(`Invalid resource type: ${resourceBudget.resourceType}. \n` +
@@ -61,11 +61,11 @@ class Budgets {
     Budgets.assertNoExcessProperties(invalidRest, 'Timing Budget');
 
     const validTimingMetrics = [
-      'firstContentfulPaint',
-      'firstCpuIdle',
-      'timeToInteractive',
-      'firstMeaningfulPaint',
-      'estimaatedInputLatency',
+      'first-contentful-paint',
+      'first-cpu-idle',
+      'time-to-interactive',
+      'first-meaningful-paint',
+      'estimated-input-latency',
     ];
     if (!validTimingMetrics.includes(timingBudget.metric)) {
       throw new Error(`Invalid timing metric: ${timingBudget.metric}. \n` +
@@ -84,6 +84,8 @@ class Budgets {
     };
   }
 
+  // More info on the Budgets format:
+  // https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
   /**
      * @constructor
      * @implements {LH.Budgets.Json}
