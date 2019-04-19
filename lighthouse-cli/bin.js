@@ -26,6 +26,7 @@ const printer = require('./printer.js');
 const getFlags = require('./cli-flags.js').getFlags;
 const runLighthouse = require('./run.js').runLighthouse;
 const generateConfig = require('../lighthouse-core/index.js').generateConfig;
+const Budgets = require('../lighthouse-core/config/budgets.js');
 
 const log = require('lighthouse-logger');
 const pkg = require('../package.json');
@@ -75,6 +76,18 @@ async function begin() {
     }
 
     configJson = require(`../lighthouse-core/config/${cliFlags.preset}-config.js`);
+  }
+
+  if (cliFlags.budgetsPath) {
+    cliFlags.budgetsPath = path.resolve(process.cwd(), cliFlags.budgetsPath);
+    try {
+      const budgetsJsonStr = fs.readFileSync(cliFlags.budgetsPath, 'utf8');
+      /** @type {LH.Budgets.Json} */
+      const budgets = new Budgets(JSON.parse(budgetsJsonStr));
+      cliFlags.budgetsJSON = budgets;
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
   // set logging preferences
