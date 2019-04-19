@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2019 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -55,22 +55,28 @@ describe('Budgets', () => {
     const budgets = new Budgets(budgetsJson);
     assert.equal(budgets.budgets.length, 2);
 
+    // Sets resources sizes correctly
     assert.equal(budgets.budgets[0].resourceSizes.length, 2);
     assert.equal(budgets.budgets[0].resourceSizes[0].resourceType, 'script');
     assert.equal(budgets.budgets[0].resourceSizes[0].budget, 123);
 
+    // Sets resource counts correctly
     assert.equal(budgets.budgets[0].resourceCounts.length, 2);
     assert.equal(budgets.budgets[0].resourceCounts[0].resourceType, 'total');
     assert.equal(budgets.budgets[0].resourceCounts[0].budget, 100);
 
+    // Sets timings correctly
     assert.equal(budgets.budgets[0].timings.length, 2);
     assert.equal(budgets.budgets[0].timings[1].metric, 'firstContentfulPaint');
     assert.equal(budgets.budgets[0].timings[1].budget, 1000);
     assert.equal(budgets.budgets[0].timings[1].tolerance, 500);
+
+    // Does not set unsupplied budgets
+    assert.equal(budgets.budgets[1].timings, null);
   });
   it('throws error if an unsupported budget property is used', () => {
     budgetsJson.budgets[0].sizes = [];
-    assert.throws(_ => new Budgets(budgetsJson), /Unsupported budget property/);
+    assert.throws(_ => new Budgets(budgetsJson), /[sizes]/);
   });
   describe('resource budget validation', () => {
     it('throws when an invalid resource type is supplied', () => {
@@ -80,6 +86,10 @@ describe('Budgets', () => {
     it('throws when an invalid budget is supplied', () => {
       budgetsJson.budgets[0].resourceSizes[0].budget = '100 MB';
       assert.throws(_ => new Budgets(budgetsJson), /Invalid budget/);
+    });
+    it('throws when an invalid property is supplied', () => {
+      budgetsJson.budgets[0].resourceSizes[0].browser = 'Chrome';
+      assert.throws(_ => new Budgets(budgetsJson), /[browser]/);
     });
   });
   describe('timing budget validation', () => {
@@ -94,6 +104,10 @@ describe('Budgets', () => {
     it('throws when an invalid tolerance is supplied', () => {
       budgetsJson.budgets[0].timings[0].tolerance = '100ms';
       assert.throws(_ => new Budgets(budgetsJson), /Invalid tolerance/);
+    });
+    it('throws when an invalid property is supplied', () => {
+      budgetsJson.budgets[0].timings[0].device = 'Phone';
+      assert.throws(_ => new Budgets(budgetsJson), /[device]/);
     });
   });
 });
