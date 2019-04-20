@@ -21,8 +21,8 @@ class Budgets {
   }
 
   /**
- * @param {LH.Budgets.ResourceBudget} resourceBudget
- * @return {LH.Budgets.ResourceBudget}
+ * @param {LH.BudgetsJSON.ResourceBudget} resourceBudget
+ * @return {LH.BudgetsJSON.ResourceBudget}
  */
   static validateResourceBudget(resourceBudget) {
     const {resourceType, budget, ...invalidRest} = resourceBudget;
@@ -53,8 +53,8 @@ class Budgets {
   }
 
   /**
- * @param {LH.Budgets.TimingBudget} timingBudget
- * @return {LH.Budgets.TimingBudget}
+ * @param {LH.BudgetsJSON.TimingBudget} timingBudget
+ * @return {LH.BudgetsJSON.TimingBudget}
  */
   static validateTimingBudget(timingBudget) {
     const {metric, budget, tolerance, ...invalidRest} = timingBudget;
@@ -84,19 +84,19 @@ class Budgets {
     };
   }
 
-  // More info on the Budgets format:
-  // https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
+  /** More info on the Budgets format:
+  * https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
+  * /
   /**
-     * @constructor
-     * @implements {LH.Budgets.Json}
-     * @param {LH.Budgets.Json} budgetsJSON
-     */
-  constructor(budgetsJSON) {
-    /** @type {Array<LH.Budgets.Budget>} */
-    this.budgets = [];
+ * @param {Array<LH.BudgetsJSON.Budget>} budgetsJSON
+ * @return {Array<LH.BudgetsJSON.Budget>}
+ */
+  static parseBudgets(budgetsJSON) {
+    /** @type {Array<LH.BudgetsJSON.Budget>} */
+    const budgets = [];
 
-    budgetsJSON.budgets.forEach((b) => {
-      /** @type {LH.Budgets.Budget} */
+    budgetsJSON.forEach((b) => {
+      /** @type {LH.BudgetsJSON.Budget} */
       const budget = {};
 
       const {resourceSizes, resourceCounts, timings, ...invalidRest} = b;
@@ -119,12 +119,13 @@ class Budgets {
           return Budgets.validateTimingBudget(t);
         });
       }
-      this.budgets.push({
+      budgets.push({
         resourceSizes,
         resourceCounts,
         timings,
       });
     });
+    return budgets;
   }
 }
 

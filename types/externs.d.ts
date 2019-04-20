@@ -120,7 +120,7 @@ declare global {
       /** Precomputed lantern estimates to use instead of observed analysis. */
       precomputedLanternData?: PrecomputedLanternData | null;
       /** The budgets.json object for LightWallet. */
-      budgetsJSON?: Budgets.Json | null;
+      budgetsJSON?: Array<BudgetsJSON.Budget> | null;
     }
 
     /**

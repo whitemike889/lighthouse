@@ -101,8 +101,8 @@ describe('CLI bin', function() {
 
   describe('budgets', () => {
     it('should load the config from the path', async () => {
-      const budgetsPath = require.resolve('../../../lighthouse-core/test/fixtures/budgets.json');
-      cliFlags = {...cliFlags, budgetsPath: budgetsPath};
+      const budgetsPath = '../../../lighthouse-core/test/fixtures/simple-budgets.json';
+      cliFlags = {...cliFlags, budgetsPath: require.resolve(budgetsPath)};
       const actualBudgetsJSON = require(budgetsPath);
       await bin.begin();
 

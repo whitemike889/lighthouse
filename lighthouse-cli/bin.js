@@ -82,8 +82,8 @@ async function begin() {
     cliFlags.budgetsPath = path.resolve(process.cwd(), cliFlags.budgetsPath);
     try {
       const budgetsJsonStr = fs.readFileSync(cliFlags.budgetsPath, 'utf8');
-      /** @type {LH.Budgets.Json} */
-      const budgets = new Budgets(JSON.parse(budgetsJsonStr));
+      /** @type {Array<LH.BudgetsJSON.Budget>} */
+      const budgets = Budgets.parseBudgets(JSON.parse(budgetsJsonStr));
       cliFlags.budgetsJSON = budgets;
     } catch (err) {
       throw new Error(err);
