@@ -741,6 +741,11 @@ describe('Config', () => {
       assert.strictEqual(config.categories['lighthouse-plugin-simple'].title, 'Simple');
     });
 
+    it('should initialize budgetsJSON', () => {
+      assert.throws(() => new Config({settings: {budgetsJSON: ['invalid123']}}),
+        /Budget has unrecognized properties/);
+    });
+
     it('should load plugins from the config and from passed-in flags', () => {
       const baseConfigJson = {
         audits: ['installable-manifest'],

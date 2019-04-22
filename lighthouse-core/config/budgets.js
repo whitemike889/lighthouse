@@ -91,7 +91,7 @@ class Budgets {
  * @param {Array<LH.BudgetsJSON.Budget>} budgetsJSON
  * @return {Array<LH.BudgetsJSON.Budget>}
  */
-  static parseBudgets(budgetsJSON) {
+  static initializeBudgets(budgetsJSON) {
     /** @type {Array<LH.BudgetsJSON.Budget>} */
     const budgets = [];
 

@@ -50,7 +50,7 @@ describe('Budgets', () => {
     }];
   });
   it('initializes correctly', () => {
-    const budgets = Budgets.parseBudgets(budgetsJson);
+    const budgets = Budgets.initializeBudgets(budgetsJson);
     assert.equal(budgets.length, 2);
 
     // Sets resources sizes correctly
@@ -74,38 +74,38 @@ describe('Budgets', () => {
   });
   it('throws error if an unsupported budget property is used', () => {
     budgetsJson[0].sizes = [];
-    assert.throws(_ => Budgets.parseBudgets(budgetsJson), /[sizes]/);
+    assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /[sizes]/);
   });
   describe('resource budget validation', () => {
     it('throws when an invalid resource type is supplied', () => {
       budgetsJson[0].resourceSizes[0].resourceType = 'movies';
-      assert.throws(_ => Budgets.parseBudgets(budgetsJson), /Invalid resource type/);
+      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid resource type/);
     });
     it('throws when an invalid budget is supplied', () => {
       budgetsJson[0].resourceSizes[0].budget = '100 MB';
-      assert.throws(_ => Budgets.parseBudgets(budgetsJson), /Invalid budget/);
+      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid budget/);
     });
     it('throws when an invalid property is supplied', () => {
       budgetsJson[0].resourceSizes[0].browser = 'Chrome';
-      assert.throws(_ => Budgets.parseBudgets(budgetsJson), /[browser]/);
+      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /[browser]/);
     });
   });
   describe('timing budget validation', () => {
     it('throws when an invalid metric is supplied', () => {
       budgetsJson[0].timings[0].metric = 'lastMeaningfulPaint';
-      assert.throws(_ => Budgets.parseBudgets(budgetsJson), /Invalid timing metric/);
+      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid timing metric/);
     });
     it('throws when an invalid budget is supplied', () => {
       budgetsJson[0].timings[0].budget = '100KB';
-      assert.throws(_ => Budgets.parseBudgets(budgetsJson), /Invalid budget/);
+      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid budget/);
     });
     it('throws when an invalid tolerance is supplied', () => {
       budgetsJson[0].timings[0].tolerance = '100ms';
-      assert.throws(_ => Budgets.parseBudgets(budgetsJson), /Invalid tolerance/);
+      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid tolerance/);
     });
     it('throws when an invalid property is supplied', () => {
       budgetsJson[0].timings[0].device = 'Phone';
-      assert.throws(_ => Budgets.parseBudgets(budgetsJson), /[device]/);
+      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /[device]/);
     });
   });
 });
