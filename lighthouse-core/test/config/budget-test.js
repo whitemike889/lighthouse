@@ -5,52 +5,60 @@
  */
 'use strict';
 
-const Budgets = require('../../config/budgets');
+const Budget = require('../../config/budget.js');
 const assert = require('assert');
 /* eslint-env jest */
 
-describe('Budgets', () => {
-  let budgetsJson;
+describe('Budget', () => {
+  let budget;
   beforeEach(() => {
-    budgetsJson = [{
-      resourceSizes: [{
-        resourceType: 'script',
-        budget: 123,
+    budget = [
+      {
+        resourceSizes: [
+          {
+            resourceType: 'script',
+            budget: 123,
+          },
+          {
+            resourceType: 'image',
+            budget: 456,
+          },
+        ],
+        resourceCounts: [
+          {
+            resourceType: 'total',
+            budget: 100,
+          },
+          {
+            resourceType: 'third-party',
+            budget: 10,
+          },
+        ],
+        timings: [
+          {
+            metric: 'interactive',
+            budget: 2000,
+            tolerance: 1000,
+          },
+          {
+            metric: 'first-contentful-paint',
+            budget: 1000,
+            tolerance: 500,
+          },
+        ],
       },
       {
-        resourceType: 'image',
-        budget: 456,
-      }],
-      resourceCounts: [{
-        resourceType: 'total',
-        budget: 100,
+        resourceSizes: [
+          {
+            resourceType: 'script',
+            budget: 1000,
+          },
+        ],
       },
-      {
-        resourceType: 'third-party',
-        budget: 10,
-      }],
-      timings: [{
-        metric: 'time-to-interactive',
-        budget: 2000,
-        tolerance: 1000,
-      },
-      {
-        metric: 'first-contentful-paint',
-        budget: 1000,
-        tolerance: 500,
-      }],
-    },
-    {
-      resourceSizes: [
-        {
-          resourceType: 'script',
-          budget: 1000,
-        },
-      ],
-    }];
+    ];
   });
   it('initializes correctly', () => {
-    const budgets = Budgets.initializeBudgets(budgetsJson);
+    const budgets = Budget.initializeBudget(budget);
     assert.equal(budgets.length, 2);
 
     // Sets resources sizes correctly
@@ -72,40 +80,47 @@ describe('Budgets', () => {
     // Does not set unsupplied budgets
     assert.equal(budgets[1].timings, null);
   });
+
   it('throws error if an unsupported budget property is used', () => {
-    budgetsJson[0].sizes = [];
-    assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /[sizes]/);
+    budget[0].sizes = [];
+    assert.throws(_ => Budget.initializeBudget(budget), /[sizes]/);
   });
+
   describe('resource budget validation', () => {
     it('throws when an invalid resource type is supplied', () => {
-      budgetsJson[0].resourceSizes[0].resourceType = 'movies';
-      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid resource type/);
+      budget[0].resourceSizes[0].resourceType = 'movies';
+      assert.throws(_ => Budget.initializeBudget(budget), /Invalid resource type/);
     });
+
     it('throws when an invalid budget is supplied', () => {
-      budgetsJson[0].resourceSizes[0].budget = '100 MB';
-      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid budget/);
+      budget[0].resourceSizes[0].budget = '100 MB';
+      assert.throws(_ => Budget.initializeBudget(budget), /Invalid budget/);
     });
+
     it('throws when an invalid property is supplied', () => {
-      budgetsJson[0].resourceSizes[0].browser = 'Chrome';
-      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /[browser]/);
+      budget[0].resourceSizes[0].browser = 'Chrome';
+      assert.throws(_ => Budget.initializeBudget(budget), /[browser]/);
     });
   });
   describe('timing budget validation', () => {
     it('throws when an invalid metric is supplied', () => {
-      budgetsJson[0].timings[0].metric = 'lastMeaningfulPaint';
-      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid timing metric/);
+      budget[0].timings[0].metric = 'lastMeaningfulPaint';
+      assert.throws(_ => Budget.initializeBudget(budget), /Invalid timing metric/);
     });
+
     it('throws when an invalid budget is supplied', () => {
-      budgetsJson[0].timings[0].budget = '100KB';
-      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid budget/);
+      budget[0].timings[0].budget = '100KB';
+      assert.throws(_ => Budget.initializeBudget(budget), /Invalid budget/);
     });
+
     it('throws when an invalid tolerance is supplied', () => {
-      budgetsJson[0].timings[0].tolerance = '100ms';
-      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /Invalid tolerance/);
+      budget[0].timings[0].tolerance = '100ms';
+      assert.throws(_ => Budget.initializeBudget(budget), /Invalid tolerance/);
     });
+
     it('throws when an invalid property is supplied', () => {
-      budgetsJson[0].timings[0].device = 'Phone';
-      assert.throws(_ => Budgets.initializeBudgets(budgetsJson), /[device]/);
+      budget[0].timings[0].device = 'Phone';
+      assert.throws(_ => Budget.initializeBudget(budget), /[device]/);
     });
   });
 });

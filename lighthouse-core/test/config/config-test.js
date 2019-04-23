@@ -741,9 +741,28 @@ describe('Config', () => {
       assert.strictEqual(config.categories['lighthouse-plugin-simple'].title, 'Simple');
     });
 
-    it('should initialize budgetsJSON', () => {
-      assert.throws(() => new Config({settings: {budgetsJSON: ['invalid123']}}),
-        /Budget has unrecognized properties/);
+    describe('budget setting', () => {
+      it('should be initialized', () => {
+        const configJson = {
+          settings: {
+            budget: [{
+              resourceCounts: [{
+                resourceType: 'image',
+                budget: 500,
+              }],
+            }],
+          },
+        };
+        const config = new Config(configJson);
+        assert.equal(config.settings.budget[0].resourceCounts.length, 1);
+        assert.equal(config.settings.budget[0].resourceCounts[0].resourceType, 'image');
+        assert.equal(config.settings.budget[0].resourceCounts[0].budget, 500);
+      });
+
+      it('should throw when provided an invalid budget', () => {
+        assert.throws(() => new Config({settings: {budget: ['invalid123']}}),
+          /Budget has unrecognized properties/);
+      });
     });
 
     it('should load plugins from the config and from passed-in flags', () => {

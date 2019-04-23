@@ -5,7 +5,7 @@
  */
 'use strict';
 
-class Budgets {
+class Budget {
 /**
  * Asserts that obj has no own properties, throwing a nice error message if it does.
  * Plugin and object name are included for nicer logging.
@@ -21,12 +21,12 @@ class Budgets {
   }
 
   /**
- * @param {LH.BudgetsJSON.ResourceBudget} resourceBudget
- * @return {LH.BudgetsJSON.ResourceBudget}
+ * @param {LH.Budget.ResourceBudget} resourceBudget
+ * @return {LH.Budget.ResourceBudget}
  */
   static validateResourceBudget(resourceBudget) {
     const {resourceType, budget, ...invalidRest} = resourceBudget;
-    Budgets.assertNoExcessProperties(invalidRest, 'Resource Budget');
+    Budget.assertNoExcessProperties(invalidRest, 'Resource Budget');
 
     const validResourceTypes = [
       'total',
@@ -53,17 +53,17 @@ class Budgets {
   }
 
   /**
- * @param {LH.BudgetsJSON.TimingBudget} timingBudget
- * @return {LH.BudgetsJSON.TimingBudget}
+ * @param {LH.Budget.TimingBudget} timingBudget
+ * @return {LH.Budget.TimingBudget}
  */
   static validateTimingBudget(timingBudget) {
     const {metric, budget, tolerance, ...invalidRest} = timingBudget;
-    Budgets.assertNoExcessProperties(invalidRest, 'Timing Budget');
+    Budget.assertNoExcessProperties(invalidRest, 'Timing Budget');
 
     const validTimingMetrics = [
       'first-contentful-paint',
       'first-cpu-idle',
-      'time-to-interactive',
+      'interactive',
       'first-meaningful-paint',
       'estimated-input-latency',
     ];
@@ -84,39 +84,39 @@ class Budgets {
     };
   }
 
-  /** More info on the Budgets format:
+  /** More info on the Budget format:
   * https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
   * /
   /**
- * @param {Array<LH.BudgetsJSON.Budget>} budgetsJSON
- * @return {Array<LH.BudgetsJSON.Budget>}
+ * @param {Array<LH.Budget.Budget>} budgetArr
+ * @return {Array<LH.Budget.Budget>}
  */
-  static initializeBudgets(budgetsJSON) {
-    /** @type {Array<LH.BudgetsJSON.Budget>} */
+  static initializeBudget(budgetArr) {
+    /** @type {Array<LH.Budget.Budget>} */
     const budgets = [];
 
-    budgetsJSON.forEach((b) => {
-      /** @type {LH.BudgetsJSON.Budget} */
+    budgetArr.forEach((b) => {
+      /** @type {LH.Budget.Budget} */
       const budget = {};
 
       const {resourceSizes, resourceCounts, timings, ...invalidRest} = b;
-      Budgets.assertNoExcessProperties(invalidRest, 'Budget');
+      Budget.assertNoExcessProperties(invalidRest, 'Budget');
 
       if (b.resourceSizes !== undefined) {
         budget.resourceSizes = b.resourceSizes.map((r) => {
-          return Budgets.validateResourceBudget(r);
+          return Budget.validateResourceBudget(r);
         });
       }
 
       if (b.resourceCounts !== undefined) {
         budget.resourceCounts = b.resourceCounts.map((r) => {
-          return Budgets.validateResourceBudget(r);
+          return Budget.validateResourceBudget(r);
         });
       }
 
       if (b.timings !== undefined) {
         budget.timings = b.timings.map((t) => {
-          return Budgets.validateTimingBudget(t);
+          return Budget.validateTimingBudget(t);
         });
       }
       budgets.push({
@@ -129,4 +129,4 @@ class Budgets {
   }
 }
 
-module.exports = Budgets;
+module.exports = Budget;

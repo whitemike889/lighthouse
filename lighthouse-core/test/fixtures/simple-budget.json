@@ -20,7 +20,7 @@
         ],
         "timings": [
             {
-                "metric": "time-to-interactive",
+                "metric": "interactive",
                 "budget": 5000,
                 "tolerance": 1000
             },

@@ -77,15 +77,11 @@ async function begin() {
     configJson = require(`../lighthouse-core/config/${cliFlags.preset}-config.js`);
   }
 
-  if (cliFlags.budgetsPath) {
-    cliFlags.budgetsPath = path.resolve(process.cwd(), cliFlags.budgetsPath);
-    try {
-      /** @type {Array<LH.BudgetsJSON.Budget>} */
-      const budgetsJsonStr = JSON.parse(fs.readFileSync(cliFlags.budgetsPath, 'utf8'));
-      cliFlags.budgetsJSON = budgetsJsonStr;
-    } catch (err) {
-      throw new Error(err);
-    }
+  if (cliFlags.budgetPath) {
+    cliFlags.budgetPath = path.resolve(process.cwd(), cliFlags.budgetPath);
+    /** @type {Array<LH.Budget.Budget>} */
+    const parsedBudget = JSON.parse(fs.readFileSync(cliFlags.budgetPath, 'utf8'));
+    cliFlags.budget = parsedBudget;
   }
 
   // set logging preferences

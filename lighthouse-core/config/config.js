@@ -17,7 +17,7 @@ const path = require('path');
 const Audit = require('../audits/audit.js');
 const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
-const Budgets = require('./budgets.js');
+const Budget = require('./budget.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -513,8 +513,8 @@ class Config {
     // Override any applicable settings with CLI flags
     const settingsWithFlags = merge(settingWithDefaults || {}, cleanFlagsForSettings(flags), true);
 
-    if (settingsWithFlags.budgetsJSON) {
-      settingsWithFlags.budgetsJSON = Budgets.initializeBudgets(settingsWithFlags.budgetsJSON);
+    if (settingsWithFlags.budget) {
+      settingsWithFlags.budget = Budget.initializeBudget(settingsWithFlags.budget);
     }
     // Locale is special and comes only from flags/settings/lookupLocale.
     settingsWithFlags.locale = locale;
