@@ -745,7 +745,7 @@ describe('Config', () => {
       it('should be initialized', () => {
         const configJson = {
           settings: {
-            budget: [{
+            budgets: [{
               resourceCounts: [{
                 resourceType: 'image',
                 budget: 500,
@@ -754,13 +754,13 @@ describe('Config', () => {
           },
         };
         const config = new Config(configJson);
-        assert.equal(config.settings.budget[0].resourceCounts.length, 1);
-        assert.equal(config.settings.budget[0].resourceCounts[0].resourceType, 'image');
-        assert.equal(config.settings.budget[0].resourceCounts[0].budget, 500);
+        assert.equal(config.settings.budgets[0].resourceCounts.length, 1);
+        assert.equal(config.settings.budgets[0].resourceCounts[0].resourceType, 'image');
+        assert.equal(config.settings.budgets[0].resourceCounts[0].budget, 500);
       });
 
       it('should throw when provided an invalid budget', () => {
-        assert.throws(() => new Config({settings: {budget: ['invalid123']}}),
+        assert.throws(() => new Config({settings: {budgets: ['invalid123']}}),
           /Budget has unrecognized properties/);
       });
     });

@@ -106,7 +106,7 @@ describe('CLI bin', function() {
       const budgetFile = require(budgetPath);
       await bin.begin();
 
-      expect(getRunLighthouseArgs()[1].budget).toEqual(budgetFile);
+      expect(getRunLighthouseArgs()[1].budgets).toEqual(budgetFile);
     });
   });
 

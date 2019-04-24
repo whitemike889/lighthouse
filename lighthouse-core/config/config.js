@@ -513,8 +513,8 @@ class Config {
     // Override any applicable settings with CLI flags
     const settingsWithFlags = merge(settingWithDefaults || {}, cleanFlagsForSettings(flags), true);
 
-    if (settingsWithFlags.budget) {
-      settingsWithFlags.budget = Budget.initializeBudget(settingsWithFlags.budget);
+    if (settingsWithFlags.budgets) {
+      settingsWithFlags.budgets = Budget.initializeBudget(settingsWithFlags.budgets);
     }
     // Locale is special and comes only from flags/settings/lookupLocale.
     settingsWithFlags.locale = locale;

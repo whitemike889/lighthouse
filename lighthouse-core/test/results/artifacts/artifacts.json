@@ -29,7 +29,7 @@
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
     "channel": "cli",
-    "budget": [
+    "budgets": [
       {
         "resourceSizes": [
           {
