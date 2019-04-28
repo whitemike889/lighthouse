@@ -1273,6 +1273,90 @@
       "explanation": "No usable web app manifest found on page.",
       "warnings": []
     },
+    "resource-summary": {
+      "id": "resource-summary",
+      "title": "Keep request counts and file sizes small",
+      "description": "To set budgets for the quantity and size of page resources, add a budget.json file.",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "displayValue": "18 requests • 157 KB",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "label",
+            "itemType": "text",
+            "text": "Resource Type"
+          },
+          {
+            "key": "count",
+            "itemType": "numeric",
+            "text": "Requests"
+          },
+          {
+            "key": "size",
+            "itemType": "bytes",
+            "text": "File Size"
+          }
+        ],
+        "items": [
+          {
+            "resourceType": "total",
+            "label": "Total",
+            "count": 18,
+            "size": 160738
+          },
+          {
+            "resourceType": "script",
+            "label": "Script",
+            "count": 4,
+            "size": 103675
+          },
+          {
+            "resourceType": "third-party",
+            "label": "Third-party",
+            "count": 2,
+            "size": 30174
+          },
+          {
+            "resourceType": "image",
+            "label": "Image",
+            "count": 2,
+            "size": 24741
+          },
+          {
+            "resourceType": "document",
+            "label": "Document",
+            "count": 3,
+            "size": 14109
+          },
+          {
+            "resourceType": "other",
+            "label": "Other",
+            "count": 2,
+            "size": 12861
+          },
+          {
+            "resourceType": "stylesheet",
+            "label": "Stylesheet",
+            "count": 7,
+            "size": 5352
+          },
+          {
+            "resourceType": "media",
+            "label": "Media",
+            "count": 0,
+            "size": 0
+          },
+          {
+            "resourceType": "font",
+            "label": "Font",
+            "count": 0,
+            "size": 0
+          }
+        ]
+      }
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -3121,6 +3205,11 @@
           "group": "diagnostics"
         },
         {
+          "id": "resource-summary",
+          "weight": 0,
+          "group": "diagnostics"
+        },
+        {
           "id": "network-requests",
           "weight": 0
         },
@@ -4089,6 +4178,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:resource-summary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:pwa-cross-browser",
         "duration": 100,
         "entryType": "measure"
@@ -4861,6 +4956,48 @@
       ],
       "lighthouse-core/audits/network-server-latency.js | description": [
         "audits[network-server-latency].description"
+      ],
+      "lighthouse-core/audits/resource-summary.js | title": [
+        "audits[resource-summary].title"
+      ],
+      "lighthouse-core/audits/resource-summary.js | description": [
+        "audits[resource-summary].description"
+      ],
+      "lighthouse-core/audits/resource-summary.js | displayValue": [
+        {
+          "values": {
+            "requestCount": 18,
+            "byteCount": 160738
+          },
+          "path": "audits[resource-summary].displayValue"
+        }
+      ],
+      "lighthouse-core/audits/resource-summary.js | totalResourceType": [
+        "audits[resource-summary].details.items[0].label"
+      ],
+      "lighthouse-core/audits/resource-summary.js | scriptResourceType": [
+        "audits[resource-summary].details.items[1].label"
+      ],
+      "lighthouse-core/audits/resource-summary.js | thirdPartyResourceType": [
+        "audits[resource-summary].details.items[2].label"
+      ],
+      "lighthouse-core/audits/resource-summary.js | imageResourceType": [
+        "audits[resource-summary].details.items[3].label"
+      ],
+      "lighthouse-core/audits/resource-summary.js | documentResourceType": [
+        "audits[resource-summary].details.items[4].label"
+      ],
+      "lighthouse-core/audits/resource-summary.js | otherResourceType": [
+        "audits[resource-summary].details.items[5].label"
+      ],
+      "lighthouse-core/audits/resource-summary.js | stylesheetResourceType": [
+        "audits[resource-summary].details.items[6].label"
+      ],
+      "lighthouse-core/audits/resource-summary.js | mediaResourceType": [
+        "audits[resource-summary].details.items[7].label"
+      ],
+      "lighthouse-core/audits/resource-summary.js | fontResourceType": [
+        "audits[resource-summary].details.items[8].label"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"
