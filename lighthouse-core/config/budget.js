@@ -103,6 +103,8 @@ class Budget {
 
       if (b.resourceSizes !== undefined) {
         budget.resourceSizes = b.resourceSizes.map((r) => {
+          // Users supply budgets in KB but Lighthouse uses bytes throughout
+          r.budget = r.budget * 1024;
           return Budget.validateResourceBudget(r);
         });
       }

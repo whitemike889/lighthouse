@@ -65,7 +65,7 @@ describe('Budget', () => {
     // Sets resources sizes correctly
     assert.equal(budgets[0].resourceSizes.length, 2);
     assert.equal(budgets[0].resourceSizes[0].resourceType, 'script');
-    assert.equal(budgets[0].resourceSizes[0].budget, 123);
+    assert.equal(budgets[0].resourceSizes[0].budget, 123 * 1024);
 
     // Sets resource counts correctly
     assert.equal(budgets[0].resourceCounts.length, 2);
