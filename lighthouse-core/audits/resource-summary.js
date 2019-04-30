@@ -74,21 +74,26 @@ class ResourceSummary extends Audit {
       {key: 'size', itemType: 'bytes', text: 'Transfer Size'},
     ];
 
+
     /** @type {Record<LH.Budget.ResourceType,string>} */
     const strMappings = {
-      total: str_(UIStrings.totalResourceType),
-      document: str_(UIStrings.documentResourceType),
-      script: str_(UIStrings.scriptResourceType),
-      stylesheet: str_(UIStrings.stylesheetResourceType),
-      image: str_(UIStrings.imageResourceType),
-      media: str_(UIStrings.mediaResourceType),
-      font: str_(UIStrings.fontResourceType),
-      other: str_(UIStrings.otherResourceType),
+      'total': str_(UIStrings.totalResourceType),
+      'document': str_(UIStrings.documentResourceType),
+      'script': str_(UIStrings.scriptResourceType),
+      'stylesheet': str_(UIStrings.stylesheetResourceType),
+      'image': str_(UIStrings.imageResourceType),
+      'media': str_(UIStrings.mediaResourceType),
+      'font': str_(UIStrings.fontResourceType),
+      'other': str_(UIStrings.otherResourceType),
       'third-party': str_(UIStrings.thirdPartyResourceType),
     };
 
-    const tableContents = Object.keys(resourceSummary).map((type) => {
+    const types = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(resourceSummary));
+
+    const tableContents = types.map((type) => {
       return {
+        // ResourceType is included as an "id". It does not appear directly in the table.
+        resourceType: type,
         label: strMappings[type],
         count: resourceSummary[type].count,
         size: resourceSummary[type].size,

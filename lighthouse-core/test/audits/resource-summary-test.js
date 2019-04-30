@@ -25,8 +25,24 @@ describe('Performance: Resource summary audit', () => {
           {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
           {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
         ])},
-      URL: { requestedUrl: 'https://example.com', finalUrl: 'https://example.com' },
+      URL: {requestedUrl: 'https://example.com', finalUrl: 'https://example.com'},
     };
+  });
+
+  it('has three table columns', () => {
+    return ResourceSummaryAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.details.headings.length, 3);
+    });
+  });
+
+  it('includes the correct properties for each table item', () => {
+    return ResourceSummaryAudit.audit(artifacts, context).then(result => {
+      const item = result.details.items[0];
+      assert.equal(item.resourceType, 'total');
+      assert.ok(item.label);
+      assert.equal(item.count, 4);
+      assert.equal(item.size, 160);
+    });
   });
 
   it('includes all resource types, regardless of whether page contains them', () => {
