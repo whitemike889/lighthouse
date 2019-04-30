@@ -20,24 +20,6 @@ const UIStrings = {
   /** [ICU Syntax] Label for an audit identifying the number of requests and kilobytes used to load the page. */
   displayValue: `{requestCount, plural, =1 {1 request} other {# requests}}` +
     ` • { byteCount, number, bytes } KB`,
-  /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
-  totalResourceType: 'Total',
-  /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */
-  documentResourceType: 'Document',
-  /** Label for a row in a data table; entries will be the total number and byte size of all 'Script' resources loaded by a web page. */
-  scriptResourceType: 'Script',
-  /** Label for a row in a data table; entries will be the total number and byte size of all 'Stylesheet' resources loaded by a web page. */
-  stylesheetResourceType: 'Stylesheet',
-  /** Label for a row in a data table; entries will be the total number and byte size of all 'Image' resources loaded by a web page */
-  imageResourceType: 'Image',
-  /** Label for a row in a data table; entries will be the total number and byte size of all 'Media' resources loaded by a web page */
-  mediaResourceType: 'Media',
-  /** Label for a row in a data table; entries will be the total number and byte size of all 'Font' resources loaded by a web page */
-  fontResourceType: 'Font',
-  /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page that don't fit into the categories of Document, Script, Stylesheet, Image, Media, & Font.*/
-  otherResourceType: 'Other',
-  /** Label for a row in a data table; entries will be the total number and byte size of all third-part resources loaded by a web page */
-  thirdPartyResourceType: 'Third-party',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -64,39 +46,39 @@ class ResourceSummary extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const mainResource = await (MainResource.request({devtoolsLog, URL: artifacts.URL}, context));
-    const resourceSummary = ComputedResourceSummary.summarize(networkRecords, mainResource.url);
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    const summary = ComputedResourceSummary.summarize(networkRecords, mainResource.url);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'label', itemType: 'text', text: 'Resource Type'},
       {key: 'count', itemType: 'numeric', text: 'Requests'},
-      {key: 'size', itemType: 'bytes', text: 'Transfer Size'},
+      {key: 'sizpi18e', itemType: 'bytes', text: 'Transfer Size'},
     ];
 
 
     /** @type {Record<LH.Budget.ResourceType,string>} */
     const strMappings = {
-      'total': str_(UIStrings.totalResourceType),
-      'document': str_(UIStrings.documentResourceType),
-      'script': str_(UIStrings.scriptResourceType),
-      'stylesheet': str_(UIStrings.stylesheetResourceType),
-      'image': str_(UIStrings.imageResourceType),
-      'media': str_(UIStrings.mediaResourceType),
-      'font': str_(UIStrings.fontResourceType),
-      'other': str_(UIStrings.otherResourceType),
-      'third-party': str_(UIStrings.thirdPartyResourceType),
+      'total': str_(i18n.UIStrings.totalResourceType),
+      'document': str_(i18n.UIStrings.documentResourceType),
+      'script': str_(i18n.UIStrings.scriptResourceType),
+      'stylesheet': str_(i18n.UIStrings.stylesheetResourceType),
+      'image': str_(i18n.UIStrings.imageResourceType),
+      'media': str_(i18n.UIStrings.mediaResourceType),
+      'font': str_(i18n.UIStrings.fontResourceType),
+      'other': str_(i18n.UIStrings.otherResourceType),
+      'third-party': str_(i18n.UIStrings.thirdPartyResourceType),
     };
 
-    const types = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(resourceSummary));
-
-    const tableContents = types.map((type) => {
+    const types = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
+    const tableContents = types.map(type => {
       return {
-        // ResourceType is included as an "id". It does not appear directly in the table.
+        // ResourceType is included as an "id" for ease of use.
+        // It does not appear directly in the table.
         resourceType: type,
         label: strMappings[type],
-        count: resourceSummary[type].count,
-        size: resourceSummary[type].size,
+        count: summary[type].count,
+        size: summary[type].size,
       };
     }).sort((a, b) => {
       return b.size - a.size;
@@ -108,8 +90,8 @@ class ResourceSummary extends Audit {
       details: tableDetails,
       score: 1,
       displayValue: str_(UIStrings.displayValue, {
-        requestCount: resourceSummary.total.count,
-        byteCount: resourceSummary.total.size,
+        requestCount: summary.total.count,
+        byteCount: summary.total.size,
       }),
     };
   }

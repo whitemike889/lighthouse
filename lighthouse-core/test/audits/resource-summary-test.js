@@ -6,7 +6,6 @@
 'use strict';
 
 const ResourceSummaryAudit = require('../../audits/resource-summary.js');
-const assert = require('assert');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -29,42 +28,47 @@ describe('Performance: Resource summary audit', () => {
     };
   });
 
-  it('has three table columns', () => {
-    return ResourceSummaryAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.details.headings.length, 3);
-    });
+  it('has three table columns', async () => {
+    const result = await ResourceSummaryAudit.audit(artifacts, context);
+    expect(result.details.headings.length).toBe(3);
   });
 
-  it('includes the correct properties for each table item', () => {
-    return ResourceSummaryAudit.audit(artifacts, context).then(result => {
-      const item = result.details.items[0];
-      assert.equal(item.resourceType, 'total');
-      assert.ok(item.label);
-      assert.equal(item.count, 4);
-      assert.equal(item.size, 160);
-    });
+  it('has the correct score', async () => {
+    const result = await ResourceSummaryAudit.audit(artifacts, context);
+    expect(result.score).toBe(1);
   });
 
-  it('includes all resource types, regardless of whether page contains them', () => {
-    return ResourceSummaryAudit.audit(artifacts, context).then(result => {
-      assert.equal(Object.keys(result.details.items).length, 9);
-    });
+  it('has the correct display value', async () => {
+    const result = await ResourceSummaryAudit.audit(artifacts, context);
+    expect(result.displayValue).toBeDisplayString('4 requests • 0 KB');
   });
 
-  it('it displays "0" if there are no resources of that type', () => {
-    return ResourceSummaryAudit.audit(artifacts, context).then(result => {
-      const fontItem = result.details.items.find(item => item.resourceType === 'font');
-      assert.equal(fontItem.count, 0);
-      assert.equal(fontItem.size, 0);
-    });
+  it('includes the correct properties for each table item', async () => {
+    const result = await ResourceSummaryAudit.audit(artifacts, context);
+    const item = result.details.items[0];
+    expect(item.resourceType).toEqual('total');
+    expect(item.label).toBeDisplayString('Total');
+    expect(item.count).toBe(4);
+    expect(item.size).toBe(160);
   });
 
-  it('it sorts items by size (descending)', () => {
-    return ResourceSummaryAudit.audit(artifacts, context).then(result => {
-      const items = result.details.items;
-      assert.ok(items[0].size >= items[1].size);
-      assert.ok(items[1].size >= items[2].size);
-      assert.ok(items[2].size >= items[3].size);
-    });
+  it('includes all resource types, regardless of whether page contains them', async () => {
+    const result = await ResourceSummaryAudit.audit(artifacts, context);
+    expect(Object.keys(result.details.items).length).toBe(9);
+  });
+
+  it('it displays "0" if there are no resources of that type', async () => {
+    const result = await ResourceSummaryAudit.audit(artifacts, context);
+    const fontItem = result.details.items.find(item => item.resourceType === 'font');
+    expect(fontItem.count).toBe(0);
+    expect(fontItem.size).toBe(0);
+  });
+
+  it('it sorts items by size (descending)', async () => {
+    const result = await ResourceSummaryAudit.audit(artifacts, context);
+    const items = result.details.items;
+    expect(items[0].size).toBeGreaterThanOrEqual(items[1].size);
+    expect(items[1].size).toBeGreaterThanOrEqual(items[2].size);
+    expect(items[2].size).toBeGreaterThanOrEqual(items[3].size);
   });
 });

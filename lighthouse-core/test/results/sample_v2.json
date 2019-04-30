@@ -1275,7 +1275,7 @@
     },
     "resource-summary": {
       "id": "resource-summary",
-      "title": "Keep request counts and file sizes small",
+      "title": "Keep request counts and transfer sizes small",
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file.",
       "score": null,
       "scoreDisplayMode": "informative",
@@ -1294,9 +1294,9 @@
             "text": "Requests"
           },
           {
-            "key": "size",
+            "key": "sizpi18e",
             "itemType": "bytes",
-            "text": "File Size"
+            "text": "Transfer Size"
           }
         ],
         "items": [
@@ -4715,19 +4715,28 @@
       "auditGroupExpandTooltip": "Show audits",
       "crcInitialNavigation": "Initial Navigation",
       "crcLongestDurationLabel": "Maximum critical path latency:",
+      "documentResourceType": "Document",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
+      "fontResourceType": "Font",
+      "imageResourceType": "Image",
       "labDataTitle": "Lab Data",
       "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
+      "mediaResourceType": "Media",
       "notApplicableAuditsGroupTitle": "Not applicable",
       "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
+      "otherResourceType": "Other",
       "passedAuditsGroupTitle": "Passed audits",
+      "scriptResourceType": "Script",
       "snippetCollapseButtonLabel": "Collapse snippet",
       "snippetExpandButtonLabel": "Expand snippet",
+      "stylesheetResourceType": "Stylesheet",
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
+      "thirdPartyResourceType": "Third-party",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
+      "totalResourceType": "Total",
       "varianceDisclaimer": "Values are estimated and may vary.",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
       "warningHeader": "Warnings: "
@@ -4975,33 +4984,6 @@
           },
           "path": "audits[resource-summary].displayValue"
         }
-      ],
-      "lighthouse-core/audits/resource-summary.js | totalResourceType": [
-        "audits[resource-summary].details.items[0].label"
-      ],
-      "lighthouse-core/audits/resource-summary.js | scriptResourceType": [
-        "audits[resource-summary].details.items[1].label"
-      ],
-      "lighthouse-core/audits/resource-summary.js | thirdPartyResourceType": [
-        "audits[resource-summary].details.items[2].label"
-      ],
-      "lighthouse-core/audits/resource-summary.js | imageResourceType": [
-        "audits[resource-summary].details.items[3].label"
-      ],
-      "lighthouse-core/audits/resource-summary.js | documentResourceType": [
-        "audits[resource-summary].details.items[4].label"
-      ],
-      "lighthouse-core/audits/resource-summary.js | otherResourceType": [
-        "audits[resource-summary].details.items[5].label"
-      ],
-      "lighthouse-core/audits/resource-summary.js | stylesheetResourceType": [
-        "audits[resource-summary].details.items[6].label"
-      ],
-      "lighthouse-core/audits/resource-summary.js | mediaResourceType": [
-        "audits[resource-summary].details.items[7].label"
-      ],
-      "lighthouse-core/audits/resource-summary.js | fontResourceType": [
-        "audits[resource-summary].details.items[8].label"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"

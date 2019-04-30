@@ -56,6 +56,26 @@ const UIStrings = {
   columnWastedMs: 'Potential Savings',
   /** Label for the time spent column in data tables, entries will be the number of milliseconds spent during a particular activity */
   columnTimeSpent: 'Time Spent',
+  /** This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or "3rd-party") resources in the table, where "third-party resources" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page. */
+  thirdPartyResourcesLabel: 'Show 3rd-party resources',
+  /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
+  totalResourceType: 'Total',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */
+  documentResourceType: 'Document',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Script' resources loaded by a web page. 'Script' refers to JavaScript or other files that are executable by a browser. */
+  scriptResourceType: 'Script',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Stylesheet' resources loaded by a web page. 'Stylesheet' refers to CSS stylesheets. */
+  stylesheetResourceType: 'Stylesheet',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Image' resources loaded by a web page. */
+  imageResourceType: 'Image',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Media' resources loaded by a web page. 'Media' refers to audio and video files. */
+  mediaResourceType: 'Media',
+  /** Label for a row in a data table; entries will be the total number and byte size of all 'Font' resources loaded by a web page. */
+  fontResourceType: 'Font',
+  /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page that don't fit into the categories of Document, Script, Stylesheet, Image, Media, & Font.*/
+  otherResourceType: 'Other',
+  /** Label for a row in a data table; entries will be the total number and byte size of all third-party resources loaded by a web page. 'Third-party resources are items loaded from URLs that aren't controlled by the owner of the web page. */
+  thirdPartyResourceType: 'Third-party',
 };
 
 const formats = {
