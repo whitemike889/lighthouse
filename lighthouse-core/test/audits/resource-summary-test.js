@@ -64,11 +64,26 @@ describe('Performance: Resource summary audit', () => {
     expect(fontItem.size).toBe(0);
   });
 
-  it('it sorts items by size (descending)', async () => {
-    const result = await ResourceSummaryAudit.audit(artifacts, context);
-    const items = result.details.items;
-    expect(items[0].size).toBeGreaterThanOrEqual(items[1].size);
-    expect(items[1].size).toBeGreaterThanOrEqual(items[2].size);
-    expect(items[2].size).toBeGreaterThanOrEqual(items[3].size);
+  describe('table ordering', () => {
+    it('except for the last row, it sorts items by size (descending)', async () => {
+      const result = await ResourceSummaryAudit.audit(artifacts, context);
+      const items = result.details.items;
+      items.forEach((item, index) => {
+        if (index + 2 < items.length) {
+          expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
+        }
+      });
+    });
+
+    it('"Total" is the first tow', async () => {
+      const result = await ResourceSummaryAudit.audit(artifacts, context);
+      expect(result.details.items[0].resourceType).toBe('total');
+    });
+
+    it('"Third-party" is the last-row', async () => {
+      const result = await ResourceSummaryAudit.audit(artifacts, context);
+      const items = result.details.items;
+      expect(items[items.length - 1].resourceType).toBe('third-party');
+    });
   });
 });

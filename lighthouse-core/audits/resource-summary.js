@@ -81,6 +81,11 @@ class ResourceSummary extends Audit {
         size: summary[type].size,
       };
     }).sort((a, b) => {
+      // Sorts table rows to be:
+      // 1st row: Total
+      // 2nd to n-1 row: Sorted by descending size
+      // Last row: Third-party
+      if (a.resourceType === 'third-party') return 1;
       return b.size - a.size;
     });
 
