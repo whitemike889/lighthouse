@@ -30,7 +30,7 @@ describe('Performance: Resource summary audit', () => {
 
   it('has three table columns', async () => {
     const result = await ResourceSummaryAudit.audit(artifacts, context);
-    expect(result.details.headings.length).toBe(3);
+    expect(result.details.headings).toHaveLength(3);
   });
 
   it('has the correct score', async () => {
@@ -48,19 +48,19 @@ describe('Performance: Resource summary audit', () => {
     const item = result.details.items[0];
     expect(item.resourceType).toEqual('total');
     expect(item.label).toBeDisplayString('Total');
-    expect(item.count).toBe(4);
+    expect(item.requestCount).toBe(4);
     expect(item.size).toBe(160);
   });
 
   it('includes all resource types, regardless of whether page contains them', async () => {
     const result = await ResourceSummaryAudit.audit(artifacts, context);
-    expect(Object.keys(result.details.items).length).toBe(9);
+    expect(Object.keys(result.details.items)).toHaveLength(9);
   });
 
   it('it displays "0" if there are no resources of that type', async () => {
     const result = await ResourceSummaryAudit.audit(artifacts, context);
     const fontItem = result.details.items.find(item => item.resourceType === 'font');
-    expect(fontItem.count).toBe(0);
+    expect(fontItem.requestCount).toBe(0);
     expect(fontItem.size).toBe(0);
   });
 
@@ -68,14 +68,12 @@ describe('Performance: Resource summary audit', () => {
     it('except for the last row, it sorts items by size (descending)', async () => {
       const result = await ResourceSummaryAudit.audit(artifacts, context);
       const items = result.details.items;
-      items.forEach((item, index) => {
-        if (index + 2 < items.length) {
-          expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
-        }
+      items.slice(0, -2).forEach((item, index) => {
+        expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
       });
     });
 
-    it('"Total" is the first tow', async () => {
+    it('"Total" is the first row', async () => {
       const result = await ResourceSummaryAudit.audit(artifacts, context);
       expect(result.details.items[0].resourceType).toBe('total');
     });

@@ -6,14 +6,12 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const NetworkRecords = require('../computed/network-records.js');
 const ComputedResourceSummary = require('../computed/resource-summary.js');
 const i18n = require('../lib/i18n/i18n.js');
-const MainResource = require('../computed/main-resource.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
-  title: 'Keep request counts and transfer sizes small',
+  title: 'Keep request counts low and transfer sizes small',
   /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. */
   description: 'To set budgets for the quantity and size of page resources,' +
     ' add a budget.json file.',
@@ -34,7 +32,7 @@ class ResourceSummary extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
 
@@ -45,15 +43,14 @@ class ResourceSummary extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
-    const summary = ComputedResourceSummary.summarize(networkRecords, mainResource.url);
+    const summary = await ComputedResourceSummary
+      .request({devtoolsLog, URL: artifacts.URL}, context);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'label', itemType: 'text', text: 'Resource Type'},
-      {key: 'count', itemType: 'numeric', text: 'Requests'},
-      {key: 'sizpi18e', itemType: 'bytes', text: 'Transfer Size'},
+      {key: 'requestCount', itemType: 'numeric', text: 'Requests'},
+      {key: 'size', itemType: 'bytes', text: 'Transfer Size'},
     ];
 
 
@@ -71,25 +68,25 @@ class ResourceSummary extends Audit {
     };
 
     const types = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
-    const tableContents = types.map(type => {
+    const rows = types.map(type => {
       return {
         // ResourceType is included as an "id" for ease of use.
         // It does not appear directly in the table.
         resourceType: type,
         label: strMappings[type],
-        count: summary[type].count,
+        requestCount: summary[type].count,
         size: summary[type].size,
       };
-    }).sort((a, b) => {
-      // Sorts table rows to be:
-      // 1st row: Total
-      // 2nd to n-1 row: Sorted by descending size
-      // Last row: Third-party
-      if (a.resourceType === 'third-party') return 1;
-      return b.size - a.size;
     });
+    // Force third-party to be last, descending by size otherwise
+    const thirdPartyRow = rows.find(r => r.resourceType === 'third-party') || [];
+    const otherRows = rows.filter(r => r.resourceType !== 'third-party')
+      .sort((a, b) => {
+        return b.size - a.size;
+      });
+    const tableItems = otherRows.concat(thirdPartyRow);
 
-    const tableDetails = Audit.makeTableDetails(headings, tableContents);
+    const tableDetails = Audit.makeTableDetails(headings, tableItems);
 
     return {
       details: tableDetails,

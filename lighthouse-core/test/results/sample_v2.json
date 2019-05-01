@@ -1275,7 +1275,7 @@
     },
     "resource-summary": {
       "id": "resource-summary",
-      "title": "Keep request counts and transfer sizes small",
+      "title": "Keep request counts low and transfer sizes small",
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file.",
       "score": null,
       "scoreDisplayMode": "informative",
@@ -1289,12 +1289,12 @@
             "text": "Resource Type"
           },
           {
-            "key": "count",
+            "key": "requestCount",
             "itemType": "numeric",
             "text": "Requests"
           },
           {
-            "key": "sizpi18e",
+            "key": "size",
             "itemType": "bytes",
             "text": "Transfer Size"
           }
@@ -1303,56 +1303,56 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "count": 18,
+            "requestCount": 18,
             "size": 160738
           },
           {
             "resourceType": "script",
             "label": "Script",
-            "count": 4,
+            "requestCount": 4,
             "size": 103675
-          },
-          {
-            "resourceType": "third-party",
-            "label": "Third-party",
-            "count": 2,
-            "size": 30174
           },
           {
             "resourceType": "image",
             "label": "Image",
-            "count": 2,
+            "requestCount": 2,
             "size": 24741
           },
           {
             "resourceType": "document",
             "label": "Document",
-            "count": 3,
+            "requestCount": 3,
             "size": 14109
           },
           {
             "resourceType": "other",
             "label": "Other",
-            "count": 2,
+            "requestCount": 2,
             "size": 12861
           },
           {
             "resourceType": "stylesheet",
             "label": "Stylesheet",
-            "count": 7,
+            "requestCount": 7,
             "size": 5352
           },
           {
             "resourceType": "media",
             "label": "Media",
-            "count": 0,
+            "requestCount": 0,
             "size": 0
           },
           {
             "resourceType": "font",
             "label": "Font",
-            "count": 0,
+            "requestCount": 0,
             "size": 0
+          },
+          {
+            "resourceType": "third-party",
+            "label": "Third-party",
+            "requestCount": 2,
+            "size": 30174
           }
         ]
       }
@@ -4187,6 +4187,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:ResourceSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:pwa-cross-browser",
         "duration": 100,
         "entryType": "measure"
@@ -4715,28 +4721,19 @@
       "auditGroupExpandTooltip": "Show audits",
       "crcInitialNavigation": "Initial Navigation",
       "crcLongestDurationLabel": "Maximum critical path latency:",
-      "documentResourceType": "Document",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
-      "fontResourceType": "Font",
-      "imageResourceType": "Image",
       "labDataTitle": "Lab Data",
       "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
-      "mediaResourceType": "Media",
       "notApplicableAuditsGroupTitle": "Not applicable",
       "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
-      "otherResourceType": "Other",
       "passedAuditsGroupTitle": "Passed audits",
-      "scriptResourceType": "Script",
       "snippetCollapseButtonLabel": "Collapse snippet",
       "snippetExpandButtonLabel": "Expand snippet",
-      "stylesheetResourceType": "Stylesheet",
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
-      "thirdPartyResourceType": "Third-party",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-      "totalResourceType": "Total",
       "varianceDisclaimer": "Values are estimated and may vary.",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
       "warningHeader": "Warnings: "
@@ -4984,6 +4981,33 @@
           },
           "path": "audits[resource-summary].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | totalResourceType": [
+        "audits[resource-summary].details.items[0].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": [
+        "audits[resource-summary].details.items[1].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | imageResourceType": [
+        "audits[resource-summary].details.items[2].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | documentResourceType": [
+        "audits[resource-summary].details.items[3].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | otherResourceType": [
+        "audits[resource-summary].details.items[4].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": [
+        "audits[resource-summary].details.items[5].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": [
+        "audits[resource-summary].details.items[6].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | fontResourceType": [
+        "audits[resource-summary].details.items[7].label"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": [
+        "audits[resource-summary].details.items[8].label"
       ],
       "lighthouse-core/audits/accessibility/accesskeys.js | title": [
         "audits.accesskeys.title"

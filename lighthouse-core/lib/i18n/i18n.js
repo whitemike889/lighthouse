@@ -56,8 +56,6 @@ const UIStrings = {
   columnWastedMs: 'Potential Savings',
   /** Label for the time spent column in data tables, entries will be the number of milliseconds spent during a particular activity */
   columnTimeSpent: 'Time Spent',
-  /** This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or "3rd-party") resources in the table, where "third-party resources" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page. */
-  thirdPartyResourcesLabel: 'Show 3rd-party resources',
   /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
   totalResourceType: 'Total',
   /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */

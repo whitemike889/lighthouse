@@ -760,7 +760,7 @@
     "description": "[ICU Syntax] Label for an audit identifying the number of requests and kilobytes used to load the page."
   },
   "lighthouse-core/audits/resource-summary.js | title": {
-    "message": "Keep request counts and transfer sizes small",
+    "message": "Keep request counts low and transfer sizes small",
     "description": "Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page."
   },
   "lighthouse-core/audits/seo/canonical.js | description": {
@@ -1271,10 +1271,6 @@
     "message": "Stylesheet",
     "description": "Label for a row in a data table; entries will be the total number and byte size of all 'Stylesheet' resources loaded by a web page. 'Stylesheet' refers to CSS stylesheets."
   },
-  "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourcesLabel": {
-    "message": "Show 3rd-party resources",
-    "description": "This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or \"3rd-party\") resources in the table, where \"third-party resources\" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page."
-  },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Third-party",
     "description": "Label for a row in a data table; entries will be the total number and byte size of all third-party resources loaded by a web page. 'Third-party resources are items loaded from URLs that aren't controlled by the owner of the web page."
@@ -1394,6 +1390,10 @@
   "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
     "message": "Expand snippet",
     "description": "Label for button that shows all lines of the snippet when clicked"
+  },
+  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "Show 3rd-party resources",
+    "description": "This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or \"3rd-party\") resources in the table, where \"third-party resources\" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page."
   },
   "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
     "message": "There were issues affecting this run of Lighthouse:",
