@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const Audit = require('../../audits/resource-budget.js');
-const assert = require('assert');
+const ResourceBudgetAudit = require('../../audits/resource-budget.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -33,37 +32,80 @@ describe('Performance: Resource budgets audit', () => {
     beforeEach(() => {
       context.settings.budgets = [{
         path: '/',
-        resourceSizes: [{
-          resourceType: 'script',
-          budget: 1,
-        }],
-        resourceCounts: [{
-          resourceType: 'script',
-          budget: 10000,
-        }],
+        resourceSizes: [
+          {
+            resourceType: 'script',
+            budget: 0,
+          },
+          {
+            resourceType: 'image',
+            budget: 1000,
+          },
+        ],
+        resourceCounts: [
+          {
+            resourceType: 'script',
+            budget: 0,
+          },
+          {
+            resourceType: 'image',
+            budget: 1000,
+          },
+        ],
       }];
     });
 
-    it('includes table columns for request & file size overages', () => {
-      return Audit.audit(artifacts, context).then(result => {
-        assert.equal(result.details.headings.length, 5);
+    it('includes table columns for requet & file size overages', async () => {
+      const result = await ResourceBudgetAudit.audit(artifacts, context);
+      expect(result.details.headings).toHaveLength(5);
+    });
+
+    it('table item information is correct', async () => {
+      const result = await ResourceBudgetAudit.audit(artifacts, context);
+      const item = result.details.items[0];
+      expect(item.label).toBeDisplayString('Script');
+      expect(item.requestCount).toBe(2);
+      expect(item.size).toBe(60);
+      expect(item.sizeOverBudget).toBe(60);
+      expect(item.countOverBudget).toBeDisplayString('2 requests');
+    });
+
+    describe('request & transfer size overage', () => {
+      it('are displayed', async () => {
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        const scriptRow = result.details.items.find(r => r.resourceType === 'script');
+        expect(scriptRow.sizeOverBudget).toBe(60);
+        expect(scriptRow.countOverBudget).toBeDisplayString('2 requests');
+      });
+
+      it('are empty for passing budgets', async () => {
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        const imageRow = result.details.items.find(r => r.resourceType === 'image');
+        expect(imageRow.sizeOverBudget).toBeUndefined();
+        expect(imageRow.countOverBudget).toBeUndefined();
+      });
+
+      it('convert budgets from kilobytes to bytes during calculations', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          resourceSizes: [
+            {
+              resourceType: 'document',
+              budget: 20,
+            },
+          ],
+        }];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].siveOverBudget).toBeUndefined();
       });
     });
 
-    it('displays request & file size overages correctly', () => {
-      return Audit.audit(artifacts, context).then(result => {
-        assert.equal(result.details.items[0].sizeOverBudget, 59);
-        assert.equal(result.details.items[0].countOverBudget, undefined);
-      });
+    it('only includes rows for resource types with budgets', async () => {
+      const result = await ResourceBudgetAudit.audit(artifacts, context);
+      expect(result.details.items).toHaveLength(2);
     });
 
-    it('only includes rows for resource types with budgets', () => {
-      return Audit.audit(artifacts, context).then(result => {
-        assert.equal(result.details.items.length, 1);
-      });
-    });
-
-    it('sorts rows by descending file size overage', () => {
+    it('sorts rows by descending file size overage', async () => {
       context.settings.budgets = [{
         path: '/',
         resourceSizes: [
@@ -81,14 +123,14 @@ describe('Performance: Resource budgets audit', () => {
           },
         ],
       }];
-      return Audit.audit(artifacts, context).then(result => {
-        const items = result.details.items;
-        assert.ok(items[0].sizeOverBudget >= items[1].sizeOverBudget);
-        assert.ok(items[1].sizeOverBudget >= items[2].sizeOverBudget);
+      const result = await ResourceBudgetAudit.audit(artifacts, context);
+      const items = result.details.items;
+      items.slice(0, -2).forEach((item, index) => {
+        expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
       });
     });
 
-    it('uses the last matching budget', () => {
+    it('uses the first budget in budgets', async () => {
       context.settings.budgets = [{
         path: '/',
         resourceSizes: [
@@ -108,10 +150,8 @@ describe('Performance: Resource budgets audit', () => {
         ],
       },
       ];
-      return Audit.audit(artifacts, context).then(result => {
-        const items = result.details.items;
-        assert.ok(items[0].label.includes('script'));
-      });
+      const result = await ResourceBudgetAudit.audit(artifacts, context);
+      expect(result.details.items[0].resourceType).toBe('image');
     });
   });
 
@@ -120,24 +160,42 @@ describe('Performance: Resource budgets audit', () => {
       context.settings.budgets = null;
     });
 
-    it('table only includes resourceType, requests, and file size', () => {
-      return Audit.audit(artifacts, context).then(result => {
-        assert.equal(result.details.headings.length, 3);
-      });
+    it('table only includes resourceType, requests, and file size', async () => {
+      const result = await ResourceBudgetAudit.audit(artifacts, context);
+      expect(result.details.headings).toHaveLength(3);
     });
 
-    it('table includes all resource types', () => {
-      return Audit.audit(artifacts, context).then(result => {
-        assert.equal(result.details.items.length, 9);
-      });
+    it('table item information is correct', async () => {
+      const result = await ResourceBudgetAudit.audit(artifacts, context);
+      const item = result.details.items[0];
+      expect(item.label).toBeDisplayString('Total');
+      expect(item.requestCount).toBe(4);
+      expect(item.size).toBe(160);
     });
 
-    it('sorts rows by descending file size', () => {
-      return Audit.audit(artifacts, context).then(result => {
+    it('table includes all resource types', async () => {
+      const result = await ResourceBudgetAudit.audit(artifacts, context);
+      expect(result.details.items).toHaveLength(9);
+    });
+
+    describe('table ordering', () => {
+      it('except for the last row, it sorts items by size (descending)', async () => {
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
         const items = result.details.items;
-        assert.ok(items[0].size >= items[1].size);
-        assert.ok(items[1].size >= items[2].size);
-        assert.ok(items[2].size >= items[3].size);
+        items.slice(0, -2).forEach((item, index) => {
+          expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
+        });
+      });
+
+      it('"Total" is the first row', async () => {
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].resourceType).toBe('total');
+      });
+
+      it('"Third-party" is the last-row', async () => {
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        const items = result.details.items;
+        expect(items[items.length - 1].resourceType).toBe('third-party');
       });
     });
   });

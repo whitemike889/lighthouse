@@ -755,49 +755,13 @@
     "message": "To set budgets for the quantity and size of page resources, add a budget.json file.",
     "description": "Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits."
   },
-  "lighthouse-core/audits/resource-budget.js | documentResourceType": {
-    "message": "Document",
-    "description": "Label for the 'Document' resource type."
-  },
-  "lighthouse-core/audits/resource-budget.js | fontResourceType": {
-    "message": "Font",
-    "description": "Label for the 'font' resource type."
-  },
-  "lighthouse-core/audits/resource-budget.js | imageResourceType": {
-    "message": "Image",
-    "description": "Label for the 'image' resource type."
-  },
-  "lighthouse-core/audits/resource-budget.js | mediaResourceType": {
-    "message": "Media",
-    "description": "Label for the 'media' resource type."
-  },
-  "lighthouse-core/audits/resource-budget.js | otherResourceType": {
-    "message": "Other",
-    "description": "Label for the 'other' resource type."
-  },
   "lighthouse-core/audits/resource-budget.js | requestCount": {
     "message": "{count, plural,\n    =1 {1 request}\n    other {# requests}\n   }",
     "description": "[ICU Syntax] Label identifying the number of requests"
   },
-  "lighthouse-core/audits/resource-budget.js | scriptResourceType": {
-    "message": "Script",
-    "description": "Label for the 'script' resource type."
-  },
-  "lighthouse-core/audits/resource-budget.js | stylesheetResourceType": {
-    "message": "Stylesheet",
-    "description": "Label for the 'stylesheet' resource type."
-  },
-  "lighthouse-core/audits/resource-budget.js | thirdPartyResourceType": {
-    "message": "Third-party",
-    "description": "Label for the 'third-party' resource type."
-  },
   "lighthouse-core/audits/resource-budget.js | title": {
-    "message": "Keep request counts and file sizes small",
+    "message": "Keep request counts low and file sizes small",
     "description": "Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page."
-  },
-  "lighthouse-core/audits/resource-budget.js | totalResourceType": {
-    "message": "Total",
-    "description": ""
   },
   "lighthouse-core/audits/resource-summary.js | description": {
     "message": "To set budgets for the quantity and size of page resources, add a budget.json file.",

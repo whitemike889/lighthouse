@@ -5,16 +5,13 @@
  */
 'use strict';
 
-const Audit = require('./audit');
-const NetworkRecords = require('../computed/network-records.js');
-const ComputedResourceSummary = require('../computed/resource-summary.js');
+const Audit = require('./audit.js');
+const ResourceSummary = require('../computed/resource-summary.js');
 const i18n = require('../lib/i18n/i18n.js');
-const MainResource = require('../computed/main-resource.js');
-const Budget = require('../config/budget.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
-  title: 'Keep request counts and file sizes small',
+  title: 'Keep request counts low and file sizes small',
   /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. */
   description: 'To set budgets for the quantity and size of page resources,' +
     ' add a budget.json file.',
@@ -23,69 +20,36 @@ const UIStrings = {
     =1 {1 request}
     other {# requests}
    }`,
-  totalResourceType: 'Total',
-  /** Label for the 'Document' resource type. */
-  documentResourceType: 'Document',
-  /** Label for the 'script' resource type. */
-  scriptResourceType: 'Script',
-  /** Label for the 'stylesheet' resource type. */
-  stylesheetResourceType: 'Stylesheet',
-  /** Label for the 'image' resource type. */
-  imageResourceType: 'Image',
-  /** Label for the 'media' resource type. */
-  mediaResourceType: 'Media',
-  /** Label for the 'font' resource type. */
-  fontResourceType: 'Font',
-  /** Label for the 'other' resource type. */
-  otherResourceType: 'Other',
-  /** Label for the 'third-party' resource type. */
-  thirdPartyResourceType: 'Third-party',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
+/** @typedef {{count: number, size: number}} ResourceEntry */
+
 class ResourceBudget extends Audit {
   /**
-     * @return {LH.Audit.Meta}
-     */
+   * @return {LH.Audit.Meta}
+   */
   static get meta() {
     return {
       id: 'resource-budget',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
 
   /**
- * @param {Array<LH.Budget.ResourceBudget>|undefined} budget
- * @param {number} measurement
- * @param {LH.Budget.ResourceType} resourceType
- * @return {number|undefined}
- */
-  static overBudgetAmount(budget, measurement, resourceType) {
-    if (budget === undefined) {
-      return undefined;
-    }
-    const resourceBudget = budget.find((b) => b.resourceType === resourceType);
-    if (resourceBudget === undefined) {
-      return undefined;
-    }
-    const overBudget = measurement - resourceBudget.budget;
-    return overBudget > 0 ? overBudget : undefined;
-  }
-
-  /**
- * @param {LH.Budget | undefined} budget
- * @return {LH.Audit.Details.Table['headings']}
- */
+   * @param {LH.Budget | undefined} budget
+   * @return {LH.Audit.Details.Table['headings']}
+   */
   static tableHeadings(budget) {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headers = [
       {key: 'label', itemType: 'text', text: 'Resource Type'},
-      {key: 'count', itemType: 'numeric', text: 'Requests'},
-      {key: 'size', itemType: 'bytes', text: 'File Size'},
+      {key: 'requestCount', itemType: 'numeric', text: 'Requests'},
+      {key: 'size', itemType: 'bytes', text: 'Transfer Size'},
     ];
 
     /** @type {LH.Audit.Details.Table['headings']} */
@@ -97,82 +61,115 @@ class ResourceBudget extends Audit {
   }
 
   /**
-* @param {{resourceType: LH.Budget.ResourceType, count: number, size: number}} row
-* @param {LH.Budget | undefined} budget
-* @return {boolean}
-*/
-  static shouldIncludeRow(row, budget) {
-    if (budget === undefined) {
-      return true;
-    } else {
-      const budgets = (budget.resourceCounts || []).concat(budget.resourceSizes || []);
-      return !!budgets.find((b) => {
-        return b.resourceType === row.resourceType;
-      });
-    }
+   * @param {LH.Budget.ResourceType} resourceType
+   * @return {string}
+   */
+  static rowLabel(resourceType) {
+    /** @type {Record<LH.Budget.ResourceType,string>} */
+    const strMappings = {
+      'total': str_(i18n.UIStrings.totalResourceType),
+      'document': str_(i18n.UIStrings.documentResourceType),
+      'script': str_(i18n.UIStrings.scriptResourceType),
+      'stylesheet': str_(i18n.UIStrings.stylesheetResourceType),
+      'image': str_(i18n.UIStrings.imageResourceType),
+      'media': str_(i18n.UIStrings.mediaResourceType),
+      'font': str_(i18n.UIStrings.fontResourceType),
+      'other': str_(i18n.UIStrings.otherResourceType),
+      'third-party': str_(i18n.UIStrings.thirdPartyResourceType),
+    };
+    return strMappings[resourceType];
   }
 
   /**
-* @param {LH.Budget|undefined} budget
-* @param {Object<string,{resourceType: LH.Budget.ResourceType, count: number, size: number}>} summary
-* @return {Array<{label: string, count: number, size: number, countOverBudget?: string|undefined, sizeOverBudget?: number|undefined}>}
-*/
-  static tableItems(budget, summary) {
-    /** @type {Object<LH.Budget.ResourceType,string>} */
-    const strMappings = {
-      'total': str_(UIStrings.totalResourceType),
-      'document': str_(UIStrings.documentResourceType),
-      'script': str_(UIStrings.scriptResourceType),
-      'stylesheet': str_(UIStrings.stylesheetResourceType),
-      'image': str_(UIStrings.imageResourceType),
-      'media': str_(UIStrings.mediaResourceType),
-      'font': str_(UIStrings.fontResourceType),
-      'other': str_(UIStrings.otherResourceType),
-      'third-party': str_(UIStrings.thirdPartyResourceType),
-    };
-
-    /** @type {Array<{label: string, count: number, size: number, countOverBudget?: string|undefined, sizeOverBudget?: number|undefined}>}*/
-    return Object.values(summary).filter((row) => {
-      return this.shouldIncludeRow(row, budget);
-    }).map((row) => {
-      const type = row.resourceType;
-
-      const overCount = this.overBudgetAmount(budget && budget.resourceCounts, row.count, type);
-      const overSize = this.overBudgetAmount(budget && budget.resourceSizes, row.size, type);
-
+   * @param {Record<LH.Budget.ResourceType,ResourceEntry>} summary
+   * @return {Array<{resourceType: LH.Budget.ResourceType, label: string, requestCount: number, size: number}>}
+   */
+  static defaultTable(summary) {
+    const types = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
+    const rows = types.map(type => {
       return {
-        label: strMappings[type],
-        count: row.count,
-        size: row.size,
-        countOverBudget: overCount !== undefined ?
-          str_(UIStrings.requestCount, {count: overCount}) : undefined,
-        sizeOverBudget: overSize,
+        resourceType: type,
+        label: this.rowLabel(type),
+        requestCount: summary[type].count,
+        size: summary[type].size,
       };
+    });
+    // Force third-party to be last, descending by size otherwise
+    const thirdPartyRow = rows.find(r => r.resourceType === 'third-party') || [];
+    const otherRows = rows.filter(r => r.resourceType !== 'third-party')
+      .sort((a, b) => {
+        return b.size - a.size;
+      });
+    return otherRows.concat(thirdPartyRow);
+  }
+
+  /**
+   * @param {LH.Budget} budget
+   * @param {Record<LH.Budget.ResourceType,ResourceEntry>} summary
+   * @return {Array<{resourceType: LH.Budget.ResourceType, label: string, requestCount: number, size: number, sizeOverBudget: number | undefined, countOverBudget: string | undefined}>}
+   */
+  static budgetTable(budget, summary) {
+    const resourceTypes = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
+    return resourceTypes.map((type) => {
+      const resourceType = type;
+      const label = this.rowLabel(type);
+      const requestCount = summary[type].count;
+      const size = summary[type].size;
+
+      let sizeOverBudget;
+      let countOverBudget;
+
+      if (budget.resourceSizes) {
+        const sizeBudget = budget.resourceSizes.find(b => b.resourceType === type);
+        if (sizeBudget && (size > (sizeBudget.budget * 1024))) {
+          sizeOverBudget = size - (sizeBudget.budget * 1024);
+        }
+      }
+      if (budget.resourceCounts) {
+        const countBudget = budget.resourceCounts.find(b => b.resourceType === type);
+        if (countBudget && (requestCount > countBudget.budget)) {
+          const requestDifference = requestCount - countBudget.budget;
+          countOverBudget = str_(UIStrings.requestCount, {count: requestDifference});
+        }
+      }
+      return {
+        resourceType,
+        label,
+        requestCount,
+        size,
+        countOverBudget,
+        sizeOverBudget,
+      };
+    }).filter((row) => {
+      // Only resources with budgets should be included in the table
+      if (budget.resourceSizes) {
+        if (budget.resourceSizes.find(b => b.resourceType === row.resourceType)) return true;
+      }
+      if (budget.resourceCounts) {
+        if (budget.resourceCounts.find(b => b.resourceType === row.resourceType)) return true;
+      }
+      return false;
     }).sort((a, b) => {
-      const overBudgetComparison = (b.sizeOverBudget || 0) - (a.sizeOverBudget || 0);
-      const sizeComparison = b.size - a.size;
-      return budget ? overBudgetComparison : sizeComparison;
+      return (b.sizeOverBudget || 0) - (a.sizeOverBudget || 0);
     });
   }
 
   /**
-     * @param {LH.Artifacts} artifacts
-     * @param {LH.Audit.Context} context
-     * @return {Promise<LH.Audit.Product>}
-     */
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
+   */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const mainResource = await (MainResource.request({devtoolsLog, URL: artifacts.URL}, context));
 
-    /** @type{LH.Budget | undefined} */
-    const budget = (context.settings.budgets || []).reverse().find((budget) => {
-      return Budget.urlMatchesPattern(mainResource.url, budget.path);
-    });
-    const resourceSummary = ComputedResourceSummary.summarize(networkRecords, mainResource.url);
+    /** @type {Record<LH.Budget.ResourceType,{count:number, size:number}>} */
+    const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
+
+    /** @type {LH.Budget | undefined} */
+    const budget = context.settings.budgets ? context.settings.budgets[0] : undefined;
 
     const headings = ResourceBudget.tableHeadings(budget);
-    const tableItems = ResourceBudget.tableItems(budget, resourceSummary);
+    const tableItems = budget ? this.budgetTable(budget, summary) : this.defaultTable(summary);
 
     return {
       details: Audit.makeTableDetails(headings, tableItems),

@@ -2142,6 +2142,89 @@
             "scoreDisplayMode": "numeric", 
             "title": "Eliminate render-blocking resources"
         },
+        "resource-budget": {
+            "description": "To set budgets for the quantity and size of page resources, add a budget.json file.",
+            "id": "resource-budget",
+            "score": null,
+            "scoreDisplayMode": "informative",
+            "title": "Keep request counts low and file sizes small",
+            "details": {
+                "type": "table",
+                "headings": [
+                    {
+                        "key": "label",
+                        "itemType": "text",
+                        "text": "Resource Type"
+                    },
+                    {
+                        "key": "requestCount",
+                        "itemType": "numeric",
+                        "text": "Requests"
+                    },
+                    {
+                        "key": "size",
+                        "itemType": "bytes",
+                        "text": "Transfer Size"
+                    }
+                ],
+                "items": [
+                    {
+                        "resourceType": "total",
+                        "label": "Total",
+                        "requestCount": 18,
+                        "size": 160738
+                    },
+                    {
+                        "resourceType": "script",
+                        "label": "Script",
+                        "requestCount": 4,
+                        "size": 103675
+                    },
+                    {
+                        "resourceType": "image",
+                        "label": "Image",
+                        "requestCount": 2,
+                        "size": 24741
+                    },
+                    {
+                        "resourceType": "document",
+                        "label": "Document",
+                        "requestCount": 3,
+                        "size": 14109
+                    },
+                    {
+                        "resourceType": "other",
+                        "label": "Other",
+                        "requestCount": 2,
+                        "size": 12861
+                    },
+                    {
+                        "resourceType": "stylesheet",
+                        "label": "Stylesheet",
+                        "requestCount": 7,
+                        "size": 5352
+                    },
+                    {
+                        "resourceType": "media",
+                        "label": "Media",
+                        "requestCount": 0,
+                        "size": 0
+                    },
+                    {
+                        "resourceType": "font",
+                        "label": "Font",
+                        "requestCount": 0,
+                        "size": 0
+                    },
+                    {
+                        "resourceType": "third-party",
+                        "label": "Third-party",
+                        "requestCount": 2,
+                        "size": 30174
+                    }
+                ]
+            }
+        },
         "resource-summary": {
             "description": "To set budgets for the quantity and size of page resources, add a budget.json file.",
             "details": {
@@ -3437,6 +3520,11 @@
                     "weight": 0.0
                 },
                 {
+                    "group": "budgets",
+                    "id": "resource-budget",
+                    "weight": 0
+                },
+                {
                     "group": "diagnostics",
                     "id": "resource-summary",
                     "weight": 0
@@ -4178,7 +4266,7 @@
             {
                 "duration": 100,
                 "entryType": "measure",
-                "name": "lh:audit:resource-summary",
+                "name": "lh:audit:resource-budget",
                 "startTime": 0.0
             },
             {
@@ -4186,6 +4274,12 @@
                 "entryType": "measure",
                 "name": "lh:computed:ResourceSummary",
                 "startTime": 0.0
+            },
+            {
+                "duration": 100,
+                "entryType": "measure",
+                "name": "lh:audit:resource-summary",
+                "startTime": 0
             },
             {
                 "duration": 100.0, 
