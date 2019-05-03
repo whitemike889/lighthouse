@@ -52,13 +52,10 @@ class ResourceBudget extends Audit {
       {key: 'requestCount', itemType: 'numeric', text: 'Requests'},
       {key: 'size', itemType: 'bytes', text: 'Transfer Size'},
     ];
-
-    /** @type {LH.Audit.Details.Table['headings']} */
-    const budgetHeaders = [
-      {key: 'countOverBudget', itemType: 'text', text: ''},
-      {key: 'sizeOverBudget', itemType: 'bytes', text: 'Over Budget'},
-    ];
-    return budget ? headers.concat(budgetHeaders) : headers;
+    if (budget) {
+      headers.push({key: 'sizeOverBudget', itemType: 'bytes', text: 'Over Budget'});
+    }
+    return headers;
   }
 
   /**
@@ -146,14 +143,13 @@ class ResourceBudget extends Audit {
         score: 0,
         notApplicable: true,
       };
-    } else {
-      const headings = ResourceBudget.tableHeadings(budget);
-      const tableItems = this.tableItems(budget, summary);
-      return {
-        details: Audit.makeTableDetails(headings, tableItems),
-        score: 1,
-      };
     }
+    const headings = ResourceBudget.tableHeadings(budget);
+    const tableItems = this.tableItems(budget, summary);
+    return {
+      details: Audit.makeTableDetails(headings, tableItems),
+      score: 1,
+    };
   }
 }
 

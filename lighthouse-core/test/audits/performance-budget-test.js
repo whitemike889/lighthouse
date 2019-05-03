@@ -31,7 +31,6 @@ describe('Performance: Resource budgets audit', () => {
   describe('with a budget.json', () => {
     beforeEach(() => {
       context.settings.budgets = [{
-        path: '/',
         resourceSizes: [
           {
             resourceType: 'script',
@@ -57,7 +56,7 @@ describe('Performance: Resource budgets audit', () => {
 
     it('includes table columns for requet & file size overages', async () => {
       const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details.headings).toHaveLength(5);
+      expect(result.details.headings).toHaveLength(4);
     });
 
     it('table item information is correct', async () => {
@@ -87,7 +86,6 @@ describe('Performance: Resource budgets audit', () => {
 
       it('convert budgets from kilobytes to bytes during calculations', async () => {
         context.settings.budgets = [{
-          path: '/',
           resourceSizes: [
             {
               resourceType: 'document',
@@ -107,7 +105,6 @@ describe('Performance: Resource budgets audit', () => {
 
     it('sorts rows by descending file size overage', async () => {
       context.settings.budgets = [{
-        path: '/',
         resourceSizes: [
           {
             resourceType: 'document',
@@ -132,7 +129,6 @@ describe('Performance: Resource budgets audit', () => {
 
     it('uses the first budget in budgets', async () => {
       context.settings.budgets = [{
-        path: '/',
         resourceSizes: [
           {
             resourceType: 'image',
@@ -141,7 +137,6 @@ describe('Performance: Resource budgets audit', () => {
         ],
       },
       {
-        path: '/',
         resourceSizes: [
           {
             resourceType: 'script',
