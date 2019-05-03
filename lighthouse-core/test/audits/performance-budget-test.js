@@ -56,7 +56,7 @@ describe('Performance: Resource budgets audit', () => {
 
     it('includes table columns for requet & file size overages', async () => {
       const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details.headings).toHaveLength(4);
+      expect(result.details.headings).toHaveLength(5);
     });
 
     it('table item information is correct', async () => {

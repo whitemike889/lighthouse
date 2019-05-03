@@ -3209,8 +3209,7 @@
         },
         {
           "id": "performance-budget",
-          "weight": 0,
-          "group": "budgets"
+          "weight": 0
         },
         {
           "id": "resource-summary",

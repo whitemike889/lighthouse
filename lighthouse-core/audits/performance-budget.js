@@ -42,23 +42,6 @@ class ResourceBudget extends Audit {
   }
 
   /**
-   * @param {LH.Budget} budget
-   * @return {LH.Audit.Details.Table['headings']}
-   */
-  static tableHeadings(budget) {
-    /** @type {LH.Audit.Details.Table['headings']} */
-    const headers = [
-      {key: 'label', itemType: 'text', text: 'Resource Type'},
-      {key: 'requestCount', itemType: 'numeric', text: 'Requests'},
-      {key: 'size', itemType: 'bytes', text: 'Transfer Size'},
-    ];
-    if (budget) {
-      headers.push({key: 'sizeOverBudget', itemType: 'bytes', text: 'Over Budget'});
-    }
-    return headers;
-  }
-
-  /**
    * @param {LH.Budget.ResourceType} resourceType
    * @return {string}
    */
@@ -144,10 +127,18 @@ class ResourceBudget extends Audit {
         notApplicable: true,
       };
     }
-    const headings = ResourceBudget.tableHeadings(budget);
-    const tableItems = this.tableItems(budget, summary);
+
+    /** @type { LH.Audit.Details.Table['headings'] } */
+    const headers = [
+      {key: 'label', itemType: 'text', text: 'Resource Type'},
+      {key: 'requestCount', itemType: 'numeric', text: 'Requests'},
+      {key: 'size', itemType: 'bytes', text: 'Transfer Size'},
+      {key: 'countOverBudget', itemType: 'text', text: ''},
+      {key: 'sizeOverBudget', itemType: 'bytes', text: 'Over Budget'},
+    ];
+
     return {
-      details: Audit.makeTableDetails(headings, tableItems),
+      details: Audit.makeTableDetails(headers, this.tableItems(budget, summary)),
       score: 1,
     };
   }

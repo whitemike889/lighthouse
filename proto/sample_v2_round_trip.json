@@ -3444,7 +3444,6 @@
                     "weight": 0.0
                 },
                 {
-                    "group": "budgets",
                     "id": "performance-budget",
                     "weight": 0.0
                 },

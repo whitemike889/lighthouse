@@ -152,9 +152,7 @@ describe('PerfCategoryRenderer', () => {
     const passedAudits = category.auditRefs.filter(audit =>
         audit.group && audit.group !== 'metrics' && Util.showAsPassed(audit.result));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
-    // TODO(khempenius): Remove "+1" once budgets renderer code is added.
-    // Until budgets renderer code is added, JSON vs. DOM comparison will differ by 1.
-    assert.equal(passedElements.length + 1, passedAudits.length);
+    assert.equal(passedElements.length, passedAudits.length);
   });
 
   // Unsupported by perf cat renderer right now.

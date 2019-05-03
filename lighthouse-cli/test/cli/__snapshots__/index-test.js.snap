@@ -818,7 +818,6 @@ Object {
           "weight": 0,
         },
         Object {
-          "group": "budgets",
           "id": "performance-budget",
           "weight": 0,
         },
