@@ -10,11 +10,11 @@ const ResourceSummary = require('../computed/resource-summary.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
-  title: 'Keep request counts low and file sizes small',
-  /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. */
-  description: 'To set budgets for the quantity and size of page resources,' +
-    ' add a budget.json file.',
+  /** Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as "performance budgets" because these metrics impact page performance (i.e. how quickly a page loads). */
+  title: 'Performance budget',
+  /** Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. */
+  description: 'Keep the quantity and size of network requests under the targets ' +
+    'set by the provided performance budget.',
   /** [ICU Syntax] Label identifying the number of requests*/
   requestCount: `{count, plural,
     =1 {1 request}
@@ -81,34 +81,11 @@ class ResourceBudget extends Audit {
   }
 
   /**
-   * @param {Record<LH.Budget.ResourceType,ResourceEntry>} summary
-   * @return {Array<{resourceType: LH.Budget.ResourceType, label: string, requestCount: number, size: number}>}
-   */
-  static defaultTable(summary) {
-    const types = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
-    const rows = types.map(type => {
-      return {
-        resourceType: type,
-        label: this.rowLabel(type),
-        requestCount: summary[type].count,
-        size: summary[type].size,
-      };
-    });
-    // Force third-party to be last, descending by size otherwise
-    const thirdPartyRow = rows.find(r => r.resourceType === 'third-party') || [];
-    const otherRows = rows.filter(r => r.resourceType !== 'third-party')
-      .sort((a, b) => {
-        return b.size - a.size;
-      });
-    return otherRows.concat(thirdPartyRow);
-  }
-
-  /**
    * @param {LH.Budget} budget
    * @param {Record<LH.Budget.ResourceType,ResourceEntry>} summary
    * @return {Array<{resourceType: LH.Budget.ResourceType, label: string, requestCount: number, size: number, sizeOverBudget: number | undefined, countOverBudget: string | undefined}>}
    */
-  static budgetTable(budget, summary) {
+  static tableItems(budget, summary) {
     const resourceTypes = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
     return resourceTypes.map((type) => {
       const resourceType = type;
@@ -168,13 +145,19 @@ class ResourceBudget extends Audit {
     /** @type {LH.Budget | undefined} */
     const budget = context.settings.budgets ? context.settings.budgets[0] : undefined;
 
-    const headings = ResourceBudget.tableHeadings(budget);
-    const tableItems = budget ? this.budgetTable(budget, summary) : this.defaultTable(summary);
-
-    return {
-      details: Audit.makeTableDetails(headings, tableItems),
-      score: 1,
-    };
+    if (!budget) {
+      return {
+        score: 0,
+        notApplicable: true,
+      };
+    } else {
+      const headings = ResourceBudget.tableHeadings(budget);
+      const tableItems = this.tableItems(budget, summary);
+      return {
+        details: Audit.makeTableDetails(headings, tableItems),
+        score: 1,
+      };
+    }
   }
 }
 
