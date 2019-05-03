@@ -15,8 +15,8 @@ const UIStrings = {
   /** Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. */
   description: 'Keep the quantity and size of network requests under the targets ' +
     'set by the provided performance budget.',
-  /** [ICU Syntax] Label identifying the number of requests over the budget for requests*/
-  requestCount: `{count, plural,
+  /** [ICU Syntax] Entry in a data table identifying the number of network requests of a particular type. Count will be a whole number. String should be as short as possible to be able to fit well into the table. */
+  requestCountOverBudget: `{count, plural,
     =1 {1 request}
     other {# requests}
    }`,
@@ -42,7 +42,7 @@ class ResourceBudget extends Audit {
   }
 
   /**
-   * @param {LH.Budget | undefined} budget
+   * @param {LH.Budget} budget
    * @return {LH.Audit.Details.Table['headings']}
    */
   static tableHeadings(budget) {
@@ -103,7 +103,7 @@ class ResourceBudget extends Audit {
         const countBudget = budget.resourceCounts.find(b => b.resourceType === resourceType);
         if (countBudget && (requestCount > countBudget.budget)) {
           const requestDifference = requestCount - countBudget.budget;
-          countOverBudget = str_(UIStrings.requestCount, {count: requestDifference});
+          countOverBudget = str_(UIStrings.requestCountOverBudget, {count: requestDifference});
         }
       }
       return {

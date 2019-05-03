@@ -122,7 +122,7 @@ describe('Performance: Resource budgets audit', () => {
       }];
       const result = await ResourceBudgetAudit.audit(artifacts, context);
       const items = result.details.items;
-      items.slice(0, -2).forEach((item, index) => {
+      items.slice(0, -1).forEach((item, index) => {
         expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
       });
     });
