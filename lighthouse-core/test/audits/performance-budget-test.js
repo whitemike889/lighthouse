@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const ResourceBudgetAudit = require('../../audits/resource-budget.js');
+const ResourceBudgetAudit = require('../../audits/performance-budget.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -160,43 +160,10 @@ describe('Performance: Resource budgets audit', () => {
       context.settings.budgets = null;
     });
 
-    it('table only includes resourceType, requests, and file size', async () => {
+    it('audit does not apply', async () => {
       const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details.headings).toHaveLength(3);
-    });
-
-    it('table item information is correct', async () => {
-      const result = await ResourceBudgetAudit.audit(artifacts, context);
-      const item = result.details.items[0];
-      expect(item.label).toBeDisplayString('Total');
-      expect(item.requestCount).toBe(4);
-      expect(item.size).toBe(160);
-    });
-
-    it('table includes all resource types', async () => {
-      const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details.items).toHaveLength(9);
-    });
-
-    describe('table ordering', () => {
-      it('except for the last row, it sorts items by size (descending)', async () => {
-        const result = await ResourceBudgetAudit.audit(artifacts, context);
-        const items = result.details.items;
-        items.slice(0, -2).forEach((item, index) => {
-          expect(item.size).toBeGreaterThanOrEqual(items[index + 1].size);
-        });
-      });
-
-      it('"Total" is the first row', async () => {
-        const result = await ResourceBudgetAudit.audit(artifacts, context);
-        expect(result.details.items[0].resourceType).toBe('total');
-      });
-
-      it('"Third-party" is the last-row', async () => {
-        const result = await ResourceBudgetAudit.audit(artifacts, context);
-        const items = result.details.items;
-        expect(items[items.length - 1].resourceType).toBe('third-party');
-      });
+      expect(result.details).toBeUndefined();
+      expect(result.notApplicable).toBe(true);
     });
   });
 });

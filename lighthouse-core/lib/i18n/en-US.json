@@ -743,6 +743,18 @@
     "message": "Server Backend Latencies",
     "description": "Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates."
   },
+  "lighthouse-core/audits/performance-budget.js | description": {
+    "message": "Keep the quantity and size of network requests under the targets set by the provided performance budget.",
+    "description": "Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits."
+  },
+  "lighthouse-core/audits/performance-budget.js | requestCount": {
+    "message": "{count, plural,\n    =1 {1 request}\n    other {# requests}\n   }",
+    "description": "[ICU Syntax] Label identifying the number of requests over the budget for requests"
+  },
+  "lighthouse-core/audits/performance-budget.js | title": {
+    "message": "Performance budget",
+    "description": "Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as \"performance budgets\" because these metrics impact page performance (i.e. how quickly a page loads)."
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/redirects).",
     "description": "Description of a Lighthouse audit that tells users why they should reduce the number of server-side redirects on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation."
@@ -750,18 +762,6 @@
   "lighthouse-core/audits/redirects.js | title": {
     "message": "Avoid multiple page redirects",
     "description": "Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates."
-  },
-  "lighthouse-core/audits/resource-budget.js | description": {
-    "message": "Keep the quantity and size of network requests under the targets set by the provided performance budget.",
-    "description": "Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits."
-  },
-  "lighthouse-core/audits/resource-budget.js | requestCount": {
-    "message": "{count, plural,\n    =1 {1 request}\n    other {# requests}\n   }",
-    "description": "[ICU Syntax] Label identifying the number of requests"
-  },
-  "lighthouse-core/audits/resource-budget.js | title": {
-    "message": "Performance budget",
-    "description": "Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as \"performance budgets\" because these metrics impact page performance (i.e. how quickly a page loads)."
   },
   "lighthouse-core/audits/resource-summary.js | description": {
     "message": "To set budgets for the quantity and size of page resources, add a budget.json file.",

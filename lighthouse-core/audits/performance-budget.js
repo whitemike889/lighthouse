@@ -15,7 +15,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. */
   description: 'Keep the quantity and size of network requests under the targets ' +
     'set by the provided performance budget.',
-  /** [ICU Syntax] Label identifying the number of requests*/
+  /** [ICU Syntax] Label identifying the number of requests over the budget for requests*/
   requestCount: `{count, plural,
     =1 {1 request}
     other {# requests}
@@ -25,6 +25,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @typedef {{count: number, size: number}} ResourceEntry */
+/** @typedef {{resourceType: LH.Budget.ResourceType, label: string, requestCount: number, size: number, sizeOverBudget: number | undefined, countOverBudget: string | undefined}} BudgetItem */
 
 class ResourceBudget extends Audit {
   /**
@@ -32,7 +33,7 @@ class ResourceBudget extends Audit {
    */
   static get meta() {
     return {
-      id: 'resource-budget',
+      id: 'performance-budget',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
@@ -64,18 +65,18 @@ class ResourceBudget extends Audit {
    * @param {LH.Budget.ResourceType} resourceType
    * @return {string}
    */
-  static rowLabel(resourceType) {
+  static getRowLabel(resourceType) {
     /** @type {Record<LH.Budget.ResourceType,string>} */
     const strMappings = {
-      'total': str_(i18n.UIStrings.totalResourceType),
-      'document': str_(i18n.UIStrings.documentResourceType),
-      'script': str_(i18n.UIStrings.scriptResourceType),
-      'stylesheet': str_(i18n.UIStrings.stylesheetResourceType),
-      'image': str_(i18n.UIStrings.imageResourceType),
-      'media': str_(i18n.UIStrings.mediaResourceType),
-      'font': str_(i18n.UIStrings.fontResourceType),
-      'other': str_(i18n.UIStrings.otherResourceType),
-      'third-party': str_(i18n.UIStrings.thirdPartyResourceType),
+      'total': i18n.UIStrings.totalResourceType,
+      'document': i18n.UIStrings.documentResourceType,
+      'script': i18n.UIStrings.scriptResourceType,
+      'stylesheet': i18n.UIStrings.stylesheetResourceType,
+      'image': i18n.UIStrings.imageResourceType,
+      'media': i18n.UIStrings.mediaResourceType,
+      'font': i18n.UIStrings.fontResourceType,
+      'other': i18n.UIStrings.otherResourceType,
+      'third-party': i18n.UIStrings.thirdPartyResourceType,
     };
     return strMappings[resourceType];
   }
@@ -83,27 +84,26 @@ class ResourceBudget extends Audit {
   /**
    * @param {LH.Budget} budget
    * @param {Record<LH.Budget.ResourceType,ResourceEntry>} summary
-   * @return {Array<{resourceType: LH.Budget.ResourceType, label: string, requestCount: number, size: number, sizeOverBudget: number | undefined, countOverBudget: string | undefined}>}
+   * @return {Array<BudgetItem>}
    */
   static tableItems(budget, summary) {
     const resourceTypes = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
-    return resourceTypes.map((type) => {
-      const resourceType = type;
-      const label = this.rowLabel(type);
-      const requestCount = summary[type].count;
-      const size = summary[type].size;
+    return resourceTypes.map((resourceType) => {
+      const label = str_(this.getRowLabel(resourceType));
+      const requestCount = summary[resourceType].count;
+      const size = summary[resourceType].size;
 
       let sizeOverBudget;
       let countOverBudget;
 
       if (budget.resourceSizes) {
-        const sizeBudget = budget.resourceSizes.find(b => b.resourceType === type);
+        const sizeBudget = budget.resourceSizes.find(b => b.resourceType === resourceType);
         if (sizeBudget && (size > (sizeBudget.budget * 1024))) {
           sizeOverBudget = size - (sizeBudget.budget * 1024);
         }
       }
       if (budget.resourceCounts) {
-        const countBudget = budget.resourceCounts.find(b => b.resourceType === type);
+        const countBudget = budget.resourceCounts.find(b => b.resourceType === resourceType);
         if (countBudget && (requestCount > countBudget.budget)) {
           const requestDifference = requestCount - countBudget.budget;
           countOverBudget = str_(UIStrings.requestCount, {count: requestDifference});
@@ -120,10 +120,10 @@ class ResourceBudget extends Audit {
     }).filter((row) => {
       // Only resources with budgets should be included in the table
       if (budget.resourceSizes) {
-        if (budget.resourceSizes.find(b => b.resourceType === row.resourceType)) return true;
+        if (budget.resourceSizes.some(b => b.resourceType === row.resourceType)) return true;
       }
       if (budget.resourceCounts) {
-        if (budget.resourceCounts.find(b => b.resourceType === row.resourceType)) return true;
+        if (budget.resourceCounts.some(b => b.resourceType === row.resourceType)) return true;
       }
       return false;
     }).sort((a, b) => {
@@ -138,11 +138,7 @@ class ResourceBudget extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-
-    /** @type {Record<LH.Budget.ResourceType,{count:number, size:number}>} */
     const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
-
-    /** @type {LH.Budget | undefined} */
     const budget = context.settings.budgets ? context.settings.budgets[0] : undefined;
 
     if (!budget) {
