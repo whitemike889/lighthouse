@@ -773,6 +773,11 @@ Object {
           "weight": 0,
         },
         Object {
+          "group": "budgets",
+          "id": "performance-budget",
+          "weight": 0,
+        },
+        Object {
           "group": "load-opportunities",
           "id": "efficient-animated-content",
           "weight": 0,
@@ -815,10 +820,6 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "font-display",
-          "weight": 0,
-        },
-        Object {
-          "id": "performance-budget",
           "weight": 0,
         },
         Object {

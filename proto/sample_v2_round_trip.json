@@ -3399,6 +3399,11 @@
                     "weight": 0.0
                 },
                 {
+                    "group": "budgets",
+                    "id": "performance-budget",
+                    "weight": 0.0
+                },
+                {
                     "group": "load-opportunities",
                     "id": "efficient-animated-content",
                     "weight": 0.0
@@ -3441,10 +3446,6 @@
                 {
                     "group": "diagnostics",
                     "id": "font-display",
-                    "weight": 0.0
-                },
-                {
-                    "id": "performance-budget",
                     "weight": 0.0
                 },
                 {

@@ -150,7 +150,8 @@ describe('PerfCategoryRenderer', () => {
     const passedSection = categoryDOM.querySelector('.lh-category > .lh-clump--passed');
 
     const passedAudits = category.auditRefs.filter(audit =>
-        audit.group && audit.group !== 'metrics' && Util.showAsPassed(audit.result));
+      (audit.group === 'load-opportunities' || audit.group === 'diagnostics')
+      && audit.group && Util.showAsPassed(audit.result));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     assert.equal(passedElements.length, passedAudits.length);
   });
