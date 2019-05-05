@@ -255,7 +255,8 @@ describe('ReportRenderer', () => {
 
     let notApplicableCount = 0;
     Object.values(clonedSampleResult.audits).forEach(audit => {
-      if (audit.scoreDisplayMode === 'notApplicable') {
+      // The performance-budget audit is omitted from the DOM if it is not applicable
+      if (audit.scoreDisplayMode === 'notApplicable' && audit.id !== 'performance-budget') {
         notApplicableCount++;
         audit.scoreDisplayMode = 'not_applicable';
       }
@@ -265,10 +266,8 @@ describe('ReportRenderer', () => {
 
     const container = renderer._dom._document.body;
     const reportElement = renderer.renderReport(sampleResults, container);
-    // TODO(khempenius): Remove "+1" once budgets renderer code is added.
-    // Until budgets renderer code is added, JSON vs. DOM comparison will differ by 1.
     const notApplicableElementCount = reportElement
       .querySelectorAll('.lh-audit--notapplicable').length;
-    assert.strictEqual(notApplicableCount, notApplicableElementCount + 1);
+    assert.strictEqual(notApplicableCount, notApplicableElementCount);
   });
 });
