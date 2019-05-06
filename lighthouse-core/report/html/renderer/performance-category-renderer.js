@@ -169,11 +169,10 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const budgetAudit = category.auditRefs.find((audit) => audit.id === 'performance-budget');
     if (budgetAudit && budgetAudit.result.details) {
       const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
-      const tmpl = this.dom.cloneTemplate('#tmpl-lh-budgets-header', this.templateContext);
-      budgetsGroupEl.appendChild(this.dom.find('.lh-budgets__header', tmpl));
-
       const table = this.detailsRenderer.render(budgetAudit.result.details);
       if (table) {
+        table.id = budgetAudit.id;
+        table.classList.add('lh-audit');
         budgetsGroupEl.appendChild(table);
         budgetsGroupEl.classList.add('lh-audit-group--budgets');
         element.appendChild(budgetsGroupEl);
