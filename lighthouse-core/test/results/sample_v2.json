@@ -3402,11 +3402,6 @@
           "group": "load-opportunities"
         },
         {
-          "id": "performance-budget",
-          "weight": 0,
-          "group": "budgets"
-        },
-        {
           "id": "efficient-animated-content",
           "weight": 0,
           "group": "load-opportunities"
@@ -3450,6 +3445,11 @@
           "id": "font-display",
           "weight": 0,
           "group": "diagnostics"
+        },
+        {
+          "id": "performance-budget",
+          "weight": 0,
+          "group": "budgets"
         },
         {
           "id": "resource-summary",
