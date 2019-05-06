@@ -8,31 +8,12 @@
 const cli = require('../../lighthouse-cli/run.js');
 const cliFlags = require('../../lighthouse-cli/cli-flags.js');
 const assetSaver = require('../lib/asset-saver.js');
-
 const artifactPath = 'lighthouse-core/test/results/artifacts';
 
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
+const budgetedConfig = require('../test/results/sample-config.js');
 
 /** @typedef {import('net').AddressInfo} AddressInfo */
-
-/** @type {LH.Config.Json} */
-const budgetedConfig = {
-  extends: 'lighthouse:default',
-  settings: {
-    budgets: [{
-      resourceSizes: [
-        {resourceType: 'script', budget: 125},
-        {resourceType: 'total', budget: 500},
-      ],
-      timings: [
-        {metric: 'interactive', budget: 5000, tolerance: 1000},
-      ],
-      resourceCounts: [
-        {resourceType: 'third-party', budget: 0},
-      ],
-    }],
-  },
-};
 
 /**
  * Update the report artifacts. If artifactName is set only that artifact will be updated.
@@ -52,7 +33,6 @@ async function update(artifactName) {
   const url = `http://localhost:${port}/dobetterweb/dbw_tester.html`;
   const rawFlags = [
     `--gather-mode=${artifactPath}`,
-    '--throttling-method=devtools',
     url,
   ].join(' ');
   const flags = cliFlags.getFlags(rawFlags);
@@ -63,7 +43,7 @@ async function update(artifactName) {
     // Revert everything except the one artifact
     const newArtifacts = await assetSaver.loadArtifacts(artifactPath);
     if (!(artifactName in newArtifacts) && !(artifactName in oldArtifacts)) {
-      console.warn(`❌ Unknown artifact name: '${artifactName}'. Reverting artifacts...`); // eslint-disable-line no-console
+      throw Error('Unknown artifact name: ' + artifactName);
     }
     const finalArtifacts = oldArtifacts;
     finalArtifacts[artifactName] = newArtifacts[artifactName];

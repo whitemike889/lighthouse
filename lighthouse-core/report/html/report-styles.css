@@ -85,6 +85,7 @@
   --color-black-600: #757575;
   --color-black-800: #424242;
   --color-black-900: #212121;
+  --off-black: #111111;
   --color-black: #000000;
   --color-blue: #2962FF;
   --color-green-700: #018642;
@@ -135,6 +136,7 @@
   --topbar-height: 36px;
   --topbar-icon-size: 24px;
   --topbar-padding: 0 8px;
+  --metrics-toggle-color: var(--color-black-200);
 
   --color-average-secondary: var(--color-orange-700);
   --color-average: var(--color-orange);
@@ -180,7 +182,8 @@
   --topbar-bg: var(--color-black);
   --plugin-badge-bg: var(--color-black-800);
   --header-bg-color: var(--color-black-900);
-  --env-item-bg: rgba(0, 0, 0, 0.5);
+  --env-item-bg: var(--color-black);
+  --report-secondary-border-color: var(--color-black-200);
 
   --body-background-color: var(--color-black-900);
   --body-text-color: var(--color-black-100);
@@ -599,30 +602,36 @@
   color: var(--secondary-text-color);
   padding: var(--expandable-padding);
 }
-.lh-audit-group--metrics__show-descriptions .lh-metric__description {
-  display: block;
-}
 
 .lh-metric__value {
   white-space: nowrap; /* No wrapping between metric value and the icon */
   font-weight: 500;
 }
 
-.lh-metrics-toggle {
-  position: relative;
+/* No-JS toggle switch */
+/* Keep this selector sync'd w/ `magicSelector` in report-ui-features-test.js */
+ .lh-metrics-toggle__input:checked ~ .lh-columns .lh-metric__description {
+  display: block;
 }
+
 .lh-metrics-toggle__input {
   cursor: pointer;
   opacity: 0;
   position: absolute;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  width: 74px;
+  height: 28px;
+  top: -3px;
 }
-.lh-metrics-toggle label {
+.lh-metrics-toggle__label {
   display: flex;
   background-color: #eee;
   border-radius: 20px;
   overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: -3px;
+  pointer-events: none;
 }
 .lh-metrics-toggle__input:focus + label {
   outline: -webkit-focus-ring-color auto 3px;
@@ -643,10 +652,15 @@
 .lh-metrics-toggle__lines {
   fill: var(--color-metric-toggle-lines);
 }
-.lh-metrics-toggle label .lh-metrics-toggle__icon--less {
+
+.lh-metrics-toggle__label  {
+  background-color: var(--metrics-toggle-color);
+}
+
+.lh-metrics-toggle__label .lh-metrics-toggle__icon--less {
   padding-left: 8px;
 }
-.lh-metrics-toggle label .lh-metrics-toggle__icon--more {
+.lh-metrics-toggle__label .lh-metrics-toggle__icon--more {
   padding-right: 8px;
 }
 
@@ -825,6 +839,7 @@
 
 .lh-audit-group {
   margin-bottom: var(--audits-margin-bottom);
+  position: relative;
 }
 
 .lh-audit-group__header::before {
