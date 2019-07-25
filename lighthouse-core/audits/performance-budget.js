@@ -7,6 +7,8 @@
 
 const Audit = require('./audit.js');
 const ResourceSummary = require('../computed/resource-summary.js');
+const MainResource = require('../computed/main-resource.js');
+const Budget = require('../config/budget.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -121,7 +123,11 @@ class ResourceBudget extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
-    const budget = context.settings.budgets ? context.settings.budgets[0] : undefined;
+    const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
+    // Applies the LAST matching budget
+    const budget = context.settings.budgets ? context.settings.budgets.reverse().find((b) => {
+      return Budget.urlMatchesPattern(mainResource.url, b.path);
+    }) : undefined;
 
     if (!budget) {
       return {

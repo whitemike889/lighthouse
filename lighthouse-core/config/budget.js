@@ -5,6 +5,8 @@
  */
 'use strict';
 
+const URL = require('../lib/url-shim.js');
+
 /**
  * @param {unknown} arr
  * @return {arr is Array<Record<string, unknown>>}
@@ -97,6 +99,97 @@ class Budget {
   }
 
   /**
+   * Validates that path is properly formed. Verifies the quantity and location
+   * of the two robot.txt regex characters: $, *
+   * @param {unknown} val
+   * @return {string}
+   */
+  static validatePath(val) {
+    /*
+     * If no path is specified the budget is assumed to apply to all pages. This makes
+     * budget.json backwards compatible with earlier API versions that did not include path.
+     */
+
+    if ((val === undefined) || (val === null)) {
+      return '/';
+    }
+    const path = /** @type {string} */ (val);
+    const hasLeadingSlash = path.startsWith('/');
+    const validWildcardQuantity = ((path.match(/\*/g) || []).length <= 1);
+    const validDollarSignQuantity = ((path.match(/\$/g) || []).length <= 1);
+    const validDollarSignPlacement = !path.includes('$') || path.endsWith('$');
+
+    const isValid = hasLeadingSlash && validWildcardQuantity
+      && validDollarSignQuantity && validDollarSignPlacement;
+
+    if (!isValid) {
+      throw new Error(`Invalid path ${path}. ` +
+        `'Path' should be specified using the 'robots.txt' format.\n` +
+        `Learn more about the 'robots.txt' format here:\n` +
+        `https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values`);
+    }
+    return path;
+  }
+
+  /**
+   * Determines whether a URL matches against a robots.txt-style "path".
+   * @param {string} url
+   * @param {string} pattern
+   * @return {boolean}
+   */
+  static urlMatchesPattern(url, pattern) {
+    /*
+     * Pattern should use the robots.txt format. E.g. "/*-article.html" or "/". Reference:
+     * https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values
+     */
+
+    const urlObj = new URL(url);
+    const urlPath = urlObj.pathname + urlObj.search;
+
+    const hasWildcard = pattern.includes('*');
+    const hasDollarSign = pattern.includes('$');
+
+    /**
+     * There are 4 different cases of path strings.
+     * Paths should have already been validated with #validatePath.
+     *
+     * Case #1: No special characters
+     * Example: "/cat"
+     * Behavior: URL should start with given pattern.
+     */
+    if (!hasWildcard && !hasDollarSign) {
+      return urlPath.startsWith(pattern);
+    /**
+     * Case #2: $ only
+     * Example: "/js$"
+     * Behavior: URL should be identical to pattern.
+     */
+    } else if (!hasWildcard && hasDollarSign) {
+      return urlPath === pattern.slice(0, -1);
+    /**
+     * Case #3: * only
+     * Example: "/vendor*chunk"
+     * Behavior: URL should start with the string pattern that comes before the wildcard
+     * & later in the string contain the string pattern that comes after the wildcard.
+     */
+    } else if (hasWildcard && !hasDollarSign) {
+      const [beforeWildcard, afterWildcard] = pattern.split('*');
+      const remainingUrl = urlPath.slice(beforeWildcard.length);
+      return urlPath.startsWith(beforeWildcard) && remainingUrl.includes(afterWildcard);
+      /**
+       * Case #4: $ and *
+       * Example: "/vendor*chunk.js$"
+       * Behavior: URL should start with the string pattern that comes before the wildcard
+       * & end with the string pattern that comes after the wildcard.
+       */
+    } else if (hasWildcard && hasDollarSign) {
+      const [beforeWildcard, afterWildcard] = pattern.split('*');
+      return urlPath.startsWith(beforeWildcard) && urlPath.endsWith(afterWildcard.slice(0, -1));
+    }
+    return false;
+  }
+
+  /**
    * @param {Record<string, unknown>} timingBudget
    * @return {LH.Budget.TimingBudget}
    */
@@ -147,8 +240,10 @@ class Budget {
       /** @type {LH.Budget} */
       const budget = {};
 
-      const {resourceSizes, resourceCounts, timings, ...invalidRest} = b;
+      const {path, resourceSizes, resourceCounts, timings, ...invalidRest} = b;
       Budget.assertNoExcessProperties(invalidRest, 'Budget');
+
+      budget.path = Budget.validatePath(path);
 
       if (isArrayOfUnknownObjects(resourceSizes)) {
         budget.resourceSizes = resourceSizes.map(Budget.validateResourceBudget);
