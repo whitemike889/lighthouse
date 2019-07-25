@@ -108,16 +108,13 @@ describe('Budget', () => {
 
   describe('top-level validation', () => {
     it('throws when provided an invalid budget array', () => {
-      budgets = 55;
-      assert.throws(_ => Budget.initializeBudget(budgets),
+      assert.throws(_ => Budget.initializeBudget(55),
         /Budget file is not defined as an array of/);
 
-      budgets = ['invalid123'];
-      assert.throws(_ => Budget.initializeBudget(budgets),
+      assert.throws(_ => Budget.initializeBudget(['invalid123']),
         /Budget file is not defined as an array of/);
 
-      budgets = [null];
-      assert.throws(_ => Budget.initializeBudget(budgets),
+      assert.throws(_ => Budget.initializeBudget([null]),
         /Budget file is not defined as an array of/);
     });
 

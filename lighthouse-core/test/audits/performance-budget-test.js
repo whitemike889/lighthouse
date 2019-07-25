@@ -100,6 +100,13 @@ describe('Performance: Resource budgets audit', () => {
       });
     });
 
+    it('does not mutate the budget config', async () => {
+      const configBefore = JSON.parse(JSON.stringify(context.settings.budgets));
+      await ResourceBudgetAudit.audit(artifacts, context);
+      const configAfter = JSON.parse(JSON.stringify(context.settings.budgets));
+      expect(configBefore).toEqual(configAfter);
+    });
+
     it('only includes rows for resource types with budgets', async () => {
       const result = await ResourceBudgetAudit.audit(artifacts, context);
       expect(result.details.items).toHaveLength(2);
