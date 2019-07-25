@@ -10,9 +10,9 @@ const assert = require('assert');
 /* eslint-env jest */
 
 describe('Budget', () => {
-  let input;
+  let budgets;
   beforeEach(() => {
-    input = [
+    budgets = [
       {
         resourceSizes: [
           {
@@ -60,7 +60,7 @@ describe('Budget', () => {
   });
 
   it('initializes correctly', () => {
-    const result = Budget.initializeBudget(input);
+    const result = Budget.initializeBudget(budgets);
     assert.equal(result.length, 2);
 
     // Sets missing path correctly
@@ -101,162 +101,168 @@ describe('Budget', () => {
   });
 
   it('throws error if an unsupported budget property is used', () => {
-    input[0].sizes = [];
-    assert.throws(_ => Budget.initializeBudget(input),
+    budgets[0].sizes = [];
+    assert.throws(_ => Budget.initializeBudget(budgets),
       /Budget has unrecognized properties: \[sizes\]/);
   });
 
   describe('top-level validation', () => {
     it('throws when provided an invalid budget array', () => {
-      input = 55;
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets = 55;
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /Budget file is not defined as an array of/);
 
-      input = ['invalid123'];
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets = ['invalid123'];
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /Budget file is not defined as an array of/);
 
-      input = [null];
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets = [null];
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /Budget file is not defined as an array of/);
     });
 
     it('throws when budget contains invalid resourceSizes entry', () => {
-      input[0].resourceSizes = 55;
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[0].resourceSizes = 55;
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /^Error: Invalid resourceSizes entry in budget at index 0$/);
     });
 
     it('throws when budget contains invalid resourceCounts entry', () => {
-      input[0].resourceCounts = 'A string';
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[0].resourceCounts = 'A string';
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /^Error: Invalid resourceCounts entry in budget at index 0$/);
     });
 
     it('throws when budget contains invalid timings entry', () => {
-      input[1].timings = false;
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[1].timings = false;
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /^Error: Invalid timings entry in budget at index 1$/);
     });
   });
 
   describe('resource budget validation', () => {
     it('throws when an invalid resource type is supplied', () => {
-      input[0].resourceSizes[0].resourceType = 'movies';
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[0].resourceSizes[0].resourceType = 'movies';
+      assert.throws(_ => Budget.initializeBudget(budgets),
         // eslint-disable-next-line max-len
         /Invalid resource type: movies. \nValid resource types are: total, document,/);
     });
 
     it('throws when an invalid budget is supplied', () => {
-      input[0].resourceSizes[0].budget = '100 MB';
-      assert.throws(_ => Budget.initializeBudget(input), /Invalid budget: 100 MB/);
+      budgets[0].resourceSizes[0].budget = '100 MB';
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid budget: 100 MB/);
     });
 
     it('throws when an invalid property is supplied', () => {
-      input[0].resourceSizes[0].browser = 'Chrome';
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[0].resourceSizes[0].browser = 'Chrome';
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /Resource Budget has unrecognized properties: \[browser\]/);
     });
 
     it('throws when a duplicate resourceType is specified in resourceSizes', () => {
-      input[1].resourceSizes.push({resourceType: 'script', budget: 100});
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[1].resourceSizes.push({resourceType: 'script', budget: 100});
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /has duplicate entry of type 'script'/);
     });
 
     it('throws when a duplicate resourceType is specified in resourceCounts', () => {
-      input[0].resourceCounts.push({resourceType: 'third-party', budget: 100});
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[0].resourceCounts.push({resourceType: 'third-party', budget: 100});
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /has duplicate entry of type 'third-party'/);
     });
   });
 
   describe('timing budget validation', () => {
     it('throws when an invalid metric is supplied', () => {
-      input[0].timings[0].metric = 'medianMeaningfulPaint';
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[0].timings[0].metric = 'medianMeaningfulPaint';
+      assert.throws(_ => Budget.initializeBudget(budgets),
         // eslint-disable-next-line max-len
         /Invalid timing metric: medianMeaningfulPaint. \nValid timing metrics are: first-contentful-paint, /);
     });
 
     it('throws when an invalid budget is supplied', () => {
-      input[0].timings[0].budget = '100KB';
-      assert.throws(_ => Budget.initializeBudget(input), /Invalid budget: 100KB/);
+      budgets[0].timings[0].budget = '100KB';
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid budget: 100KB/);
     });
 
     it('throws when an invalid tolerance is supplied', () => {
-      input[0].timings[0].tolerance = '100ms';
-      assert.throws(_ => Budget.initializeBudget(input), /Invalid tolerance: 100ms/);
+      budgets[0].timings[0].tolerance = '100ms';
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid tolerance: 100ms/);
     });
 
     it('throws when an invalid property is supplied', () => {
-      input[0].timings[0].device = 'Phone';
-      input[0].timings[0].location = 'The middle somewhere, I don\'t know';
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[0].timings[0].device = 'Phone';
+      budgets[0].timings[0].location = 'The middle somewhere, I don\'t know';
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /Timing Budget has unrecognized properties: \[device, location\]/);
     });
 
     it('throws when a duplicate metric type is specified in timings', () => {
-      input[0].timings.push({metric: 'interactive', budget: 1000});
-      assert.throws(_ => Budget.initializeBudget(input),
+      budgets[0].timings.push({metric: 'interactive', budget: 1000});
+      assert.throws(_ => Budget.initializeBudget(budgets),
         /has duplicate entry of type 'interactive'/);
     });
   });
 
   describe('path validation', () => {
-    it('with valid inputs', () => {
-      let input = [{path: '/'}];
-      let result = Budget.initializeBudget(input);
-      assert.equal(input[0].path, result[0].path);
+    it('recognizes valid budgets', () => {
+      let budgets = [{path: '/'}];
+      let result = Budget.initializeBudget(budgets);
+      assert.equal(budgets[0].path, result[0].path);
 
-      input = [{path: '/*'}];
-      result = Budget.initializeBudget(input);
-      assert.equal(input[0].path, result[0].path);
+      budgets = [{path: '/*'}];
+      result = Budget.initializeBudget(budgets);
+      assert.equal(budgets[0].path, result[0].path);
 
-      input = [{path: '/end$'}];
-      result = Budget.initializeBudget(input);
-      assert.equal(input[0].path, result[0].path);
+      budgets = [{path: '/end$'}];
+      result = Budget.initializeBudget(budgets);
+      assert.equal(budgets[0].path, result[0].path);
 
-      input = [{path: '/fish*.php'}];
-      result = Budget.initializeBudget(input);
-      assert.equal(input[0].path, result[0].path);
+      budgets = [{path: '/fish*.php'}];
+      result = Budget.initializeBudget(budgets);
+      assert.equal(budgets[0].path, result[0].path);
 
-      input = [{path: '/*.php$'}];
-      result = Budget.initializeBudget(input);
-      assert.equal(input[0].path, result[0].path);
+      budgets = [{path: '/*.php$'}];
+      result = Budget.initializeBudget(budgets);
+      assert.equal(budgets[0].path, result[0].path);
     });
 
-    it('with invalid inputs', () => {
-      // Missing leading "/"
-      let input = [{path: ''}];
-      assert.throws(_ => Budget.initializeBudget(input), /[Invalid path]/);
+    it('invalidates paths missing leading "/"', () => {
+      let budgets = [{path: ''}];
+      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
 
-      // Missing leading "/"
-      input = [{path: 'cat'}];
-      assert.throws(_ => Budget.initializeBudget(input), /[Invalid path]/);
-
-      // Multiple * characters
-      input = [{path: '/cat*cat*cat'}];
-      assert.throws(_ => Budget.initializeBudget(input), /[Invalid path]/);
-
-      // Multiple $ characters
-      input = [{path: '/cat$cat$'}];
-      assert.throws(_ => Budget.initializeBudget(input), /[Invalid path]/);
-
-      // Invalid $ location
-      input = [{path: '/cat$html'}];
-      assert.throws(_ => Budget.initializeBudget(input), /[Invalid path]/);
+      budgets = [{path: 'cat'}];
+      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
     });
 
-    it('with no path', () => {
-      const input = [{}];
-      const result = Budget.initializeBudget(input);
+    it('invalidates paths with multiple * characters', () => {
+      budgets = [{path: '/cat*cat*cat'}];
+      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
+    });
+
+    it('invalidates paths with multiple $ characters', () => {
+      budgets = [{path: '/cat$cat$'}];
+      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
+    });
+
+    it('invalidates paths with $ character in the wrong location', () => {
+      budgets = [{path: '/cat$html'}];
+      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
+    });
+
+    it('defaults no path to "/"', () => {
+      const budgets = [{}];
+      const result = Budget.initializeBudget(budgets);
       assert.equal(result[0].path, '/');
     });
   });
 
   describe('path matching', () => {
+    const pathMatch = (path, pattern) => {
+      const origin = 'https://example.com';
+      return Budget.urlMatchesPattern(origin + path, pattern);
+    };
+
     it('matches root', () => {
       assert.ok(Budget.urlMatchesPattern('https://google.com', '/'));
     });
@@ -266,28 +272,33 @@ describe('Budget', () => {
       assert.equal(Budget.urlMatchesPattern('https://yt.com/videos?id=', '/videos'), true);
     });
 
-    it('is correct', () => {
-      const pathMatch = (path, pattern) => {
-        const origin = 'https://example.com';
-        return Budget.urlMatchesPattern(origin + path, pattern);
-      };
+    it('is case-sensitive', () => {
+      assert.equal(Budget.urlMatchesPattern('https://abc.com/aaa', '/aaa'), true);
+      assert.equal(Budget.urlMatchesPattern('https://abc.com/AAA', '/aaa'), false);
+      assert.equal(Budget.urlMatchesPattern('https://abc.com/aaa', '/AAA'), false);
+    });
 
-      // No *, No $:
+    it('handles patterns that do not contain * or $', () => {
       assert.equal(pathMatch('/anything', '/'), true);
       assert.equal(pathMatch('/anything', '/any'), true);
+      assert.equal(pathMatch('/anything', '/anything'), true);
       assert.equal(pathMatch('/anything', '/anything1'), false);
+    });
 
-      // No *, Yes $:
+    it('handles patterns that do not contain * but contain $', () => {
       assert.equal(pathMatch('/fish.php', '/fish.php$'), true);
       assert.equal(pathMatch('/Fish.PHP', '/fish.php$'), false);
+    });
 
-      // Yes *, No $:
+    it('handles patterns that contain * but do not contain $', () => {
       assert.equal(pathMatch('/anything', '/*'), true);
       assert.equal(pathMatch('/fish', '/fish*'), true);
       assert.equal(pathMatch('/fishfood', '/*food'), true);
+      assert.equal(pathMatch('/fish/food/and/other/things', '/*food'), true);
       assert.equal(pathMatch('/fis/', '/fish*'), false);
+    });
 
-      // Yes *, Yes $:
+    it('handles patterns that contain * and $', () => {
       assert.equal(pathMatch('/fish.php', '/*.php$'), true);
       assert.equal(pathMatch('/folder/filename.php', '/folder*.php$'), true);
       assert.equal(pathMatch('/fish.php?species=', '/*.php$'), false);

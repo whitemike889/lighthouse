@@ -11,7 +11,11 @@ declare global {
      * More info: https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
      */
     export interface Budget {
-      /** Indicates which pages a budget applies to. Uses the robots.txt format */
+      /**
+       * Indicates which pages a budget applies to. Uses the robots.txt format.
+       * Path is not a required propety in the user-facing version of Budget.
+       * If it is not supplied, it is added during validation by #validatePath.
+       */
       path: string;
       /** Budgets based on resource count. */
       resourceCounts?: Array<Budget.ResourceBudget>;

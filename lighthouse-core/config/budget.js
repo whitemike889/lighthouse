@@ -115,8 +115,8 @@ class Budget {
     }
     const path = /** @type {string} */ (val);
     const hasLeadingSlash = path.startsWith('/');
-    const validWildcardQuantity = ((path.match(/\*/g) || []).length <= 1);
-    const validDollarSignQuantity = ((path.match(/\$/g) || []).length <= 1);
+    const validWildcardQuantity = (path.match(/\*/g) || []).length <= 1;
+    const validDollarSignQuantity = (path.match(/\$/g) || []).length <= 1;
     const validDollarSignPlacement = !path.includes('$') || path.endsWith('$');
 
     const isValid = hasLeadingSlash && validWildcardQuantity
@@ -176,12 +176,12 @@ class Budget {
       const [beforeWildcard, afterWildcard] = pattern.split('*');
       const remainingUrl = urlPath.slice(beforeWildcard.length);
       return urlPath.startsWith(beforeWildcard) && remainingUrl.includes(afterWildcard);
-      /**
-       * Case #4: $ and *
-       * Example: "/vendor*chunk.js$"
-       * Behavior: URL should start with the string pattern that comes before the wildcard
-       * & end with the string pattern that comes after the wildcard.
-       */
+    /**
+     * Case #4: $ and *
+     * Example: "/vendor*chunk.js$"
+     * Behavior: URL should start with the string pattern that comes before the wildcard
+     * & end with the string pattern that comes after the wildcard.
+     */
     } else if (hasWildcard && hasDollarSign) {
       const [beforeWildcard, afterWildcard] = pattern.split('*');
       return urlPath.startsWith(beforeWildcard) && urlPath.endsWith(afterWildcard.slice(0, -1));
