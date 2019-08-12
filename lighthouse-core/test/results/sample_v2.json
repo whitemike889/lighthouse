@@ -3264,6 +3264,7 @@
     "channel": "cli",
     "budgets": [
       {
+        "path": "/",
         "resourceSizes": [
           {
             "resourceType": "total",
