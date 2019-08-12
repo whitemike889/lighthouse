@@ -125,6 +125,7 @@ class ResourceBudget extends Audit {
     const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
     const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
     // Clones budget so that the user-supplied version is not mutated.
+    /** @type {Array<LH.Budget>} */
     const budgets = JSON.parse(JSON.stringify(context.settings.budgets));
     // Applies the LAST matching budget
     const budget = budgets ? budgets.reverse().find((b) => {
@@ -138,7 +139,7 @@ class ResourceBudget extends Audit {
       };
     }
 
-    /** @type { LH.Audit.Details.Table['headings'] } */
+    /** @type {LH.Audit.Details.Table['headings']} */
     const headers = [
       {key: 'label', itemType: 'text', text: str_(i18n.UIStrings.columnResourceType)},
       {key: 'requestCount', itemType: 'numeric', text: str_(i18n.UIStrings.columnRequests)},
