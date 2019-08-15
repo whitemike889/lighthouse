@@ -226,25 +226,25 @@ describe('Budget', () => {
 
     it('invalidates paths missing leading "/"', () => {
       let budgets = [{path: ''}];
-      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid path/);
 
       budgets = [{path: 'cat'}];
-      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid path/);
     });
 
     it('invalidates paths with multiple * characters', () => {
       budgets = [{path: '/cat*cat*cat'}];
-      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid path/);
     });
 
     it('invalidates paths with multiple $ characters', () => {
       budgets = [{path: '/cat$cat$'}];
-      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid path/);
     });
 
     it('invalidates paths with $ character in the wrong location', () => {
       budgets = [{path: '/cat$html'}];
-      assert.throws(_ => Budget.initializeBudget(budgets), /[Invalid path]/);
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid path/);
     });
 
     it('defaults no path to "/"', () => {
@@ -293,13 +293,16 @@ describe('Budget', () => {
       assert.equal(pathMatch('/fishfood', '/*food'), true);
       assert.equal(pathMatch('/fish/food/and/other/things', '/*food'), true);
       assert.equal(pathMatch('/fis/', '/fish*'), false);
+      assert.equal(pathMatch('/fish', '/fish*fish'), false);
     });
 
     it('handles patterns that contain * and $', () => {
       assert.equal(pathMatch('/fish.php', '/*.php$'), true);
       assert.equal(pathMatch('/folder/filename.php', '/folder*.php$'), true);
+      assert.equal(pathMatch('/folder/filename.php', '/folder/filename*.php$'), true);
       assert.equal(pathMatch('/fish.php?species=', '/*.php$'), false);
       assert.equal(pathMatch('/filename.php/', '/folder*.php$'), false);
+      assert.equal(pathMatch('/folder', '/folder*folder$'), false);
     });
   });
 });

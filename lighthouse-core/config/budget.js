@@ -5,8 +5,6 @@
  */
 'use strict';
 
-const URL = require('../lib/url-shim.js');
-
 /**
  * @param {unknown} arr
  * @return {arr is Array<Record<string, unknown>>}
@@ -99,50 +97,50 @@ class Budget {
   }
 
   /**
-   * Validates that path is properly formed. Verifies the quantity and location
-   * of the two robot.txt regex characters: $, *
-   * @param {unknown} val
-   * @return {string}
+   * @param {unknown} path
+   * @param {string} error
    */
-  static validatePath(val) {
-    /*
-     * If no path is specified the budget is assumed to apply to all pages. This makes
-     * budget.json backwards compatible with earlier API versions that did not include path.
-     */
+  static throwInvalidPathError(path, error) {
+    throw new Error(`Invalid path ${path}. ${error}\n` +
+      `'Path' should be specified using the 'robots.txt' format.\n` +
+      `Learn more about the 'robots.txt' format here:\n` +
+      `https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values`);
+  }
 
-    if ((val === undefined) || (val === null)) {
-      return '/';
-    }
-    const path = /** @type {string} */ (val);
-    const hasLeadingSlash = path.startsWith('/');
-    const validWildcardQuantity = (path.match(/\*/g) || []).length <= 1;
-    const validDollarSignQuantity = (path.match(/\$/g) || []).length <= 1;
-    const validDollarSignPlacement = !path.includes('$') || path.endsWith('$');
 
-    const isValid = hasLeadingSlash && validWildcardQuantity
-      && validDollarSignQuantity && validDollarSignPlacement;
-
-    if (!isValid) {
-      throw new Error(`Invalid path ${path}. ` +
-        `'Path' should be specified using the 'robots.txt' format.\n` +
-        `Learn more about the 'robots.txt' format here:\n` +
-        `https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values`);
+  /**
+   * Validates that path is either: a) undefined or ) properly formed.
+   * Verifies the quantity and location of the two robot.txt regex characters: $, *
+   * @param {unknown} path
+   * @return {undefined|string}
+   */
+  static validatePath(path) {
+    if (path === undefined) {
+      return undefined;
+    } else if (typeof path !== 'string') {
+      this.throwInvalidPathError(path, `Path should be a string.`);
+      return;
+    } else if (!path.startsWith('/')) {
+      this.throwInvalidPathError(path, `Path should start with '/'.`);
+    } else if ((path.match(/\*/g) || []).length > 1) {
+      this.throwInvalidPathError(path, `Path should only contain one '*'.`);
+    } else if ((path.match(/\$/g) || []).length > 1) {
+      this.throwInvalidPathError(path, `Path should only contain one '$' character.`);
+    } else if (path.includes('$') && !path.endsWith('$')) {
+      this.throwInvalidPathError(path, `'$' character should only occur at end of path.`);
     }
     return path;
   }
 
   /**
    * Determines whether a URL matches against a robots.txt-style "path".
+   * Pattern should use the robots.txt format. E.g. "/*-article.html" or "/". Reference:
+   * https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values
    * @param {string} url
-   * @param {string} pattern
+   * @param {string=} pattern
    * @return {boolean}
    */
-  static urlMatchesPattern(url, pattern) {
-    /*
-     * Pattern should use the robots.txt format. E.g. "/*-article.html" or "/". Reference:
-     * https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values
-     */
-
+  static urlMatchesPattern(url, pattern = '/') {
     const urlObj = new URL(url);
     const urlPath = urlObj.pathname + urlObj.search;
 
@@ -180,11 +178,12 @@ class Budget {
      * Case #4: $ and *
      * Example: "/vendor*chunk.js$"
      * Behavior: URL should start with the string pattern that comes before the wildcard
-     * & end with the string pattern that comes after the wildcard.
+     * & later in the string end with the string pattern that comes after the wildcard.
      */
     } else if (hasWildcard && hasDollarSign) {
       const [beforeWildcard, afterWildcard] = pattern.split('*');
-      return urlPath.startsWith(beforeWildcard) && urlPath.endsWith(afterWildcard.slice(0, -1));
+      const urlEnd = urlPath.slice(beforeWildcard.length);
+      return urlPath.startsWith(beforeWildcard) && urlEnd.endsWith(afterWildcard.slice(0, -1));
     }
     return false;
   }

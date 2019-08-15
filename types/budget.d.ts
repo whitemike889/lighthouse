@@ -13,10 +13,10 @@ declare global {
     export interface Budget {
       /**
        * Indicates which pages a budget applies to. Uses the robots.txt format.
-       * Path is not a required propety in the user-facing version of Budget.
-       * If it is not supplied, it is added during validation by #validatePath.
+       * If it is not supplied, the budget applies to all pages.
+       * More info on robots.txt: https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values
        */
-      path: string;
+      path?: string;
       /** Budgets based on resource count. */
       resourceCounts?: Array<Budget.ResourceBudget>;
       /** Budgets based on resource size. */

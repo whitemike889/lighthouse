@@ -126,7 +126,7 @@ class ResourceBudget extends Audit {
     const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
     // Clones budget so that the user-supplied version is not mutated.
     /** @type {Array<LH.Budget>} */
-    const budgets = JSON.parse(JSON.stringify(context.settings.budgets));
+    const budgets = Array.from(context.settings.budgets || []);
     // Applies the LAST matching budget
     const budget = budgets ? budgets.reverse().find((b) => {
       return Budget.urlMatchesPattern(mainResource.url, b.path);

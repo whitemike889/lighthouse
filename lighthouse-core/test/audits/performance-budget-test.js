@@ -23,7 +23,7 @@ describe('Performance: Resource budgets audit', () => {
           {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
         ]),
       },
-      URL: {requestedUrl: 'http://example.com', finalURL: 'http://example.com'},
+      URL: {requestedUrl: 'http://example.com', finalUrl: 'http://example.com'},
     };
     context = {computedCache: new Map(), settings: {}};
   });
