@@ -63,8 +63,8 @@ describe('Budget', () => {
     const result = Budget.initializeBudget(budgets);
     assert.equal(result.length, 2);
 
-    // Sets missing path correctly
-    assert.equal(result[0].path, '/');
+    // Missing paths are not overwritten
+    assert.equal(result[0].path, undefined);
     // Sets path correctly
     assert.equal(result[1].path, '/second-path');
 
@@ -247,10 +247,10 @@ describe('Budget', () => {
       assert.throws(_ => Budget.initializeBudget(budgets), /Invalid path/);
     });
 
-    it('defaults no path to "/"', () => {
+    it('does not throw if no path is specified', () => {
       const budgets = [{}];
       const result = Budget.initializeBudget(budgets);
-      assert.equal(result[0].path, '/');
+      assert.equal(result[0].path, undefined);
     });
   });
 
@@ -273,6 +273,11 @@ describe('Budget', () => {
       assert.equal(Budget.urlMatchesPattern('https://abc.com/aaa', '/aaa'), true);
       assert.equal(Budget.urlMatchesPattern('https://abc.com/AAA', '/aaa'), false);
       assert.equal(Budget.urlMatchesPattern('https://abc.com/aaa', '/AAA'), false);
+    });
+
+    it('matches all pages if path is not defined', () => {
+      assert.ok(Budget.urlMatchesPattern('https://example.com', undefined), true);
+      assert.ok(Budget.urlMatchesPattern('https://example.com/dogs', undefined), true);
     });
 
     it('handles patterns that do not contain * or $', () => {
