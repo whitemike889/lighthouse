@@ -1522,7 +1522,7 @@
                 "type": "debugdata"
             },
             "id": "metrics",
-            "numericValue": 4927.278,
+            "numericValue": 4927.0,
             "score": null,
             "scoreDisplayMode": "informative",
             "title": "Metrics"

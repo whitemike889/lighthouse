@@ -1242,7 +1242,7 @@
       "description": "Collects all available metrics.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 4927.278,
+      "numericValue": 4927,
       "details": {
         "type": "debugdata",
         "items": [
