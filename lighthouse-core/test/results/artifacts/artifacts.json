@@ -34,7 +34,7 @@
         "path": "/",
         "options": {
           "runs": 1,
-          "measurementStrategyy": "optimistic"
+          "runCombinationStrategy": "optimistic"
         },
         "resourceSizes": [
           {

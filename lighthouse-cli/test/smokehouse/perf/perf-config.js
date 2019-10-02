@@ -17,7 +17,7 @@ const perfConfig = {
       path: '/',
       options: {
         runs: 1,
-        measurementStrategy: 'optimistic',
+        runCombinationStrategy: 'optimistic',
       },
       resourceCounts: [
         {resourceType: 'total', budget: 8},

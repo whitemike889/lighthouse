@@ -33,7 +33,7 @@
     {
         "options": {
             "runs": 1,
-            "measurementStrategy": "pessimistic"
+            "runCombinationStrategy": "pessimistic"
         },
         "resourceCounts": [
             {
