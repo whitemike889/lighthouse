@@ -133,6 +133,39 @@ class Budget {
   }
 
   /**
+   * @param {unknown} options
+   * @return {LH.Budget.Options}
+   */
+  static validateOptions(options = {runs: 1, measurementStrategy: 'median'}) {
+    if (!isObjectOfUnknownProperties(options)) {
+      throw new Error(`The options property should be defined as an object.`);
+    }
+    const {runs, measurementStrategy, ...invalidRest} = options;
+    Budget.assertNoExcessProperties(invalidRest, 'Options');
+
+    /** @type {Array<LH.Budget.MeasurementStrategy>} */
+    const validStrategies = [
+      'median',
+      'optimistic',
+      'pessimistic',
+    ];
+    const strategy = /** @type {LH.Budget.MeasurementStrategy} */ (measurementStrategy);
+    if (!validStrategies.includes(strategy)) {
+      throw new Error(`Invalid measurement strategy: ${strategy}. \n` +
+        `Valid measurement strategies are: ${validStrategies.join(', ')}`);
+    }
+    if (!isNumber(runs)) {
+      throw new Error(`Invalid runs quantity: ${runs}`);
+    } else if (runs < 1 || runs > 10) {
+      throw new Error(`Runs should be between 1-10 inclusive.`);
+    }
+    return {
+      measurementStrategy: strategy,
+      runs,
+    };
+  }
+
+  /**
    * Determines whether a URL matches against a robots.txt-style "path".
    * Pattern should use the robots.txt format. E.g. "/*-article.html" or "/". Reference:
    * https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values
@@ -193,7 +226,7 @@ class Budget {
    * @return {LH.Budget.TimingBudget}
    */
   static validateTimingBudget(timingBudget) {
-    const {metric, budget, tolerance, ...invalidRest} = timingBudget;
+    const {metric, budget, ...invalidRest} = timingBudget;
     Budget.assertNoExcessProperties(invalidRest, 'Timing Budget');
 
     /** @type {Array<LH.Budget.TimingMetric>} */
@@ -203,6 +236,8 @@ class Budget {
       'interactive',
       'first-meaningful-paint',
       'max-potential-fid',
+      'estimated-input-latency',
+      'total-blocking-time',
     ];
     // Assume metric is an allowed string, throw if not.
     if (!validTimingMetrics.includes(/** @type {LH.Budget.TimingMetric} */ (metric))) {
@@ -212,15 +247,12 @@ class Budget {
     if (!isNumber(budget)) {
       throw new Error(`Invalid budget: ${budget}`);
     }
-    if (typeof tolerance !== 'undefined' && !isNumber(tolerance)) {
-      throw new Error(`Invalid tolerance: ${tolerance}`);
-    }
     return {
       metric: /** @type {LH.Budget.TimingMetric} */ (metric),
       budget,
-      tolerance,
     };
   }
+
 
   /**
    * More info on the Budget format:
@@ -239,10 +271,14 @@ class Budget {
       /** @type {LH.Budget} */
       const budget = {};
 
-      const {path, resourceSizes, resourceCounts, timings, ...invalidRest} = b;
+      const {path, options, resourceSizes, resourceCounts, timings, ...invalidRest} = b;
       Budget.assertNoExcessProperties(invalidRest, 'Budget');
 
       budget.path = Budget.validatePath(path);
+
+
+      budget.options = Budget.validateOptions(options);
+
 
       if (isArrayOfUnknownObjects(resourceSizes)) {
         budget.resourceSizes = resourceSizes.map(Budget.validateResourceBudget);

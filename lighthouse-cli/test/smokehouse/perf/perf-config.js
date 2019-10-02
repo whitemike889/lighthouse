@@ -15,6 +15,10 @@ const perfConfig = {
     // A mixture of under, over, and meeting budget to exercise all paths.
     budgets: [{
       path: '/',
+      options: {
+        runs: 1,
+        measurementStrategy: 'optimistic',
+      },
       resourceCounts: [
         {resourceType: 'total', budget: 8},
         {resourceType: 'stylesheet', budget: 1}, // meets budget
@@ -38,11 +42,11 @@ const perfConfig = {
         {resourceType: 'third-party', budget: 0},
       ],
       timings: [
-        {metric: 'first-contentful-paint', budget: 2000, tolerance: 100},
-        {metric: 'first-cpu-idle', budget: 2000, tolerance: 100},
-        {metric: 'interactive', budget: 2000, tolerance: 100},
-        {metric: 'first-meaningful-paint', budget: 2000, tolerance: 100},
-        {metric: 'max-potential-fid', budget: 2000, tolerance: 100},
+        {metric: 'first-contentful-paint', budget: 2000},
+        {metric: 'first-cpu-idle', budget: 2000},
+        {metric: 'interactive', budget: 2000},
+        {metric: 'first-meaningful-paint', budget: 2000},
+        {metric: 'max-potential-fid', budget: 2000},
       ],
     }],
   },

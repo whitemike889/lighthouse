@@ -16,6 +16,10 @@ const budgetedConfig = {
     throttlingMethod: 'devtools',
     budgets: [{
       path: '/',
+      options: {
+        runs: 1,
+        measurementStrategy: 'median',
+      },
       resourceCounts: [
         {resourceType: 'total', budget: 10},
         {resourceType: 'stylesheet', budget: 2},
@@ -39,11 +43,11 @@ const budgetedConfig = {
         {resourceType: 'third-party', budget: 25},
       ],
       timings: [
-        {metric: 'first-contentful-paint', budget: 3000, tolerance: 100},
-        {metric: 'first-cpu-idle', budget: 2900, tolerance: 100},
-        {metric: 'interactive', budget: 2900, tolerance: 100},
-        {metric: 'first-meaningful-paint', budget: 2000, tolerance: 100},
-        {metric: 'max-potential-fid', budget: 100, tolerance: 100},
+        {metric: 'first-contentful-paint', budget: 3000},
+        {metric: 'first-cpu-idle', budget: 2900},
+        {metric: 'interactive', budget: 2900},
+        {metric: 'first-meaningful-paint', budget: 2000},
+        {metric: 'max-potential-fid', budget: 100},
       ],
     }],
   },

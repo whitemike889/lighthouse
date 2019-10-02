@@ -14,6 +14,10 @@ describe('Budget', () => {
   beforeEach(() => {
     budgets = [
       {
+        options: {
+          runs: 3,
+          measurementStrategy: 'pessimistic',
+        },
         resourceSizes: [
           {
             resourceType: 'script',
@@ -38,12 +42,10 @@ describe('Budget', () => {
           {
             metric: 'interactive',
             budget: 2000,
-            tolerance: 1000,
           },
           {
             metric: 'first-contentful-paint',
             budget: 1000,
-            // tolerance is optional, so not defined here.
           },
         ],
       },
@@ -68,6 +70,12 @@ describe('Budget', () => {
     // Sets path correctly
     assert.equal(result[1].path, '/second-path');
 
+    // Sets options correctly
+    assert.equal(result[0].options.runs, 3);
+    assert.equal(result[0].options.measurementStrategy, 'pessimistic');
+    assert.equal(result[1].options.runs, 1);
+    assert.equal(result[1].options.measurementStrategy, 'median');
+
     // Sets resources sizes correctly
     assert.equal(result[0].resourceSizes.length, 2);
     assert.equal(result[0].resourceSizes[0].resourceType, 'script');
@@ -83,12 +91,10 @@ describe('Budget', () => {
     assert.deepStrictEqual(result[0].timings[0], {
       metric: 'interactive',
       budget: 2000,
-      tolerance: 1000,
     });
     assert.deepStrictEqual(result[0].timings[1], {
       metric: 'first-contentful-paint',
       budget: 1000,
-      tolerance: undefined,
     });
 
     // Does not set unsupplied result
@@ -134,6 +140,43 @@ describe('Budget', () => {
       budgets[1].timings = false;
       assert.throws(_ => Budget.initializeBudget(budgets),
         /^Error: Invalid timings entry in budget at index 1$/);
+    });
+
+    it('throws when budget contains an invalid options property', () => {
+      budgets[1].options = 123;
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /The options property should be defined as an object./);
+    });
+  });
+
+  describe('options validation', () => {
+    it('sets the correct defaults', () => {
+      budgets[0] = {};
+      const result = Budget.initializeBudget(budgets);
+      assert.equal(result[0].options.runs, 1);
+      assert.equal(result[0].options.measurementStrategy, 'median');
+    });
+
+    it('throws when an invalid option is provided', () => {
+      budgets[0].options.turtles = true;
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /Options has unrecognized properties: \[turtles\]/);
+    });
+
+    it('throws when runs is non-numeric', () => {
+      budgets[0].options.runs = true;
+      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid runs quantity: true/);
+    });
+
+    it('throws when runs is an invalid number', () => {
+      budgets[0].options.runs = 999;
+      assert.throws(_ => Budget.initializeBudget(budgets), /Runs should be between 1-10 inclusive/);
+    });
+
+    it('throws when an invalid measurement strategy is provided', () => {
+      budgets[0].options.measurementStrategy = 'exponential';
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /Invalid measurement strategy: exponential./);
     });
   });
 
@@ -182,9 +225,9 @@ describe('Budget', () => {
       assert.throws(_ => Budget.initializeBudget(budgets), /Invalid budget: 100KB/);
     });
 
-    it('throws when an invalid tolerance is supplied', () => {
+    it('throws when a tolerance is supplied', () => {
       budgets[0].timings[0].tolerance = '100ms';
-      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid tolerance: 100ms/);
+      assert.throws(_ => Budget.initializeBudget(budgets), /unrecognized properties/);
     });
 
     it('throws when an invalid property is supplied', () => {

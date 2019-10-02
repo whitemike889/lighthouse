@@ -17,6 +17,8 @@ declare global {
        * More info on robots.txt: https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values
        */
       path?: string;
+      /** Configuration options */
+      options?: Budget.Options;
       /** Budgets based on resource count. */
       resourceCounts?: Array<Budget.ResourceBudget>;
       /** Budgets based on resource size. */
@@ -26,6 +28,14 @@ declare global {
     }
 
     module Budget {
+
+      export interface Options {
+        /** The number of times to test a page; the default is 1. */
+        runs?: Number;
+        /** This indicates how measurements taken over multiple runs should be interpretted; the default is 'median'. */
+        measurementStrategy?: MeasurementStrategy; 
+      }
+
       export interface ResourceBudget {
         /** The resource type that a budget applies to. */
         resourceType: ResourceType;
@@ -38,12 +48,17 @@ declare global {
         metric: TimingMetric;
         /** Budget for timing measurement, in milliseconds. */
         budget: number;
-        /** Tolerance, i.e. buffer, to apply to a timing budget. Units: milliseconds. */
-        tolerance?: number;
       }
 
+      /**
+       * This indicates how measurements taken over multiple runs should be interpretted; the default is 1.
+       * 'Median' mode fails if the median run fails, 'optimistic' fails only if all runs fail, and 'pessimistic' fails if any of the runs fail.
+       * This can be supplied if only 1 run is used, but it is superfluous because all strategies would yield the same result.
+       */
+      export type MeasurementStrategy = 'median' | 'optimistic' | 'pessimistic';
+
       /** Supported timing metrics. */
-      export type TimingMetric = 'first-contentful-paint' | 'first-cpu-idle' | 'interactive' | 'first-meaningful-paint' | 'max-potential-fid';
+      export type TimingMetric = 'first-contentful-paint' | 'first-cpu-idle' | 'interactive' | 'first-meaningful-paint' | 'max-potential-fid' | 'estimated-input-latency' | 'total-blocking-time';
 
       /** Supported values for the resourceType property of a ResourceBudget. */
       export type ResourceType = 'stylesheet' | 'image' | 'media' | 'font' | 'script' | 'document' | 'other' | 'total' | 'third-party';
