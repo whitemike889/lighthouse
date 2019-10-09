@@ -18,7 +18,7 @@ const budgetedConfig = {
       path: '/',
       options: {
         runs: 1,
-        runCombinationStrategy: 'median',
+        aggregationMethod: 'median',
       },
       resourceCounts: [
         {resourceType: 'total', budget: 10},

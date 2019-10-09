@@ -16,7 +16,7 @@ describe('Budget', () => {
       {
         options: {
           runs: 3,
-          runCombinationStrategy: 'pessimistic',
+          aggregationMethod: 'pessimistic',
         },
         resourceSizes: [
           {
@@ -72,9 +72,9 @@ describe('Budget', () => {
 
     // Sets options correctly
     assert.equal(result[0].options.runs, 3);
-    assert.equal(result[0].options.runCombinationStrategy, 'pessimistic');
+    assert.equal(result[0].options.aggregationMethod, 'pessimistic');
     assert.equal(result[1].options.runs, 1);
-    assert.equal(result[1].options.runCombinationStrategy, 'median');
+    assert.equal(result[1].options.aggregationMethod, 'median');
 
     // Sets resources sizes correctly
     assert.equal(result[0].resourceSizes.length, 2);
@@ -154,7 +154,7 @@ describe('Budget', () => {
       budgets[0] = {};
       const result = Budget.initializeBudget(budgets);
       assert.equal(result[0].options.runs, 1);
-      assert.equal(result[0].options.runCombinationStrategy, 'median');
+      assert.equal(result[0].options.aggregationMethod, 'median');
     });
 
     it('throws when an invalid option is provided', () => {
@@ -174,7 +174,7 @@ describe('Budget', () => {
     });
 
     it('throws when an invalid measurement strategy is provided', () => {
-      budgets[0].options.runCombinationStrategy = 'exponential';
+      budgets[0].options.aggregationMethod = 'exponential';
       assert.throws(_ => Budget.initializeBudget(budgets),
         /Invalid measurement strategy: exponential./);
     });

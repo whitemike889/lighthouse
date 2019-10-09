@@ -3267,7 +3267,7 @@
       {
         "path": "/",
         "options": {
-          "runCombinationStrategy": "median",
+          "aggregationMethod": "median",
           "runs": 1
         },
         "resourceSizes": [

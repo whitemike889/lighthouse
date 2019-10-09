@@ -33,7 +33,7 @@ declare global {
         /** The number of times to test a page; the default is 1. */
         runs?: Number;
         /** This indicates how measurements taken over multiple runs should be interpretted; the default is 'median'. */
-        runCombinationStrategy?: RunCombinationStrategy; 
+        aggregationMethod?: AggregationMethod;
       }
 
       export interface ResourceBudget {
@@ -57,7 +57,7 @@ declare global {
        * 'Pessimistic' mode fails if any of the runs fail. Put another way, this only passes if all runs pass.
        *  This can be supplied if only 1 run is used, but it is superfluous because all strategies would yield the same result.
        */
-      export type RunCombinationStrategy = 'median' | 'optimistic' | 'pessimistic';
+      export type AggregationMethod = 'median' | 'optimistic' | 'pessimistic';
 
       /** Supported timing metrics. */
       export type TimingMetric = 'first-contentful-paint' | 'first-cpu-idle' | 'interactive' | 'first-meaningful-paint' | 'max-potential-fid' | 'estimated-input-latency' | 'total-blocking-time';

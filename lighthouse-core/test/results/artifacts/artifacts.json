@@ -34,7 +34,7 @@
         "path": "/",
         "options": {
           "runs": 1,
-          "runCombinationStrategy": "optimistic"
+          "aggregationMethod": "optimistic"
         },
         "resourceSizes": [
           {

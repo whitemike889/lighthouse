@@ -136,20 +136,20 @@ class Budget {
    * @param {unknown} options
    * @return {LH.Budget.Options}
    */
-  static validateOptions(options = {runs: 1, runCombinationStrategy: 'median'}) {
+  static validateOptions(options = {runs: 1, aggregationMethod: 'median'}) {
     if (!isObjectOfUnknownProperties(options)) {
       throw new Error(`The options property should be defined as an object.`);
     }
-    const {runs, runCombinationStrategy, ...invalidRest} = options;
+    const {runs, aggregationMethod, ...invalidRest} = options;
     Budget.assertNoExcessProperties(invalidRest, 'Options');
 
-    /** @type {Array<LH.Budget.RunCombinationStrategy>} */
+    /** @type {Array<LH.Budget.AggregationMethod>} */
     const validStrategies = [
       'median',
       'optimistic',
       'pessimistic',
     ];
-    const strategy = /** @type {LH.Budget.RunCombinationStrategy} */ (runCombinationStrategy);
+    const strategy = /** @type {LH.Budget.AggregationMethod} */ (aggregationMethod);
     if (!validStrategies.includes(strategy)) {
       throw new Error(`Invalid measurement strategy: ${strategy}. \n` +
         `Valid measurement strategies are: ${validStrategies.join(', ')}`);
@@ -160,7 +160,7 @@ class Budget {
       throw new Error(`Runs should be between 1-10 inclusive.`);
     }
     return {
-      runCombinationStrategy: strategy,
+      aggregationMethod: strategy,
       runs,
     };
   }

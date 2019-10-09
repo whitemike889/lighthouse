@@ -33,7 +33,7 @@
     {
         "options": {
             "runs": 1,
-            "runCombinationStrategy": "pessimistic"
+            "aggregationMethod": "pessimistic"
         },
         "resourceCounts": [
             {
