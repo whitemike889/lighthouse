@@ -218,7 +218,7 @@ declare global {
         /** The `as` attribute of the link */
         as: string
         /** The `crossOrigin` attribute of the link */
-        crossOrigin: 'anonymous'|'use-credentials'|null
+        crossOrigin: string | null
         /** Where the link was found, either in the DOM or in the headers of the main document */
         source: 'head'|'body'|'headers'
       }
@@ -499,6 +499,7 @@ declare global {
         firstPaint?: number;
         firstContentfulPaint: number;
         firstMeaningfulPaint?: number;
+        largestContentfulPaint?: number;
         traceEnd: number;
         load?: number;
         domContentLoaded?: number;
@@ -523,6 +524,8 @@ declare global {
         firstContentfulPaintEvt: TraceEvent;
         /** The trace event marking firstMeaningfulPaint, if it was found. */
         firstMeaningfulPaintEvt?: TraceEvent;
+        /** The trace event marking largestContentfulPaint, if it was found. */
+        largestContentfulPaintEvt?: TraceEvent;
         /** The trace event marking loadEventEnd, if it was found. */
         loadEvt?: TraceEvent;
         /** The trace event marking domContentLoadedEventEnd, if it was found. */
@@ -532,6 +535,8 @@ declare global {
          * firstMeaningfulPaintCandidate events had to be attempted.
          */
         fmpFellBack: boolean;
+        /** Whether LCP was invalidated without a new candidate. */
+        lcpInvalidated: boolean;
       }
 
       /** Information on a tech stack (e.g. a JS library) used by the page. */

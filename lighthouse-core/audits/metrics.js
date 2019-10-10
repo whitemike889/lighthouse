@@ -6,7 +6,8 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const MetricsSummary = require('../computed/metrics/timing-summary.js');
+const TimingSummary = require('../computed/metrics/timing-summary.js');
+
 
 class Metrics extends Audit {
   /**
@@ -29,7 +30,7 @@ class Metrics extends Audit {
    */
   static async audit(artifacts, context) {
     /** @type {LH.Artifacts.TimingSummary} */
-    const metrics = await MetricsSummary.summarize(artifacts, context);
+    const metrics = await TimingSummary.summarize(artifacts, context);
     for (const [name, value] of Object.entries(metrics)) {
       const key = /** @type {keyof LH.Artifacts.TimingSummary} */ (name);
       if (typeof value !== 'undefined') {
@@ -41,7 +42,7 @@ class Metrics extends Audit {
     const details = {
       type: 'debugdata',
       // TODO: Consider not nesting metrics under `items`.
-      items: [metrics],
+      items: [metrics, {lcpInvalidated: traceOfTab.lcpInvalidated}],
     };
 
     return {
