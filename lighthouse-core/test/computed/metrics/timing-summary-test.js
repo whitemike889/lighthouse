@@ -22,6 +22,11 @@ describe('Timing summary', () => {
 
     expect(result).toMatchInlineSnapshot(`
 Object {
+  "debugInfo": Array [
+    Object {
+      "lcpInvalidated": undefined,
+    },
+  ],
   "estimatedInputLatency": 77.79999999999995,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351.3320000492968,

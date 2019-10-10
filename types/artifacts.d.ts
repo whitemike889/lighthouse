@@ -591,6 +591,10 @@ declare global {
         observedLastVisualChangeTs: number | undefined;
         observedSpeedIndex: number | undefined;
         observedSpeedIndexTs: number | undefined;
+
+        debugInfo: Array<Record<string, unknown>>;
+
+        [p: string]: number | undefined | Array<Record<string, unknown>>;
       }
     }
   }

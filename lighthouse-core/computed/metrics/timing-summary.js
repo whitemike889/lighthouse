@@ -58,10 +58,8 @@ class TimingSummary {
       firstContentfulPaintTs: firstContentfulPaint.timestamp,
       firstMeaningfulPaint: firstMeaningfulPaint.timing,
       firstMeaningfulPaintTs: firstMeaningfulPaint.timestamp,
-      // eslint-disable-next-line max-len
-      largestContentfulPaint: traceOfTab.lcpInvalidated ? undefined : largestContentfulPaint && largestContentfulPaint.timing,
-      // eslint-disable-next-line max-len
-      largestContentfulPaintTs: traceOfTab.lcpInvalidated ? undefined : largestContentfulPaint && largestContentfulPaint.timestamp,
+      largestContentfulPaint: largestContentfulPaint && largestContentfulPaint.timing,
+      largestContentfulPaintTs: largestContentfulPaint && largestContentfulPaint.timestamp,
       firstCPUIdle: firstCPUIdle && firstCPUIdle.timing,
       firstCPUIdleTs: firstCPUIdle && firstCPUIdle.timestamp,
       interactive: interactive && interactive.timing,
@@ -81,10 +79,8 @@ class TimingSummary {
       observedFirstContentfulPaintTs: traceOfTab.timestamps.firstContentfulPaint,
       observedFirstMeaningfulPaint: traceOfTab.timings.firstMeaningfulPaint,
       observedFirstMeaningfulPaintTs: traceOfTab.timestamps.firstMeaningfulPaint,
-      // eslint-disable-next-line max-len
-      observedLargestContentfulPaint: traceOfTab.lcpInvalidated ? undefined : traceOfTab.timings.largestContentfulPaint,
-      // eslint-disable-next-line max-len
-      observedLargestContentfulPaintTs: traceOfTab.lcpInvalidated ? undefined : traceOfTab.timestamps.largestContentfulPaint,
+      observedLargestContentfulPaint: traceOfTab.timings.largestContentfulPaint,
+      observedLargestContentfulPaintTs: traceOfTab.timestamps.largestContentfulPaint,
       observedTraceEnd: traceOfTab.timings.traceEnd,
       observedTraceEndTs: traceOfTab.timestamps.traceEnd,
       observedLoad: traceOfTab.timings.load,
@@ -99,6 +95,8 @@ class TimingSummary {
       observedLastVisualChangeTs: (speedline.complete + speedline.beginning) * 1000,
       observedSpeedIndex: speedline.speedIndex,
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
+
+      debugInfo: [{lcpInvalidated: trace.lcpInvalidated}],
     };
   }
 }
