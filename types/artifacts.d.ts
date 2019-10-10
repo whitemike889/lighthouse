@@ -558,6 +558,8 @@ declare global {
         firstContentfulPaintTs: number | undefined;
         firstMeaningfulPaint: number | undefined;
         firstMeaningfulPaintTs: number | undefined;
+        largestContentfulPaint: number | undefined;
+        largestContentfulPaintTs: number | undefined;
         firstCPUIdle: number | undefined;
         firstCPUIdleTs: number | undefined;
         interactive: number | undefined;
@@ -575,6 +577,8 @@ declare global {
         observedFirstContentfulPaintTs: number | undefined;
         observedFirstMeaningfulPaint: number | undefined;
         observedFirstMeaningfulPaintTs: number | undefined;
+        observedLargestContentfulPaint: number | undefined;
+        observedLargestContentfulPaintTs: number | undefined;
         observedTraceEnd: number | undefined;
         observedTraceEndTs: number | undefined;
         observedLoad: number | undefined;

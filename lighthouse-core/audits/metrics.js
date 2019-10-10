@@ -8,7 +8,6 @@
 const Audit = require('./audit.js');
 const TimingSummary = require('../computed/metrics/timing-summary.js');
 
-
 class Metrics extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -30,11 +29,11 @@ class Metrics extends Audit {
    */
   static async audit(artifacts, context) {
     /** @type {LH.Artifacts.TimingSummary} */
-    const metrics = await TimingSummary.summarize(artifacts, context);
-    for (const [name, value] of Object.entries(metrics)) {
+    const timings = await TimingSummary.summarize(artifacts, context);
+    for (const [name, value] of Object.entries(timings)) {
       const key = /** @type {keyof LH.Artifacts.TimingSummary} */ (name);
       if (typeof value !== 'undefined') {
-        metrics[key] = Math.round(value);
+        timings[key] = Math.round(value);
       }
     }
 
@@ -42,12 +41,12 @@ class Metrics extends Audit {
     const details = {
       type: 'debugdata',
       // TODO: Consider not nesting metrics under `items`.
-      items: [metrics, {lcpInvalidated: traceOfTab.lcpInvalidated}],
+      items: [timings],
     };
 
     return {
       score: 1,
-      numericValue: metrics.interactive || 0,
+      numericValue: timings.interactive || 0,
       details,
     };
   }

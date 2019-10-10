@@ -10,6 +10,7 @@ const TraceOfTab = require('../trace-of-tab.js');
 const Speedline = require('../speedline.js');
 const FirstContentfulPaint = require('./first-contentful-paint.js');
 const FirstMeaningfulPaint = require('./first-meaningful-paint.js');
+const LargestContentfulPaint = require('./largest-contentful-paint.js');
 const FirstCPUIdle = require('./first-cpu-idle.js');
 const Interactive = require('./interactive.js');
 const SpeedIndex = require('./speed-index.js');
@@ -43,6 +44,7 @@ class TimingSummary {
     const speedline = await Speedline.request(trace, context);
     const firstContentfulPaint = await FirstContentfulPaint.request(metricComputationData, context);
     const firstMeaningfulPaint = await FirstMeaningfulPaint.request(metricComputationData, context);
+    const largestContentfulPaint = await requestOrUndefined(LargestContentfulPaint, metricComputationData); // eslint-disable-line max-len
     const firstCPUIdle = await requestOrUndefined(FirstCPUIdle, metricComputationData);
     const interactive = await requestOrUndefined(Interactive, metricComputationData);
     const speedIndex = await requestOrUndefined(SpeedIndex, metricComputationData);
@@ -56,6 +58,10 @@ class TimingSummary {
       firstContentfulPaintTs: firstContentfulPaint.timestamp,
       firstMeaningfulPaint: firstMeaningfulPaint.timing,
       firstMeaningfulPaintTs: firstMeaningfulPaint.timestamp,
+      // eslint-disable-next-line max-len
+      largestContentfulPaint: traceOfTab.lcpInvalidated ? undefined : largestContentfulPaint && largestContentfulPaint.timing,
+      // eslint-disable-next-line max-len
+      largestContentfulPaintTs: traceOfTab.lcpInvalidated ? undefined : largestContentfulPaint && largestContentfulPaint.timestamp,
       firstCPUIdle: firstCPUIdle && firstCPUIdle.timing,
       firstCPUIdleTs: firstCPUIdle && firstCPUIdle.timestamp,
       interactive: interactive && interactive.timing,
@@ -75,6 +81,10 @@ class TimingSummary {
       observedFirstContentfulPaintTs: traceOfTab.timestamps.firstContentfulPaint,
       observedFirstMeaningfulPaint: traceOfTab.timings.firstMeaningfulPaint,
       observedFirstMeaningfulPaintTs: traceOfTab.timestamps.firstMeaningfulPaint,
+      // eslint-disable-next-line max-len
+      observedLargestContentfulPaint: traceOfTab.lcpInvalidated ? undefined : traceOfTab.timings.largestContentfulPaint,
+      // eslint-disable-next-line max-len
+      observedLargestContentfulPaintTs: traceOfTab.lcpInvalidated ? undefined : traceOfTab.timestamps.largestContentfulPaint,
       observedTraceEnd: traceOfTab.timings.traceEnd,
       observedTraceEndTs: traceOfTab.timestamps.traceEnd,
       observedLoad: traceOfTab.timings.load,
