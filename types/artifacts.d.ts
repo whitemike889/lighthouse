@@ -8,7 +8,6 @@ import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline-core');
-import { memberExpression } from 'babel-types';
 
 type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
@@ -591,11 +590,9 @@ declare global {
         observedLastVisualChangeTs: number | undefined;
         observedSpeedIndex: number | undefined;
         observedSpeedIndexTs: number | undefined;
-
-        debugInfo: Array<Record<string, unknown>>;
-
-        [p: string]: number | undefined | Array<Record<string, unknown>>;
       }
+
+      export type DebugInfo = Array<Record<string,boolean>>
     }
   }
 }

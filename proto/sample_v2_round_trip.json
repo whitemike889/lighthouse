@@ -25,86 +25,51 @@
         },
         "aria-allowed-attr": {
             "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://web.dev/aria-allowed-attr/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "aria-allowed-attr",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "`[aria-*]` attributes match their roles"
         },
         "aria-required-attr": {
             "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://web.dev/aria-required-attr/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "aria-required-attr",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "`[role]`s have all required `[aria-*]` attributes"
         },
         "aria-required-children": {
             "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "aria-required-children",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children."
         },
         "aria-required-parent": {
             "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "aria-required-parent",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "`[role]`s are contained by their required parent element"
         },
         "aria-roles": {
             "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "aria-roles",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "`[role]` values are valid"
         },
         "aria-valid-attr": {
             "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://web.dev/aria-valid-attr/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "aria-valid-attr",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "`[aria-*]` attributes are valid and not misspelled"
         },
         "aria-valid-attr-value": {
             "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://web.dev/aria-valid-attr-value/).",
-            "details": {
-                "headings": [],
-                "items": [],
-                "type": "table"
-            },
             "id": "aria-valid-attr-value",
-            "score": 1.0,
-            "scoreDisplayMode": "binary",
+            "score": null,
+            "scoreDisplayMode": "notApplicable",
             "title": "`[aria-*]` attributes have valid values"
         },
         "audio-caption": {
@@ -235,7 +200,7 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
                             "nodeLabel": "Do better web tester page",
-                            "path": "3,HTML,1,BODY,7,DIV,0,H2",
+                            "path": "3,HTML,1,BODY,5,DIV,0,H2",
                             "selector": "h2",
                             "snippet": "<h2>Do better web tester page</h2>",
                             "type": "node"
@@ -245,7 +210,7 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
                             "nodeLabel": "Hi there!",
-                            "path": "3,HTML,1,BODY,7,DIV,1,SPAN",
+                            "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
                             "selector": "span",
                             "snippet": "<span>Hi there!</span>",
                             "type": "node"
@@ -464,29 +429,25 @@
                 ],
                 "items": [
                     {
+                        "lineNumber": 322.0,
                         "source": "deprecation",
-                        "value": "HTML Imports is deprecated and will be removed in M80, around February 2020. Please use ES modules instead. See https://www.chromestatus.com/features/5144752345317376 and https://developers.google.com/web/updates/2019/07/web-components-time-to-upgrade for more details."
-                    },
-                    {
-                        "lineNumber": 13.0,
-                        "source": "deprecation",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.js",
-                        "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead."
-                    },
-                    {
-                        "lineNumber": 358.0,
-                        "source": "deprecation",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
                         "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
                     },
                     {
+                        "lineNumber": 325.0,
                         "source": "deprecation",
-                        "value": "/deep/ combinator is no longer supported in CSS dynamic profile. It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details."
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                        "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead."
+                    },
+                    {
+                        "source": "deprecation",
+                        "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details."
                     }
                 ],
                 "type": "table"
             },
-            "displayValue": "4 warnings found",
+            "displayValue": "3 warnings found",
             "id": "deprecations",
             "score": 0.0,
             "scoreDisplayMode": "binary",
@@ -572,30 +533,30 @@
                 "items": [
                     {
                         "statistic": "Total DOM Elements",
-                        "value": "141"
+                        "value": "31"
                     },
                     {
                         "element": {
                             "type": "code",
-                            "value": "<title id=\"social-facebook-5\">"
+                            "value": "<h2>"
                         },
                         "statistic": "Maximum DOM Depth",
-                        "value": "4"
+                        "value": "3"
                     },
                     {
                         "element": {
                             "type": "code",
-                            "value": "<div id=\"shadow-root-container\">"
+                            "value": "<body>"
                         },
                         "statistic": "Maximum Child Elements",
-                        "value": "100"
+                        "value": "29"
                     }
                 ],
                 "type": "table"
             },
-            "displayValue": "141 elements",
+            "displayValue": "31 elements",
             "id": "dom-size",
-            "numericValue": 141.0,
+            "numericValue": 31.0,
             "score": 1.0,
             "scoreDisplayMode": "numeric",
             "title": "Avoids an excessive DOM size"
@@ -667,40 +628,35 @@
                 ],
                 "items": [
                     {
-                        "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:59663/dobetterweb/clock.appcache",
+                        "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache",
                         "source": "other",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
                         "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
                         "source": "network",
-                        "url": "http://localhost:59663/dobetterweb/unknown404.css?delay=200"
+                        "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
                     },
                     {
                         "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
                         "source": "network",
-                        "url": "http://localhost:59663/dobetterweb/fcp-delayer.js?delay=5000"
+                        "url": "http://localhost:10200/favicon.ico"
                     },
                     {
                         "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
                         "source": "network",
-                        "url": "http://localhost:59663/favicon.ico"
+                        "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
                     },
                     {
-                        "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-                        "source": "network",
-                        "url": "http://localhost:59663/dobetterweb/unknown404.css?delay=200"
-                    },
-                    {
-                        "description": "Error: A distinctive error\n    at http://localhost:59663/dobetterweb/dbw_tester.html:57:54",
+                        "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
                         "source": "Runtime.exception",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     }
                 ],
                 "type": "table"
             },
             "id": "errors-in-console",
-            "numericValue": 6.0,
+            "numericValue": 5.0,
             "score": 0.0,
             "scoreDisplayMode": "binary",
             "title": "Browser errors were logged to the console"
@@ -737,17 +693,17 @@
                 "items": [
                     {
                         "href": "https://www.google.com/",
-                        "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\">",
+                        "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
                         "target": "_blank"
                     },
                     {
                         "href": "Unknown",
-                        "outerHTML": "<a target=\"_blank\">",
+                        "outerHTML": "<a target=\"blank\">Hello</a>",
                         "target": "_blank"
                     },
                     {
                         "href": "https://www.google.com/",
-                        "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">",
+                        "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>",
                         "rel": "nofollow",
                         "target": "_blank"
                     }
@@ -759,7 +715,7 @@
             "scoreDisplayMode": "binary",
             "title": "Links to cross-origin destinations are unsafe",
             "warnings": [
-                "Unable to determine the destination for anchor (<a target=\"_blank\">). If not used as a hyperlink, consider removing target=_blank."
+                "Unable to determine the destination for anchor (<a target=\"blank\">Hello</a>). If not used as a hyperlink, consider removing target=_blank."
             ]
         },
         "final-screenshot": {
@@ -856,20 +812,14 @@
                 ],
                 "items": [
                     {
-                        "coverage": "6.78%",
-                        "fontSize": "11px",
-                        "selector": "input, textarea, select, button",
-                        "source": "User Agent Stylesheet"
-                    },
-                    {
-                        "coverage": "93.22%",
+                        "coverage": "100.00%",
                         "fontSize": "\u2265 12px",
                         "source": "Legible text"
                     }
                 ],
                 "type": "table"
             },
-            "displayValue": "93.22% legible text",
+            "displayValue": "100% legible text",
             "id": "font-size",
             "score": 1.0,
             "scoreDisplayMode": "binary",
@@ -899,12 +849,12 @@
                 ],
                 "items": [
                     {
-                        "label": "line: 318",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "label": "line: 277",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
-                        "label": "line: 322",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "label": "line: 281",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     }
                 ],
                 "type": "table"
@@ -1011,7 +961,7 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
                             "nodeLabel": "img",
-                            "path": "3,HTML,1,BODY,12,IMG",
+                            "path": "3,HTML,1,BODY,10,IMG",
                             "selector": "img[height=\"\\35 7\"]",
                             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
                             "type": "node"
@@ -1021,7 +971,7 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
                             "nodeLabel": "img",
-                            "path": "3,HTML,1,BODY,14,IMG",
+                            "path": "3,HTML,1,BODY,12,IMG",
                             "selector": "img[height=\"\\33 18\"]",
                             "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
                             "type": "node"
@@ -1031,7 +981,7 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
                             "nodeLabel": "img",
-                            "path": "3,HTML,1,BODY,16,IMG",
+                            "path": "3,HTML,1,BODY,14,IMG",
                             "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
                             "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
                             "type": "node"
@@ -1041,9 +991,9 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
                             "nodeLabel": "img",
-                            "path": "3,HTML,1,BODY,55,IMG",
-                            "selector": "img:nth-child(33)",
-                            "snippet": "<img src=\"blob:http://localhost:59663/3246cdf4-5445-4168-8420-4c167ec24071\">",
+                            "path": "3,HTML,1,BODY,53,IMG",
+                            "selector": "img:nth-child(30)",
+                            "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
                             "type": "node"
                         }
                     }
@@ -1084,7 +1034,7 @@
                         "actualAspectRatio": "480 x 318\n        (1.51)",
                         "displayedAspectRatio": "480 x 57\n        (8.42)",
                         "doRatiosMatch": false,
-                        "url": "http://localhost:59663/dobetterweb/lighthouse-480x318.jpg"
+                        "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg"
                     }
                 ],
                 "type": "table"
@@ -1233,7 +1183,7 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
                             "nodeLabel": "input",
-                            "path": "3,HTML,1,BODY,50,INPUT",
+                            "path": "3,HTML,1,BODY,48,INPUT",
                             "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
                             "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
                             "type": "node"
@@ -1243,8 +1193,8 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
                             "nodeLabel": "input",
-                            "path": "3,HTML,1,BODY,52,INPUT",
-                            "selector": "input:nth-child(31)",
+                            "path": "3,HTML,1,BODY,50,INPUT",
+                            "selector": "input:nth-child(28)",
                             "snippet": "<input type=\"password\">",
                             "type": "node"
                         }
@@ -1253,7 +1203,7 @@
                         "node": {
                             "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
                             "nodeLabel": "input",
-                            "path": "3,HTML,1,BODY,54,INPUT",
+                            "path": "3,HTML,1,BODY,52,INPUT",
                             "selector": "input[onpaste=\"return\\ false\\;\"]",
                             "snippet": "<input type=\"password\" onpaste=\"return false;\">",
                             "type": "node"
@@ -1301,7 +1251,7 @@
                         "node": {
                             "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
                             "nodeLabel": "a",
-                            "path": "3,HTML,1,BODY,46,A",
+                            "path": "3,HTML,1,BODY,44,A",
                             "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
                             "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
                             "type": "node"
@@ -1311,7 +1261,7 @@
                         "node": {
                             "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
                             "nodeLabel": "a",
-                            "path": "3,HTML,1,BODY,48,A",
+                            "path": "3,HTML,1,BODY,46,A",
                             "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
                             "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
                             "type": "node"
@@ -1975,16 +1925,16 @@
                 ],
                 "items": [
                     {
-                        "label": "line: 256",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "label": "line: 178",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
-                        "label": "line: 257",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "label": "line: 179",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     },
                     {
-                        "label": "line: 258",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "label": "line: 180",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     }
                 ],
                 "type": "table"
@@ -2051,8 +2001,8 @@
                 ],
                 "items": [
                     {
-                        "label": "line: 328",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "label": "line: 287",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     }
                 ],
                 "type": "table"
@@ -2131,44 +2081,15 @@
         "offscreen-images": {
             "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://web.dev/offscreen-images).",
             "details": {
-                "headings": [
-                    {
-                        "key": "url",
-                        "valueType": "thumbnail"
-                    },
-                    {
-                        "key": "url",
-                        "label": "URL",
-                        "valueType": "url"
-                    },
-                    {
-                        "key": "totalBytes",
-                        "label": "Size",
-                        "valueType": "bytes"
-                    },
-                    {
-                        "key": "wastedBytes",
-                        "label": "Potential Savings",
-                        "valueType": "bytes"
-                    }
-                ],
-                "items": [
-                    {
-                        "requestStartTime": 206698.816329,
-                        "totalBytes": 934285.0,
-                        "url": "http://localhost:59663/dobetterweb/lighthouse-rotating.gif",
-                        "wastedBytes": 934285.0,
-                        "wastedPercent": 100.0
-                    }
-                ],
-                "overallSavingsBytes": 934285.0,
-                "overallSavingsMs": 200.0,
+                "headings": [],
+                "items": [],
+                "overallSavingsBytes": 0.0,
+                "overallSavingsMs": 0.0,
                 "type": "opportunity"
             },
-            "displayValue": "Potential savings of 912\u00a0KB",
             "id": "offscreen-images",
-            "numericValue": 200.0,
-            "score": 0.83,
+            "numericValue": 0.0,
+            "score": 1.0,
             "scoreDisplayMode": "numeric",
             "title": "Defer offscreen images",
             "warnings": []
@@ -2366,67 +2287,14 @@
         "render-blocking-resources": {
             "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://web.dev/render-blocking-resources).",
             "details": {
-                "headings": [
-                    {
-                        "key": "url",
-                        "label": "URL",
-                        "valueType": "url"
-                    },
-                    {
-                        "key": "totalBytes",
-                        "label": "Size",
-                        "valueType": "bytes"
-                    },
-                    {
-                        "key": "wastedMs",
-                        "label": "Potential Savings",
-                        "valueType": "timespanMs"
-                    }
-                ],
-                "items": [
-                    {
-                        "totalBytes": 868.0,
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=100",
-                        "wastedMs": 866.0
-                    },
-                    {
-                        "totalBytes": 186.0,
-                        "url": "http://localhost:59663/dobetterweb/unknown404.css?delay=200",
-                        "wastedMs": 866.0
-                    },
-                    {
-                        "totalBytes": 868.0,
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=2200",
-                        "wastedMs": 866.0
-                    },
-                    {
-                        "totalBytes": 808.0,
-                        "url": "http://localhost:59663/dobetterweb/dbw_partial_a.html?delay=200",
-                        "wastedMs": 866.0
-                    },
-                    {
-                        "totalBytes": 868.0,
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=3000&capped",
-                        "wastedMs": 866.0
-                    },
-                    {
-                        "totalBytes": 1017.0,
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.js",
-                        "wastedMs": 866.0
-                    },
-                    {
-                        "totalBytes": 200.0,
-                        "url": "http://localhost:59663/dobetterweb/fcp-delayer.js?delay=5000",
-                        "wastedMs": 866.0
-                    }
-                ],
-                "overallSavingsMs": 866.0,
+                "headings": [],
+                "items": [],
+                "overallSavingsMs": 0.0,
                 "type": "opportunity"
             },
-            "displayValue": "Potential savings of 870\u00a0ms",
             "id": "render-blocking-resources",
-            "numericValue": 866.0,
-            "score": 0.49,
+            "numericValue": 0.0,
+            "score": 1.0,
             "scoreDisplayMode": "numeric",
             "title": "Eliminate render-blocking resources"
         },
@@ -2660,7 +2528,7 @@
                         "overlapScoreRatio": 0.8333333333333334,
                         "overlappingTarget": {
                             "nodeLabel": "Do something else",
-                            "path": "3,HTML,1,BODY,20,BUTTON",
+                            "path": "3,HTML,1,BODY,18,BUTTON",
                             "selector": "body > button.small-button",
                             "snippet": "<button class=\"small-button\">Do something else</button>",
                             "type": "node"
@@ -2669,7 +2537,7 @@
                         "size": "200x18",
                         "tapTarget": {
                             "nodeLabel": "Do something",
-                            "path": "3,HTML,1,BODY,19,BUTTON",
+                            "path": "3,HTML,1,BODY,17,BUTTON",
                             "selector": "body > button.small-button",
                             "snippet": "<button class=\"small-button\">Do something</button>",
                             "type": "node"
@@ -2876,12 +2744,36 @@
         "unminified-javascript": {
             "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://web.dev/unminified-javascript).",
             "details": {
-                "headings": [],
-                "items": [],
-                "overallSavingsBytes": 0.0,
+                "headings": [
+                    {
+                        "key": "url",
+                        "label": "URL",
+                        "valueType": "url"
+                    },
+                    {
+                        "key": "totalBytes",
+                        "label": "Size",
+                        "valueType": "bytes"
+                    },
+                    {
+                        "key": "wastedBytes",
+                        "label": "Potential Savings",
+                        "valueType": "bytes"
+                    }
+                ],
+                "items": [
+                    {
+                        "totalBytes": 23595.0,
+                        "url": "inline: /**\n* @license\n* Copyright Google Inc. A...",
+                        "wastedBytes": 10034.0,
+                        "wastedPercent": 42.52388078488413
+                    }
+                ],
+                "overallSavingsBytes": 10034.0,
                 "overallSavingsMs": 0.0,
                 "type": "opportunity"
             },
+            "displayValue": "Potential savings of 10\u00a0KB",
             "id": "unminified-javascript",
             "numericValue": 0.0,
             "score": 1.0,
@@ -2926,103 +2818,14 @@
         "uses-http2": {
             "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2).",
             "details": {
-                "headings": [
-                    {
-                        "itemType": "url",
-                        "key": "url",
-                        "text": "URL"
-                    },
-                    {
-                        "itemType": "text",
-                        "key": "protocol",
-                        "text": "Protocol"
-                    }
-                ],
-                "items": [
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=2000&async=true"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=100"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/unknown404.css?delay=200"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=2200"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_disabled.css?delay=200&isdisabled"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_partial_a.html?delay=200"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_partial_b.html?delay=200&isasync"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=3000&capped"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=3000&async=true"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.js"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/empty_module.js?delay=500"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/empty.css"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/fcp-delayer.js?delay=5000"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/lighthouse-480x318.jpg"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/lighthouse-rotating.gif"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/third_party/aggressive-promise-polyfill.js"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.css?scriptActivated&delay=200"
-                    },
-                    {
-                        "protocol": "http/1.1",
-                        "url": "http://localhost:59663/favicon.ico"
-                    }
-                ],
+                "headings": [],
+                "items": [],
                 "type": "table"
             },
-            "displayValue": "19 requests not served via HTTP/2",
             "id": "uses-http2",
-            "score": 0.0,
+            "score": 1.0,
             "scoreDisplayMode": "binary",
-            "title": "Does not use HTTP/2 for all of its resources"
+            "title": "Uses HTTP/2 for its own resources"
         },
         "uses-long-cache-ttl": {
             "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more](https://web.dev/uses-long-cache-ttl).",
@@ -3185,8 +2988,16 @@
                 ],
                 "items": [
                     {
-                        "label": "line: 289",
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+                        "label": "line: 26",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
+                    },
+                    {
+                        "label": "line: 222",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+                    },
+                    {
+                        "label": "line: 248",
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
                     }
                 ],
                 "type": "table"
@@ -3263,24 +3074,24 @@
                 ],
                 "items": [
                     {
-                        "totalBytes": 25073.0,
-                        "url": "http://localhost:59663/dobetterweb/third_party/aggressive-promise-polyfill.js",
-                        "wastedBytes": 16652.0
+                        "totalBytes": 71501.0,
+                        "url": "http://localhost:10200/zone.js",
+                        "wastedBytes": 56204.0
                     },
                     {
-                        "totalBytes": 15208.0,
-                        "url": "http://localhost:59663/dobetterweb/dbw_tester.html",
-                        "wastedBytes": 10104.0
+                        "totalBytes": 12519.0,
+                        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+                        "wastedBytes": 8442.0
                     }
                 ],
-                "overallSavingsBytes": 26756.0,
-                "overallSavingsMs": 350.0,
+                "overallSavingsBytes": 64646.0,
+                "overallSavingsMs": 0.0,
                 "type": "opportunity"
             },
-            "displayValue": "Potential savings of 26\u00a0KB",
+            "displayValue": "Potential savings of 63\u00a0KB",
             "id": "uses-text-compression",
-            "numericValue": 350.0,
-            "score": 0.72,
+            "numericValue": 0.0,
+            "score": 1.0,
             "scoreDisplayMode": "numeric",
             "title": "Enable text compression"
         },
@@ -3311,20 +3122,20 @@
                 "items": [
                     {
                         "fromProtocol": true,
-                        "isCrossOrigin": false,
+                        "isCrossOrigin": true,
                         "totalBytes": 24620.0,
-                        "url": "http://localhost:59663/dobetterweb/lighthouse-480x318.jpg",
-                        "wastedBytes": 9002.0
+                        "url": "http://localhost:54819/dobetterweb/lighthouse-480x318.jpg",
+                        "wastedBytes": 9028.0
                     }
                 ],
-                "overallSavingsBytes": 9002.0,
-                "overallSavingsMs": 200.0,
+                "overallSavingsBytes": 9028.0,
+                "overallSavingsMs": 0.0,
                 "type": "opportunity"
             },
             "displayValue": "Potential savings of 9\u00a0KB",
             "id": "uses-webp-images",
-            "numericValue": 200.0,
-            "score": 0.83,
+            "numericValue": 0.0,
+            "score": 1.0,
             "scoreDisplayMode": "numeric",
             "title": "Serve images in next-gen formats",
             "warnings": []
@@ -3392,37 +3203,37 @@
                 {
                     "group": "a11y-aria",
                     "id": "aria-allowed-attr",
-                    "weight": 10.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-aria",
                     "id": "aria-required-attr",
-                    "weight": 10.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-aria",
                     "id": "aria-required-children",
-                    "weight": 10.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-aria",
                     "id": "aria-required-parent",
-                    "weight": 10.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-aria",
                     "id": "aria-roles",
-                    "weight": 10.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-aria",
                     "id": "aria-valid-attr-value",
-                    "weight": 10.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-aria",
                     "id": "aria-valid-attr",
-                    "weight": 10.0
+                    "weight": 0.0
                 },
                 {
                     "group": "a11y-audio-video",
@@ -3607,7 +3418,7 @@
             "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "id": "accessibility",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
-            "score": 0.75,
+            "score": 0.46,
             "title": "Accessibility"
         },
         "best-practices": {
@@ -3674,7 +3485,7 @@
                 }
             ],
             "id": "best-practices",
-            "score": 0.07,
+            "score": 0.14,
             "title": "Best Practices"
         },
         "performance": {
@@ -4121,12 +3932,12 @@
         "onlyCategories": null
     },
     "environment": {
-        "benchmarkIndex": 1144.0,
-        "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3937.0 Safari/537.36",
-        "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Mobile Safari/537.36 Chrome-Lighthouse"
+        "benchmarkIndex": 1000.0,
+        "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+        "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36"
     },
-    "fetchTime": "2019-10-10T21:09:41.484Z",
-    "finalUrl": "http://localhost:59663/dobetterweb/dbw_tester.html",
+    "fetchTime": "2018-03-13T00:55:45.840Z",
+    "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "i18n": {
         "rendererFormattedStrings": {
             "auditGroupExpandTooltip": "Show audits",
@@ -4151,7 +3962,7 @@
         }
     },
     "lighthouseVersion": "5.5.0",
-    "requestedUrl": "http://localhost:59663/dobetterweb/dbw_tester.html",
+    "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "runWarnings": [],
     "stackPacks": [
         {
@@ -4178,546 +3989,6 @@
     ],
     "timing": {
         "entries": [
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:init:config",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:config:requireGatherers",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:config:requireAudits",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:init:connect",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:loadBlank",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:getVersion",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:getBenchmarkIndex",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:setupDriver",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:loadBlank",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:setupPassNetwork",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:driver:cleanBrowserCaches",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:CSSUsage",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:ViewportDimensions",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:RuntimeExceptions",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:ConsoleMessages",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:AnchorElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:ImageElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:LinkElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:MetaElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:ScriptElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:IFrameElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:AppCacheManifest",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:Doctype",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:DOMStats",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:OptimizedImages",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:PasswordInputsWithPreventedPaste",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:ResponseCompression",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:TagsBlockingFirstPaint",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:FontSize",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:EmbeddedContent",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:RobotsTxt",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:TapTargets",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:Accessibility",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beginRecording",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:getVersion",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:loadPage-defaultPass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:pass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:getTrace",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:getDevtoolsLog",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:CSSUsage",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:ViewportDimensions",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:RuntimeExceptions",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:ConsoleMessages",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:AnchorElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:ImageElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:LinkElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:MetaElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:ScriptElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:IFrameElements",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:AppCacheManifest",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:Doctype",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:DOMStats",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:OptimizedImages",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:PasswordInputsWithPreventedPaste",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:ResponseCompression",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:TagsBlockingFirstPaint",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:FontSize",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:EmbeddedContent",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:RobotsTxt",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:TapTargets",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:Accessibility",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:loadBlank",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:setupPassNetwork",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:ServiceWorker",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:Offline",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:StartUrl",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beginRecording",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:loadPage-offlinePass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:pass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:getDevtoolsLog",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:ServiceWorker",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:Offline",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:StartUrl",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:loadBlank",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:setupPassNetwork",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:HTTPRedirect",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beforePass:HTMLWithoutJavaScript",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:beginRecording",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:loadPage-redirectPass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:pass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:getDevtoolsLog",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:HTTPRedirect",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:afterPass:HTMLWithoutJavaScript",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:gather:disconnect",
-                "startTime": 0.0
-            },
             {
                 "duration": 100.0,
                 "entryType": "measure",
@@ -5705,5 +4976,5 @@
         ],
         "total": 12345.6789
     },
-    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3937.0 Safari/537.36"
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36"
 }

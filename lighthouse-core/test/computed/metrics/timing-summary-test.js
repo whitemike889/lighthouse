@@ -20,13 +20,8 @@ describe('Timing summary', () => {
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const result = await TimingSummary.summarize(artifacts, context);
 
-    expect(result).toMatchInlineSnapshot(`
+    expect(result.metrics).toMatchInlineSnapshot(`
 Object {
-  "debugInfo": Array [
-    Object {
-      "lcpInvalidated": undefined,
-    },
-  ],
   "estimatedInputLatency": 77.79999999999995,
   "estimatedInputLatencyTs": undefined,
   "firstCPUIdle": 3351.3320000492968,
@@ -67,10 +62,12 @@ Object {
 }
 `);
     // Includes performance metrics
-    expect(result.firstContentfulPaint).toBeDefined();
+    expect(result.metrics.firstContentfulPaint).toBeDefined();
     // Includes timestamps from trace of tab
-    expect(result.observedFirstContentfulPaint).toBeDefined();
+    expect(result.metrics.observedFirstContentfulPaint).toBeDefined();
     // Includs visual metrics from Speedline
-    expect(result.observedFirstVisualChange).toBeDefined();
+    expect(result.metrics.observedFirstVisualChange).toBeDefined();
+
+    expect(result.debugInfo).toEqual([{'lcpInvalidated': undefined}]);
   });
 });

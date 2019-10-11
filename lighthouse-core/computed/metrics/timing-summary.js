@@ -21,7 +21,7 @@ class TimingSummary {
   /**
      * @param {LH.Artifacts} artifacts
      * @param {LH.Audit.Context} context
-     * @return {Promise<LH.Artifacts.TimingSummary>}
+     * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: LH.Artifacts.TimingSummaryDebugInfo}>}
      */
   static async summarize(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
@@ -52,7 +52,7 @@ class TimingSummary {
     const totalBlockingTime = await TotalBlockingTime.request(metricComputationData, context); // eslint-disable-line max-len
 
     /** @type {LH.Artifacts.TimingSummary} */
-    return {
+    const metrics = {
       // Include the simulated/observed performance metrics
       firstContentfulPaint: firstContentfulPaint.timing,
       firstContentfulPaintTs: firstContentfulPaint.timestamp,
@@ -95,9 +95,11 @@ class TimingSummary {
       observedLastVisualChangeTs: (speedline.complete + speedline.beginning) * 1000,
       observedSpeedIndex: speedline.speedIndex,
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
-
-      debugInfo: [{lcpInvalidated: trace.lcpInvalidated}],
     };
+        /** @type {LH.Artifacts.DebugInfo} */
+    const debugInfo = [{lcpInvalidated: trace.lcpInvalidated}];
+
+    return {metrics, debugInfo};
   }
 }
 

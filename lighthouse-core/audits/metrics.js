@@ -28,12 +28,16 @@ class Metrics extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const summary = await TimingSummary.summarize(artifacts, context);
     /** @type {LH.Artifacts.TimingSummary} */
-    const {debugInfo, ...timings} = await TimingSummary.summarize(artifacts, context);
+    const metrics = summary.metrics;
+    /** @type {LH.Artifacts.DebugInfo} */
+    const debugInfo = summary.debugInfo;
 
-    for (const [name, value] of Object.entries(timings)) {
+    for (const [name, value] of Object.entries(metrics)) {
+      const key = /** @type {keyof LH.Artifacts.TimingSummary} */ (name);
       if (typeof value === 'number') {
-        timings[name] = Math.round(value);
+        metrics[key] = Math.round(value);
       }
     }
 
@@ -41,12 +45,12 @@ class Metrics extends Audit {
     const details = {
       type: 'debugdata',
       // TODO: Consider not nesting metrics under `items`.
-      items: [timings, debugInfo],
+      items: [metrics, debugInfo],
     };
 
     return {
       score: 1,
-      numericValue: timings.interactive || 0,
+      numericValue: metrics.interactive || 0,
       details,
     };
   }

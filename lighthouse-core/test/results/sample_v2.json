@@ -1,14 +1,14 @@
 {
-  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3937.0 Safari/537.36",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
   "environment": {
-    "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Mobile Safari/537.36 Chrome-Lighthouse",
-    "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3937.0 Safari/537.36",
-    "benchmarkIndex": 1144
+    "networkUserAgent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/66.0.3359.30 Mobile Safari/537.36",
+    "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+    "benchmarkIndex": 1000
   },
   "lighthouseVersion": "5.5.0",
-  "fetchTime": "2019-10-10T21:09:41.484Z",
-  "requestedUrl": "http://localhost:59663/dobetterweb/dbw_tester.html",
-  "finalUrl": "http://localhost:59663/dobetterweb/dbw_tester.html",
+  "fetchTime": "2018-03-13T00:55:45.840Z",
+  "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
+  "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "runWarnings": [],
   "audits": {
     "is-on-https": {
@@ -215,7 +215,7 @@
       "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more](https://web.dev/errors-in-console)",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "numericValue": 6,
+      "numericValue": 5,
       "details": {
         "type": "table",
         "headings": [
@@ -233,33 +233,28 @@
         "items": [
           {
             "source": "other",
-            "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:59663/dobetterweb/clock.appcache",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "description": "Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:59663/dobetterweb/unknown404.css?delay=200"
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:59663/dobetterweb/fcp-delayer.js?delay=5000"
+            "url": "http://localhost:10200/favicon.ico"
           },
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:59663/favicon.ico"
-          },
-          {
-            "source": "network",
-            "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:59663/dobetterweb/unknown404.css?delay=200"
+            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200"
           },
           {
             "source": "Runtime.exception",
-            "description": "Error: A distinctive error\n    at http://localhost:59663/dobetterweb/dbw_tester.html:57:54",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "description": "Error: An error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:42:38",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -590,7 +585,7 @@
         ],
         "items": [
           {
-            "url": "http://localhost:59663/dobetterweb/lighthouse-480x318.jpg",
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "displayedAspectRatio": "480 x 57\n        (8.42)",
             "actualAspectRatio": "480 x 318\n        (1.51)",
             "doRatiosMatch": false
@@ -604,7 +599,7 @@
       "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "4 warnings found",
+      "displayValue": "3 warnings found",
       "details": {
         "type": "table",
         "headings": [
@@ -626,24 +621,19 @@
         ],
         "items": [
           {
-            "value": "HTML Imports is deprecated and will be removed in M80, around February 2020. Please use ES modules instead. See https://www.chromestatus.com/features/5144752345317376 and https://developers.google.com/web/updates/2019/07/web-components-time-to-upgrade for more details.",
-            "url": "",
-            "source": "deprecation"
+            "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "source": "deprecation",
+            "lineNumber": 322
           },
           {
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.js",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "source": "deprecation",
-            "lineNumber": 13
+            "lineNumber": 325
           },
           {
-            "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 358
-          },
-          {
-            "value": "/deep/ combinator is no longer supported in CSS dynamic profile. It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
+            "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
             "url": "",
             "source": "deprecation"
           }
@@ -1617,85 +1607,50 @@
       "id": "aria-allowed-attr",
       "title": "`[aria-*]` attributes match their roles",
       "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://web.dev/aria-allowed-attr/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-required-attr": {
       "id": "aria-required-attr",
       "title": "`[role]`s have all required `[aria-*]` attributes",
       "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://web.dev/aria-required-attr/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-required-children": {
       "id": "aria-required-children",
       "title": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children.",
       "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-required-parent": {
       "id": "aria-required-parent",
       "title": "`[role]`s are contained by their required parent element",
       "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-roles": {
       "id": "aria-roles",
       "title": "`[role]` values are valid",
       "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-valid-attr-value": {
       "id": "aria-valid-attr-value",
       "title": "`[aria-*]` attributes have valid values",
       "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://web.dev/aria-valid-attr-value/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "aria-valid-attr": {
       "id": "aria-valid-attr",
       "title": "`[aria-*]` attributes are valid and not misspelled",
       "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://web.dev/aria-valid-attr/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "audio-caption": {
       "id": "audio-caption",
@@ -1748,7 +1703,7 @@
             "node": {
               "type": "node",
               "selector": "h2",
-              "path": "3,HTML,1,BODY,7,DIV,0,H2",
+              "path": "3,HTML,1,BODY,5,DIV,0,H2",
               "snippet": "<h2>Do better web tester page</h2>",
               "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 18.0pt, font weight: bold). Expected contrast ratio of 3:1",
               "nodeLabel": "Do better web tester page"
@@ -1758,7 +1713,7 @@
             "node": {
               "type": "node",
               "selector": "span",
-              "path": "3,HTML,1,BODY,7,DIV,1,SPAN",
+              "path": "3,HTML,1,BODY,5,DIV,1,SPAN",
               "snippet": "<span>Hi there!</span>",
               "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 1.32 (foreground color: #ffc0cb, background color: #eeeeee, font size: 12.0pt, font weight: normal). Expected contrast ratio of 4.5:1",
               "nodeLabel": "Hi there!"
@@ -1886,7 +1841,7 @@
             "node": {
               "type": "node",
               "selector": "img[height=\"\\35 7\"]",
-              "path": "3,HTML,1,BODY,12,IMG",
+              "path": "3,HTML,1,BODY,10,IMG",
               "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"57\">",
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -1896,7 +1851,7 @@
             "node": {
               "type": "node",
               "selector": "img[height=\"\\33 18\"]",
-              "path": "3,HTML,1,BODY,14,IMG",
+              "path": "3,HTML,1,BODY,12,IMG",
               "snippet": "<img src=\"lighthouse-480x318.jpg\" width=\"480\" height=\"318\">",
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -1906,7 +1861,7 @@
             "node": {
               "type": "node",
               "selector": "img[src$=\"lighthouse-rotating\\.gif\"]",
-              "path": "3,HTML,1,BODY,16,IMG",
+              "path": "3,HTML,1,BODY,14,IMG",
               "snippet": "<img src=\"lighthouse-rotating.gif\" width=\"811\" height=\"462\">",
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
@@ -1915,9 +1870,9 @@
           {
             "node": {
               "type": "node",
-              "selector": "img:nth-child(33)",
-              "path": "3,HTML,1,BODY,55,IMG",
-              "snippet": "<img src=\"blob:http://localhost:59663/3246cdf4-5445-4168-8420-4c167ec24071\">",
+              "selector": "img:nth-child(30)",
+              "path": "3,HTML,1,BODY,53,IMG",
+              "snippet": "<img src=\"blob:http://localhost:62824/289254fd-ef1d-4c1a-96a8-ba291caa2140\">",
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute or the title attribute is empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "img"
             }
@@ -1963,7 +1918,7 @@
             "node": {
               "type": "node",
               "selector": "input[onpaste=\"event\\.preventDefault\\(\\)\\;\"]",
-              "path": "3,HTML,1,BODY,50,INPUT",
+              "path": "3,HTML,1,BODY,48,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"event.preventDefault();\">",
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -1972,8 +1927,8 @@
           {
             "node": {
               "type": "node",
-              "selector": "input:nth-child(31)",
-              "path": "3,HTML,1,BODY,52,INPUT",
+              "selector": "input:nth-child(28)",
+              "path": "3,HTML,1,BODY,50,INPUT",
               "snippet": "<input type=\"password\">",
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -1983,7 +1938,7 @@
             "node": {
               "type": "node",
               "selector": "input[onpaste=\"return\\ false\\;\"]",
-              "path": "3,HTML,1,BODY,54,INPUT",
+              "path": "3,HTML,1,BODY,52,INPUT",
               "snippet": "<input type=\"password\" onpaste=\"return false;\">",
               "explanation": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
               "nodeLabel": "input"
@@ -2031,7 +1986,7 @@
             "node": {
               "type": "node",
               "selector": "a[href=\"javascript\\:void\\(0\\)\"]",
-              "path": "3,HTML,1,BODY,46,A",
+              "path": "3,HTML,1,BODY,44,A",
               "snippet": "<a href=\"javascript:void(0)\" target=\"_blank\"></a>",
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
@@ -2041,7 +1996,7 @@
             "node": {
               "type": "node",
               "selector": "a[href$=\"mailto\\:inbox\\@email\\.com\"]",
-              "path": "3,HTML,1,BODY,48,A",
+              "path": "3,HTML,1,BODY,46,A",
               "snippet": "<a href=\"mailto:inbox@email.com\" target=\"_blank\"></a>",
               "explanation": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"presentation\"\n  Element's default semantics were not overridden with role=\"none\"",
               "nodeLabel": "a"
@@ -2462,113 +2417,32 @@
       "id": "offscreen-images",
       "title": "Defer offscreen images",
       "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn more](https://web.dev/offscreen-images).",
-      "score": 0.83,
+      "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 200,
-      "displayValue": "Potential savings of 912 KB",
+      "numericValue": 0,
+      "displayValue": "",
       "warnings": [],
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "thumbnail",
-            "label": ""
-          },
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "totalBytes",
-            "valueType": "bytes",
-            "label": "Size"
-          },
-          {
-            "key": "wastedBytes",
-            "valueType": "bytes",
-            "label": "Potential Savings"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:59663/dobetterweb/lighthouse-rotating.gif",
-            "requestStartTime": 206698.816329,
-            "totalBytes": 934285,
-            "wastedBytes": 934285,
-            "wastedPercent": 100
-          }
-        ],
-        "overallSavingsMs": 200,
-        "overallSavingsBytes": 934285
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "render-blocking-resources": {
       "id": "render-blocking-resources",
       "title": "Eliminate render-blocking resources",
       "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://web.dev/render-blocking-resources).",
-      "score": 0.49,
+      "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 866,
-      "displayValue": "Potential savings of 870 ms",
+      "numericValue": 0,
+      "displayValue": "",
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "totalBytes",
-            "valueType": "bytes",
-            "label": "Size"
-          },
-          {
-            "key": "wastedMs",
-            "valueType": "timespanMs",
-            "label": "Potential Savings"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=100",
-            "totalBytes": 868,
-            "wastedMs": 866
-          },
-          {
-            "url": "http://localhost:59663/dobetterweb/unknown404.css?delay=200",
-            "totalBytes": 186,
-            "wastedMs": 866
-          },
-          {
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=2200",
-            "totalBytes": 868,
-            "wastedMs": 866
-          },
-          {
-            "url": "http://localhost:59663/dobetterweb/dbw_partial_a.html?delay=200",
-            "totalBytes": 808,
-            "wastedMs": 866
-          },
-          {
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=3000&capped",
-            "totalBytes": 868,
-            "wastedMs": 866
-          },
-          {
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.js",
-            "totalBytes": 1017,
-            "wastedMs": 866
-          },
-          {
-            "url": "http://localhost:59663/dobetterweb/fcp-delayer.js?delay=5000",
-            "totalBytes": 200,
-            "wastedMs": 866
-          }
-        ],
-        "overallSavingsMs": 866
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
       }
     },
     "unminified-css": {
@@ -2594,14 +2468,37 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
-      "displayValue": "",
+      "displayValue": "Potential savings of 10 KB",
       "warnings": [],
       "details": {
         "type": "opportunity",
-        "headings": [],
-        "items": [],
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL"
+          },
+          {
+            "key": "totalBytes",
+            "valueType": "bytes",
+            "label": "Size"
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "label": "Potential Savings"
+          }
+        ],
+        "items": [
+          {
+            "url": "inline: /**\n* @license\n* Copyright Google Inc. A...",
+            "totalBytes": 23595,
+            "wastedBytes": 10034,
+            "wastedPercent": 42.52388078488413
+          }
+        ],
         "overallSavingsMs": 0,
-        "overallSavingsBytes": 0
+        "overallSavingsBytes": 10034
       }
     },
     "unused-css-rules": {
@@ -2624,9 +2521,9 @@
       "id": "uses-webp-images",
       "title": "Serve images in next-gen formats",
       "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images).",
-      "score": 0.83,
+      "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 200,
+      "numericValue": 0,
       "displayValue": "Potential savings of 9 KB",
       "warnings": [],
       "details": {
@@ -2655,15 +2552,15 @@
         ],
         "items": [
           {
-            "url": "http://localhost:59663/dobetterweb/lighthouse-480x318.jpg",
+            "url": "http://localhost:54819/dobetterweb/lighthouse-480x318.jpg",
             "fromProtocol": true,
-            "isCrossOrigin": false,
+            "isCrossOrigin": true,
             "totalBytes": 24620,
-            "wastedBytes": 9002
+            "wastedBytes": 9028
           }
         ],
-        "overallSavingsMs": 200,
-        "overallSavingsBytes": 9002
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 9028
       }
     },
     "uses-optimized-images": {
@@ -2687,10 +2584,10 @@
       "id": "uses-text-compression",
       "title": "Enable text compression",
       "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://web.dev/uses-text-compression).",
-      "score": 0.72,
+      "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 350,
-      "displayValue": "Potential savings of 26 KB",
+      "numericValue": 0,
+      "displayValue": "Potential savings of 63 KB",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -2712,18 +2609,18 @@
         ],
         "items": [
           {
-            "url": "http://localhost:59663/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "totalBytes": 25073,
-            "wastedBytes": 16652
+            "url": "http://localhost:10200/zone.js",
+            "totalBytes": 71501,
+            "wastedBytes": 56204
           },
           {
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html",
-            "totalBytes": 15208,
-            "wastedBytes": 10104
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "totalBytes": 12519,
+            "wastedBytes": 8442
           }
         ],
-        "overallSavingsMs": 350,
-        "overallSavingsBytes": 26756
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 64646
       }
     },
     "uses-responsive-images": {
@@ -2802,8 +2699,8 @@
       "description": "Browser engineers recommend pages contain fewer than ~1,500 DOM elements. The sweet spot is a tree depth < 32 elements and fewer than 60 children/parent element. A large DOM can increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size).",
       "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 141,
-      "displayValue": "141 elements",
+      "numericValue": 31,
+      "displayValue": "31 elements",
       "details": {
         "type": "table",
         "headings": [
@@ -2827,23 +2724,23 @@
           {
             "statistic": "Total DOM Elements",
             "element": "",
-            "value": "141"
+            "value": "31"
           },
           {
             "statistic": "Maximum DOM Depth",
             "element": {
               "type": "code",
-              "value": "<title id=\"social-facebook-5\">"
+              "value": "<h2>"
             },
-            "value": "4"
+            "value": "3"
           },
           {
             "statistic": "Maximum Child Elements",
             "element": {
               "type": "code",
-              "value": "<div id=\"shadow-root-container\">"
+              "value": "<body>"
             },
-            "value": "100"
+            "value": "29"
           }
         ]
       }
@@ -2855,7 +2752,7 @@
       "score": 0,
       "scoreDisplayMode": "binary",
       "warnings": [
-        "Unable to determine the destination for anchor (<a target=\"_blank\">). If not used as a hyperlink, consider removing target=_blank."
+        "Unable to determine the destination for anchor (<a target=\"blank\">Hello</a>). If not used as a hyperlink, consider removing target=_blank."
       ],
       "details": {
         "type": "table",
@@ -2881,19 +2778,19 @@
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "",
-            "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\">"
+            "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
           },
           {
             "href": "Unknown",
             "target": "_blank",
             "rel": "",
-            "outerHTML": "<a target=\"_blank\">"
+            "outerHTML": "<a target=\"blank\">Hello</a>"
           },
           {
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "nofollow",
-            "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">"
+            "outerHTML": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
           }
         ]
       }
@@ -2920,12 +2817,12 @@
         ],
         "items": [
           {
-            "label": "line: 318",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "label": "line: 277",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
-            "label": "line: 322",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "label": "line: 281",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -2952,16 +2849,16 @@
         ],
         "items": [
           {
-            "label": "line: 256",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "label": "line: 178",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
-            "label": "line: 257",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "label": "line: 179",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           },
           {
-            "label": "line: 258",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "label": "line: 180",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -3061,8 +2958,8 @@
         ],
         "items": [
           {
-            "label": "line: 328",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "label": "line: 287",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -3100,103 +2997,15 @@
     },
     "uses-http2": {
       "id": "uses-http2",
-      "title": "Does not use HTTP/2 for all of its resources",
+      "title": "Uses HTTP/2 for its own resources",
       "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers, multiplexing, and server push. [Learn more](https://web.dev/uses-http2).",
-      "score": 0,
+      "score": 1,
       "scoreDisplayMode": "binary",
-      "displayValue": "19 requests not served via HTTP/2",
+      "displayValue": "",
       "details": {
         "type": "table",
-        "headings": [
-          {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "protocol",
-            "itemType": "text",
-            "text": "Protocol"
-          }
-        ],
-        "items": [
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=2000&async=true"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=100"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/unknown404.css?delay=200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=2200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_disabled.css?delay=200&isdisabled"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_partial_a.html?delay=200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_partial_b.html?delay=200&isasync"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=3000&capped"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?delay=3000&async=true"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.js"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/empty_module.js?delay=500"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/empty.css"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/fcp-delayer.js?delay=5000"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/lighthouse-480x318.jpg"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/lighthouse-rotating.gif"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/third_party/aggressive-promise-polyfill.js"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.css?scriptActivated&delay=200"
-          },
-          {
-            "protocol": "http/1.1",
-            "url": "http://localhost:59663/favicon.ico"
-          }
-        ]
+        "headings": [],
+        "items": []
       }
     },
     "uses-passive-event-listeners": {
@@ -3221,8 +3030,16 @@
         ],
         "items": [
           {
-            "label": "line: 289",
-            "url": "http://localhost:59663/dobetterweb/dbw_tester.html"
+            "label": "line: 26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
+          },
+          {
+            "label": "line: 222",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
+          },
+          {
+            "label": "line: 248",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html"
           }
         ]
       }
@@ -3247,7 +3064,7 @@
       "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://web.dev/font-size).",
       "score": 1,
       "scoreDisplayMode": "binary",
-      "displayValue": "93.22% legible text",
+      "displayValue": "100% legible text",
       "details": {
         "type": "table",
         "headings": [
@@ -3274,15 +3091,9 @@
         ],
         "items": [
           {
-            "source": "User Agent Stylesheet",
-            "selector": "input, textarea, select, button",
-            "coverage": "6.78%",
-            "fontSize": "11px"
-          },
-          {
             "source": "Legible text",
             "selector": "",
-            "coverage": "93.22%",
+            "coverage": "100.00%",
             "fontSize": "≥ 12px"
           }
         ]
@@ -3351,14 +3162,14 @@
             "tapTarget": {
               "type": "node",
               "snippet": "<button class=\"small-button\">Do something</button>",
-              "path": "3,HTML,1,BODY,19,BUTTON",
+              "path": "3,HTML,1,BODY,17,BUTTON",
               "selector": "body > button.small-button",
               "nodeLabel": "Do something"
             },
             "overlappingTarget": {
               "type": "node",
               "snippet": "<button class=\"small-button\">Do something else</button>",
-              "path": "3,HTML,1,BODY,20,BUTTON",
+              "path": "3,HTML,1,BODY,18,BUTTON",
               "selector": "body > button.small-button",
               "nodeLabel": "Do something else"
             },
@@ -3763,37 +3574,37 @@
         },
         {
           "id": "aria-allowed-attr",
-          "weight": 10,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-attr",
-          "weight": 10,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-children",
-          "weight": 10,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-required-parent",
-          "weight": 10,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-roles",
-          "weight": 10,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-valid-attr-value",
-          "weight": 10,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
           "id": "aria-valid-attr",
-          "weight": 10,
+          "weight": 0,
           "group": "a11y-aria"
         },
         {
@@ -3977,7 +3788,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.75
+      "score": 0.46
     },
     "best-practices": {
       "title": "Best Practices",
@@ -4044,7 +3855,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.07
+      "score": 0.14
     },
     "seo": {
       "title": "SEO",
@@ -4283,546 +4094,6 @@
   },
   "timing": {
     "entries": [
-      {
-        "startTime": 0,
-        "name": "lh:init:config",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:config:requireGatherers",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:config:requireAudits",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:init:connect",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:loadBlank",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:getVersion",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:getBenchmarkIndex",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:setupDriver",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:loadBlank",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:setupPassNetwork",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:driver:cleanBrowserCaches",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:CSSUsage",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:ViewportDimensions",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:RuntimeExceptions",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:ConsoleMessages",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:AnchorElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:ImageElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:LinkElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:MetaElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:ScriptElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:IFrameElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:AppCacheManifest",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:Doctype",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:DOMStats",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:OptimizedImages",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:PasswordInputsWithPreventedPaste",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:ResponseCompression",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:TagsBlockingFirstPaint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:FontSize",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:EmbeddedContent",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:RobotsTxt",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:TapTargets",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:Accessibility",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beginRecording",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:getVersion",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:loadPage-defaultPass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:pass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:getTrace",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:getDevtoolsLog",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:CSSUsage",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:ViewportDimensions",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:RuntimeExceptions",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:ConsoleMessages",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:AnchorElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:ImageElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:LinkElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:MetaElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:ScriptElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:IFrameElements",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:AppCacheManifest",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:Doctype",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:DOMStats",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:OptimizedImages",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:PasswordInputsWithPreventedPaste",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:ResponseCompression",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:TagsBlockingFirstPaint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:FontSize",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:EmbeddedContent",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:RobotsTxt",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:TapTargets",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:Accessibility",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:loadBlank",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:setupPassNetwork",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:ServiceWorker",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:Offline",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:StartUrl",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beginRecording",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:loadPage-offlinePass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:pass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:getDevtoolsLog",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:ServiceWorker",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:Offline",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:StartUrl",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:loadBlank",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:setupPassNetwork",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:HTTPRedirect",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beforePass:HTMLWithoutJavaScript",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:beginRecording",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:loadPage-redirectPass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:pass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:getDevtoolsLog",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:HTTPRedirect",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:afterPass:HTMLWithoutJavaScript",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:gather:disconnect",
-        "duration": 100,
-        "entryType": "measure"
-      },
       {
         "startTime": 0,
         "name": "lh:init:config",
@@ -6013,8 +5284,7 @@
         "audits[network-server-latency].details.headings[0].text",
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
-        "audits[offscreen-images].details.headings[1].label",
-        "audits[render-blocking-resources].details.headings[0].label",
+        "audits[unminified-javascript].details.headings[0].label",
         "audits[uses-webp-images].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
         "audits[efficient-animated-content].details.headings[0].label",
@@ -6022,7 +5292,6 @@
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
-        "audits[uses-http2].details.headings[0].text",
         "audits[uses-passive-event-listeners].details.headings[0].text"
       ],
       "lighthouse-core/audits/errors-in-console.js | columnDesc": [
@@ -6131,7 +5400,7 @@
       "lighthouse-core/audits/deprecations.js | displayValue": [
         {
           "values": {
-            "itemCount": 4
+            "itemCount": 3
           },
           "path": "audits.deprecations.displayValue"
         }
@@ -6338,8 +5607,7 @@
         "audits[third-party-summary].details.headings[1].text",
         "audits[uses-long-cache-ttl].details.headings[2].text",
         "audits[total-byte-weight].details.headings[1].text",
-        "audits[offscreen-images].details.headings[2].label",
-        "audits[render-blocking-resources].details.headings[1].label",
+        "audits[unminified-javascript].details.headings[1].label",
         "audits[uses-webp-images].details.headings[2].label",
         "audits[uses-text-compression].details.headings[1].label",
         "audits[efficient-animated-content].details.headings[1].label",
@@ -6621,52 +5889,11 @@
       "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": [
         "audits[offscreen-images].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
-        {
-          "values": {
-            "wastedBytes": 934285
-          },
-          "path": "audits[offscreen-images].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 9002
-          },
-          "path": "audits[uses-webp-images].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 26756
-          },
-          "path": "audits[uses-text-compression].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 682028
-          },
-          "path": "audits[efficient-animated-content].displayValue"
-        }
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": [
-        "audits[offscreen-images].details.headings[3].label",
-        "audits[render-blocking-resources].details.headings[2].label",
-        "audits[uses-webp-images].details.headings[3].label",
-        "audits[uses-text-compression].details.headings[2].label",
-        "audits[efficient-animated-content].details.headings[2].label"
-      ],
       "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | title": [
         "audits[render-blocking-resources].title"
       ],
       "lighthouse-core/audits/byte-efficiency/render-blocking-resources.js | description": [
         "audits[render-blocking-resources].description"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": [
-        {
-          "values": {
-            "wastedMs": 866
-          },
-          "path": "audits[render-blocking-resources].displayValue"
-        }
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": [
         "audits[unminified-css].title"
@@ -6679,6 +5906,38 @@
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": [
         "audits[unminified-javascript].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
+        {
+          "values": {
+            "wastedBytes": 10034
+          },
+          "path": "audits[unminified-javascript].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 9028
+          },
+          "path": "audits[uses-webp-images].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 64646
+          },
+          "path": "audits[uses-text-compression].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 682028
+          },
+          "path": "audits[efficient-animated-content].displayValue"
+        }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": [
+        "audits[unminified-javascript].details.headings[2].label",
+        "audits[uses-webp-images].details.headings[3].label",
+        "audits[uses-text-compression].details.headings[2].label",
+        "audits[efficient-animated-content].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": [
         "audits[unused-css-rules].title"
@@ -6745,7 +6004,7 @@
       "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": [
         {
           "values": {
-            "itemCount": 141
+            "itemCount": 31
           },
           "path": "audits[dom-size].displayValue"
         }
@@ -6777,7 +6036,7 @@
       "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": [
         {
           "values": {
-            "anchorHTML": "<a target=\"_blank\">"
+            "anchorHTML": "<a target=\"blank\">Hello</a>"
           },
           "path": "audits[external-anchors-use-rel-noopener].warnings[0]"
         }
@@ -6859,22 +6118,11 @@
       "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": [
         "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
       ],
-      "lighthouse-core/audits/dobetterweb/uses-http2.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/uses-http2.js | title": [
         "audits[uses-http2].title"
       ],
       "lighthouse-core/audits/dobetterweb/uses-http2.js | description": [
         "audits[uses-http2].description"
-      ],
-      "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": [
-        {
-          "values": {
-            "itemCount": 19
-          },
-          "path": "audits[uses-http2].displayValue"
-        }
-      ],
-      "lighthouse-core/audits/dobetterweb/uses-http2.js | columnProtocol": [
-        "audits[uses-http2].details.headings[1].text"
       ],
       "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": [
         "audits[uses-passive-event-listeners].title"
@@ -6903,7 +6151,7 @@
       "lighthouse-core/audits/seo/font-size.js | displayValue": [
         {
           "values": {
-            "decimalProportion": 0.9322429906542056
+            "decimalProportion": 1
           },
           "path": "audits[font-size].displayValue"
         }
