@@ -591,8 +591,6 @@ declare global {
         observedSpeedIndex: number | undefined;
         observedSpeedIndexTs: number | undefined;
       }
-
-      export type DebugInfo = Array<Record<string,boolean>>
     }
   }
 }

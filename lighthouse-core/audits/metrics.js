@@ -31,7 +31,7 @@ class Metrics extends Audit {
     const summary = await TimingSummary.summarize(artifacts, context);
     /** @type {LH.Artifacts.TimingSummary} */
     const metrics = summary.metrics;
-    /** @type {LH.Artifacts.DebugInfo} */
+    /** @type {Array<Record<string,boolean>>} */
     const debugInfo = summary.debugInfo;
 
     for (const [name, value] of Object.entries(metrics)) {

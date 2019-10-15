@@ -21,7 +21,7 @@ class TimingSummary {
   /**
      * @param {LH.Artifacts} artifacts
      * @param {LH.Audit.Context} context
-     * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: LH.Artifacts.TimingSummaryDebugInfo}>}
+     * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Array<Record<string,boolean>>}>}
      */
   static async summarize(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
@@ -96,7 +96,7 @@ class TimingSummary {
       observedSpeedIndex: speedline.speedIndex,
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
     };
-        /** @type {LH.Artifacts.DebugInfo} */
+    /** @type {Array<Record<string,boolean>>} */
     const debugInfo = [{lcpInvalidated: trace.lcpInvalidated}];
 
     return {metrics, debugInfo};
