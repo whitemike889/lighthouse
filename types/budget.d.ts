@@ -26,7 +26,6 @@ declare global {
     }
 
     module Budget {
-
       export interface ResourceBudget {
         /** The resource type that a budget applies to. */
         resourceType: ResourceType;

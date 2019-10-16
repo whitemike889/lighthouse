@@ -220,7 +220,6 @@ class Budget {
     };
   }
 
-
   /**
    * More info on the Budget format:
    * https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
