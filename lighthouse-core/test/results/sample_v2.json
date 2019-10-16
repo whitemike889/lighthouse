@@ -3269,10 +3269,6 @@
     "budgets": [
       {
         "path": "/",
-        "options": {
-          "aggregationMethod": "median",
-          "runs": 1
-        },
         "resourceSizes": [
           {
             "resourceType": "total",

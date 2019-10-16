@@ -14,10 +14,6 @@ describe('Budget', () => {
   beforeEach(() => {
     budgets = [
       {
-        options: {
-          runs: 3,
-          aggregationMethod: 'pessimistic',
-        },
         resourceSizes: [
           {
             resourceType: 'script',
@@ -69,12 +65,6 @@ describe('Budget', () => {
     assert.equal(result[0].path, undefined);
     // Sets path correctly
     assert.equal(result[1].path, '/second-path');
-
-    // Sets options correctly
-    assert.equal(result[0].options.runs, 3);
-    assert.equal(result[0].options.aggregationMethod, 'pessimistic');
-    assert.equal(result[1].options.runs, 1);
-    assert.equal(result[1].options.aggregationMethod, 'median');
 
     // Sets resources sizes correctly
     assert.equal(result[0].resourceSizes.length, 2);
@@ -140,43 +130,6 @@ describe('Budget', () => {
       budgets[1].timings = false;
       assert.throws(_ => Budget.initializeBudget(budgets),
         /^Error: Invalid timings entry in budget at index 1$/);
-    });
-
-    it('throws when budget contains an invalid options property', () => {
-      budgets[1].options = 123;
-      assert.throws(_ => Budget.initializeBudget(budgets),
-        /The options property should be defined as an object./);
-    });
-  });
-
-  describe('options validation', () => {
-    it('sets the correct defaults', () => {
-      budgets[0] = {};
-      const result = Budget.initializeBudget(budgets);
-      assert.equal(result[0].options.runs, 1);
-      assert.equal(result[0].options.aggregationMethod, 'median');
-    });
-
-    it('throws when an invalid option is provided', () => {
-      budgets[0].options.turtles = true;
-      assert.throws(_ => Budget.initializeBudget(budgets),
-        /Options has unrecognized properties: \[turtles\]/);
-    });
-
-    it('throws when runs is non-numeric', () => {
-      budgets[0].options.runs = true;
-      assert.throws(_ => Budget.initializeBudget(budgets), /Invalid runs quantity: true/);
-    });
-
-    it('throws when runs is an invalid number', () => {
-      budgets[0].options.runs = 999;
-      assert.throws(_ => Budget.initializeBudget(budgets), /Runs should be between 1-10 inclusive/);
-    });
-
-    it('throws when an invalid measurement strategy is provided', () => {
-      budgets[0].options.aggregationMethod = 'exponential';
-      assert.throws(_ => Budget.initializeBudget(budgets),
-        /Invalid measurement strategy: exponential./);
     });
   });
 

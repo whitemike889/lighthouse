@@ -15,10 +15,6 @@ const perfConfig = {
     // A mixture of under, over, and meeting budget to exercise all paths.
     budgets: [{
       path: '/',
-      options: {
-        runs: 1,
-        aggregationMethod: 'optimistic',
-      },
       resourceCounts: [
         {resourceType: 'total', budget: 8},
         {resourceType: 'stylesheet', budget: 1}, // meets budget

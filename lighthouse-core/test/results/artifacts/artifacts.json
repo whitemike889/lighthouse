@@ -32,10 +32,6 @@
     "budgets": [
       {
         "path": "/",
-        "options": {
-          "runs": 1,
-          "aggregationMethod": "optimistic"
-        },
         "resourceSizes": [
           {
             "resourceType": "total",

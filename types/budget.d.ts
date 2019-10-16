@@ -17,8 +17,6 @@ declare global {
        * More info on robots.txt: https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values
        */
       path?: string;
-      /** Configuration options */
-      options?: Budget.Options;
       /** Budgets based on resource count. */
       resourceCounts?: Array<Budget.ResourceBudget>;
       /** Budgets based on resource size. */
@@ -28,13 +26,6 @@ declare global {
     }
 
     module Budget {
-
-      export interface Options {
-        /** The number of times to test a page; the default is 1. */
-        runs?: Number;
-        /** This indicates how measurements taken over multiple runs should be interpretted; the default is 'median'. */
-        aggregationMethod?: AggregationMethod;
-      }
 
       export interface ResourceBudget {
         /** The resource type that a budget applies to. */

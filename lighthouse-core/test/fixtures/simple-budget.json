@@ -31,10 +31,6 @@
         ]
     },
     {
-        "options": {
-            "runs": 1,
-            "aggregationMethod": "pessimistic"
-        },
         "resourceCounts": [
             {
                 "resourceType": "total",

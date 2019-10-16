@@ -133,39 +133,6 @@ class Budget {
   }
 
   /**
-   * @param {unknown} options
-   * @return {LH.Budget.Options}
-   */
-  static validateOptions(options = {runs: 1, aggregationMethod: 'median'}) {
-    if (!isObjectOfUnknownProperties(options)) {
-      throw new Error(`The options property should be defined as an object.`);
-    }
-    const {runs, aggregationMethod, ...invalidRest} = options;
-    Budget.assertNoExcessProperties(invalidRest, 'Options');
-
-    /** @type {Array<LH.Budget.AggregationMethod>} */
-    const validStrategies = [
-      'median',
-      'optimistic',
-      'pessimistic',
-    ];
-    const strategy = /** @type {LH.Budget.AggregationMethod} */ (aggregationMethod);
-    if (!validStrategies.includes(strategy)) {
-      throw new Error(`Invalid measurement strategy: ${strategy}. \n` +
-        `Valid measurement strategies are: ${validStrategies.join(', ')}`);
-    }
-    if (!isNumber(runs)) {
-      throw new Error(`Invalid runs quantity: ${runs}`);
-    } else if (runs < 1 || runs > 10) {
-      throw new Error(`Runs should be between 1-10 inclusive.`);
-    }
-    return {
-      aggregationMethod: strategy,
-      runs,
-    };
-  }
-
-  /**
    * Determines whether a URL matches against a robots.txt-style "path".
    * Pattern should use the robots.txt format. E.g. "/*-article.html" or "/". Reference:
    * https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values
@@ -271,14 +238,10 @@ class Budget {
       /** @type {LH.Budget} */
       const budget = {};
 
-      const {path, options, resourceSizes, resourceCounts, timings, ...invalidRest} = b;
+      const {path, resourceSizes, resourceCounts, timings, ...invalidRest} = b;
       Budget.assertNoExcessProperties(invalidRest, 'Budget');
 
       budget.path = Budget.validatePath(path);
-
-
-      budget.options = Budget.validateOptions(options);
-
 
       if (isArrayOfUnknownObjects(resourceSizes)) {
         budget.resourceSizes = resourceSizes.map(Budget.validateResourceBudget);

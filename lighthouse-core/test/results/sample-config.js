@@ -16,10 +16,6 @@ const budgetedConfig = {
     throttlingMethod: 'devtools',
     budgets: [{
       path: '/',
-      options: {
-        runs: 1,
-        aggregationMethod: 'median',
-      },
       resourceCounts: [
         {resourceType: 'total', budget: 10},
         {resourceType: 'stylesheet', budget: 2},
