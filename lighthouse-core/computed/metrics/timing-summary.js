@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const Audit = require('../../audits/audit.js');
 const TraceOfTab = require('../trace-of-tab.js');
 const Speedline = require('../speedline.js');
 const FirstContentfulPaint = require('./first-contentful-paint.js');
@@ -16,19 +15,17 @@ const Interactive = require('./interactive.js');
 const SpeedIndex = require('./speed-index.js');
 const EstimatedInputLatency = require('./estimated-input-latency.js');
 const TotalBlockingTime = require('./total-blocking-time.js');
+const makeComputedArtifact = require('../computed-artifact.js');
 
 class TimingSummary {
   /**
-     * @param {LH.Artifacts} artifacts
+     * @param {LH.Trace} trace
+     * @param {LH.DevtoolsLog} devtoolsLog
      * @param {LH.Audit.Context} context
      * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Array<Record<string,boolean>>}>}
      */
-  static async summarize(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const settings = context.settings;
-    const metricComputationData = {trace, devtoolsLog, settings};
-
+  static async summarize(trace, devtoolsLog, context) {
+    const metricComputationData = {trace, devtoolsLog, settings: context.settings};
     /**
      * @template TArtifacts
      * @template TReturn
@@ -97,10 +94,18 @@ class TimingSummary {
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
     };
     /** @type {Array<Record<string,boolean>>} */
-    const debugInfo = [{lcpInvalidated: trace.lcpInvalidated}];
+    const debugInfo = [{lcpInvalidated: traceOfTab.lcpInvalidated}];
 
     return {metrics, debugInfo};
   }
+  /**
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog}} data
+   * @param {LH.Audit.Context} context
+   * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Array<Record<string,boolean>>}>}
+   */
+  static async compute_(data, context) {
+    return TimingSummary.summarize(data.trace, data.devtoolsLog, context);
+  }
 }
 
-module.exports = TimingSummary;
+module.exports = makeComputedArtifact(TimingSummary);

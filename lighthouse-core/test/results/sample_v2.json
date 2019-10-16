@@ -1281,7 +1281,9 @@
             "observedSpeedIndexTs": 185607736763
           },
           [
-            {}
+            {
+              "lcpInvalidated": false
+            }
           ]
         ]
       }
@@ -4541,6 +4543,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:metrics",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:TimingSummary",
         "duration": 100,
         "entryType": "measure"
       },

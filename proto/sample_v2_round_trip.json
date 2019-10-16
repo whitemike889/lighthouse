@@ -1519,7 +1519,9 @@
                         "totalBlockingTime": 117.0
                     },
                     [
-                        {}
+                        {
+                            "lcpInvalidated": false
+                        }
                     ]
                 ],
                 "type": "debugdata"
@@ -4438,6 +4440,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:audit:metrics",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:TimingSummary",
                 "startTime": 0.0
             },
             {

@@ -13,12 +13,8 @@ const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.
 /* eslint-env jest */
 describe('Timing summary', () => {
   it('contains the correct data', async () => {
-    const artifacts = {
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: devtoolsLog},
-    };
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
-    const result = await TimingSummary.summarize(artifacts, context);
+    const result = await TimingSummary.request({trace, devtoolsLog}, context);
 
     expect(result.metrics).toMatchInlineSnapshot(`
 Object {
@@ -68,6 +64,6 @@ Object {
     // Includs visual metrics from Speedline
     expect(result.metrics.observedFirstVisualChange).toBeDefined();
 
-    expect(result.debugInfo).toEqual([{'lcpInvalidated': undefined}]);
+    expect(result.debugInfo).toEqual([{'lcpInvalidated': false}]);
   });
 });

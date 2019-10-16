@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const TimingSummary = require('../computed/metrics/timing-summary.js');
+const ComputedTimingSummary = require('../computed/metrics/timing-summary.js');
 
 class Metrics extends Audit {
   /**
@@ -28,10 +28,11 @@ class Metrics extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const summary = await TimingSummary.summarize(artifacts, context);
-    /** @type {LH.Artifacts.TimingSummary} */
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const summary = await ComputedTimingSummary
+      .request({trace, devtoolsLog}, context);
     const metrics = summary.metrics;
-    /** @type {Array<Record<string,boolean>>} */
     const debugInfo = summary.debugInfo;
 
     for (const [name, value] of Object.entries(metrics)) {
