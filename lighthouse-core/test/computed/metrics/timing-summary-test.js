@@ -64,6 +64,6 @@ Object {
     // Includs visual metrics from Speedline
     expect(result.metrics.observedFirstVisualChange).toBeDefined();
 
-    expect(result.debugInfo).toEqual([{'lcpInvalidated': false}]);
+    expect(result.debugInfo).toEqual({'lcpInvalidated': false});
   });
 });

@@ -1518,11 +1518,9 @@
                         "speedIndexTs": 185607736912.0,
                         "totalBlockingTime": 117.0
                     },
-                    [
-                        {
-                            "lcpInvalidated": false
-                        }
-                    ]
+                    {
+                        "lcpInvalidated": false
+                    }
                 ],
                 "type": "debugdata"
             },

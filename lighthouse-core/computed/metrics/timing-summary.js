@@ -22,7 +22,7 @@ class TimingSummary {
      * @param {LH.Trace} trace
      * @param {LH.DevtoolsLog} devtoolsLog
      * @param {LH.Audit.Context} context
-     * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Array<Record<string,boolean>>}>}
+     * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
      */
   static async summarize(trace, devtoolsLog, context) {
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
@@ -93,15 +93,15 @@ class TimingSummary {
       observedSpeedIndex: speedline.speedIndex,
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
     };
-    /** @type {Array<Record<string,boolean>>} */
-    const debugInfo = [{lcpInvalidated: traceOfTab.lcpInvalidated}];
+    /** @type {Record<string,boolean>} */
+    const debugInfo = {lcpInvalidated: traceOfTab.lcpInvalidated};
 
     return {metrics, debugInfo};
   }
   /**
    * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Audit.Context} context
-   * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Array<Record<string,boolean>>}>}
+   * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
    */
   static async compute_(data, context) {
     return TimingSummary.summarize(data.trace, data.devtoolsLog, context);
