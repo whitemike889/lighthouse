@@ -5179,7 +5179,7 @@
       "lighthouse-core/audits/without-javascript.js | description": [
         "audits[without-javascript].description"
       ],
-      "lighthouse-core/audits/metrics/first-contentful-paint.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaint": [
         "audits[first-contentful-paint].title"
       ],
       "lighthouse-core/audits/metrics/first-contentful-paint.js | description": [
@@ -5229,7 +5229,7 @@
           "path": "audits[bootup-time].displayValue"
         }
       ],
-      "lighthouse-core/audits/metrics/first-meaningful-paint.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaint": [
         "audits[first-meaningful-paint].title"
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
@@ -5247,7 +5247,7 @@
       "lighthouse-core/audits/metrics/speed-index.js | description": [
         "audits[speed-index].description"
       ],
-      "lighthouse-core/audits/metrics/estimated-input-latency.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatency": [
         "audits[estimated-input-latency].title"
       ],
       "lighthouse-core/audits/metrics/estimated-input-latency.js | description": [
@@ -5285,13 +5285,13 @@
           "path": "audits[network-server-latency].displayValue"
         }
       ],
-      "lighthouse-core/audits/metrics/total-blocking-time.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | totalBlockingTime": [
         "audits[total-blocking-time].title"
       ],
       "lighthouse-core/audits/metrics/total-blocking-time.js | description": [
         "audits[total-blocking-time].description"
       ],
-      "lighthouse-core/audits/metrics/max-potential-fid.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | maxPotentialFID": [
         "audits[max-potential-fid].title"
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
@@ -5340,13 +5340,13 @@
           "path": "audits[time-to-first-byte].displayValue"
         }
       ],
-      "lighthouse-core/audits/metrics/first-cpu-idle.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | firstCPUIdle": [
         "audits[first-cpu-idle].title"
       ],
       "lighthouse-core/audits/metrics/first-cpu-idle.js | description": [
         "audits[first-cpu-idle].description"
       ],
-      "lighthouse-core/audits/metrics/interactive.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | interactive": [
         "audits.interactive.title"
       ],
       "lighthouse-core/audits/metrics/interactive.js | description": [
