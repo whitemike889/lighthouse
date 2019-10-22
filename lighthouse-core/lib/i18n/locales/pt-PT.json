@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "A métrica Índice de velocidade apresenta a rapidez de preenchimento visível dos conteúdos de uma página. [Saiba mais](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Índice de velocidade"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "A soma de todos os períodos de tempo entre o FCP e o Tempo até à interação, quando a duração da tarefa é superior a 50 ms, expressa em milissegundos."
   },

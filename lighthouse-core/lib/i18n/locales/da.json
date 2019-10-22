@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Hastighedsindekset viser, hvor hurtigt indholdet på en side er visuelt udfyldt. [Få flere oplysninger](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Hastighedsindeks"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Summen af alle tidsrum mellem første visning af indhold og tid inden interaktiv tilstand, når proceslængden overstiger 50 ms, udtrykt i millisekunder."
   },

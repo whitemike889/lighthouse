@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "La metrica Indice velocità mostra la velocità con cui diventano visibili i contenuti di una pagina. [Ulteriori informazioni](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Indice velocità"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Somma di tutti i periodi di tempo, espressi in millisecondi, tra FCP e Tempo all'interattività, quando la durata del task ha superato 50 ms."
   },

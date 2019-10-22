@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Hastighetsindeksen viser hvor raskt innholdet på siden blir synlig. [Finn ut mer](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Hastighetsindeks"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Summen av alle tidsperiodene mellom første innholdsrike opptegning (FCP) og tid til interaktiv, når oppgavelengden har overskredet 50 ms, uttrykt i millisekunder."
   },

@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "[Šþééð Îñðéx šĥöŵš ĥöŵ qûîçķļý ţĥé çöñţéñţš öƒ å þåĝé åŕé vîšîбļý þöþûļåţéð. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/speed-index)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "[Šþééð Îñðéx one two]"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "[Šûm öƒ åļļ ţîmé þéŕîöðš бéţŵééñ FÇÞ åñð Ţîmé ţö Îñţéŕåçţîvé, ŵĥéñ ţåšķ ļéñĝţĥ éxçééðéð 50mš, éxþŕéššéð îñ mîļļîšéçöñðš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
   },

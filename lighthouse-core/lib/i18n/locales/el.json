@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Το ευρετήριο ταχύτητας δηλώνει πόσο γρήγορα γίνεται ορατό το περιεχόμενο μιας σελίδας. [Μάθετε περισσότερα](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Ευρετήριο ταχύτητας"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Η συνολική διάρκεια, σε χιλιοστά δευτερολέπτου, των χρονικών διαστημάτων από την πρώτη μορφή με περιεχόμενο μέχρι τον χρόνο για αλληλεπίδραση, όταν η διάρκεια της εργασίας υπερβαίνει τα 50 χιλιοστά δευτερολέπτου."
   },

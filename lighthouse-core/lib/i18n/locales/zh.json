@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "速度指数表明了网页内容的可见填充速度。[了解详情](https://web.dev/speed-index)。"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "速度指数"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "当任务长度超过 50 毫秒时，首次内容渲染 (FCP) 和可交互时间之间的所有时间段的总和，以毫秒表示。"
   },

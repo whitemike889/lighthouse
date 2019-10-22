@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Indeks brzine prikazuje koliko se brzo sadržaj stranice vidljivo popunjava. [Saznajte više](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Indeks brzine"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Zbroj svih razdoblja između PRS-a i vremena do interaktivnosti kada trajanje zadatka prelazi 50 ms, iskazano u milisekundama."
   },

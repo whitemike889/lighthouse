@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "ดัชนีความเร็วแสดงให้เห็นความเร็วที่เนื้อหาของหน้าปรากฏจนดูสมบูรณ์ [ดูข้อมูลเพิ่มเติม](https://web.dev/speed-index)"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "ดัชนีความเร็ว"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "ผลรวมช่วงเวลาทั้งหมดระหว่าง FCP และเวลาในการตอบสนอง เมื่อความยาวของงานเกิน 50ms หน่วยเป็นมิลลิวินาที"
   },

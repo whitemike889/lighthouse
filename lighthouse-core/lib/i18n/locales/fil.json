@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Ipinapakita ng Speed Index ang bilis ng nakikitang pag-populate ng mga content ng isang page. [Matuto pa](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Speed Index"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Kabuuan ng lahat ng yugto ng panahon sa pagitan ng FCP at Oras bago maging Interactive, kapag lumampas ang haba ng gawain sa 50ms, ipinahayag sa milliseconds."
   },

@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Hız Endeksi, bir sayfa içeriğinin görsel olarak ne kadar hızlı doldurulabildiğini gösterir. [Daha fazla bilgi](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Hız İndeksi"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Görev süresi 50 ms.yi aştığında, FCP ile Etkileşime Hazır Olma Süresi arasındaki tüm dönemlerin milisaniye cinsinden toplamı."
   },

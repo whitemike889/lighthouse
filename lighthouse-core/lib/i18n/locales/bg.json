@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Индексът на скоростта показва колко бързо се постига визуална завършеност на страницата. [Научете повече](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Индекс на скоростта"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Сумата от всички интервали от време между FCP и „Време до интерактивност“, когато задачата е траела над 50 мсек, изразена в милисекунди."
   },

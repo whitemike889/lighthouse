@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "El índice de velocidad indica la rapidez con la que se puede ver el contenido de una página. [Más información](https://web.dev/speed-index)"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Índice de velocidad"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Suma de los periodos, en milisegundos, entre el primer renderizado con contenido y el tiempo hasta que la página es interactiva cuando se exceden los 50 ms."
   },

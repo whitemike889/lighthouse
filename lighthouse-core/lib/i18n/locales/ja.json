@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "速度インデックスは、ページのコンテンツが取り込まれて表示される速さを表します。[詳細](https://web.dev/speed-index)"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "速度インデックス"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "タスクの時間が 50 ミリ秒を上回った場合の、コンテンツの初回ペイントから操作可能になるまでのすべての時間の合計を、ミリ秒単位で表します。"
   },

@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "L'índex de velocitat mostra la rapidesa amb què s'emplena el contingut d'una pàgina. [Obtén més informació](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Índex de velocitat"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "La suma de tots els períodes de temps entre l'FCP i el Temps fins que és interactiva, quan la llargada de la tasca ha superat els 50 ms, expressada en mil·lisegons."
   },

@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "速度指數會顯示網頁可見內容的填入速度。[瞭解詳情](https://web.dev/speed-index)。"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "速度指數"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "當工作長度超過 50 毫秒時，從 FCP 到互動準備時間的時間範圍總計 (以毫秒為單位)。"
   },

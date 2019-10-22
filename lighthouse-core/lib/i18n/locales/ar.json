@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "يوضح مؤشر السرعة وتيرة تعبئة محتوى الصفحة على شاشة المستخدم. [مزيد من المعلومات](https://web.dev/speed-index)"
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "مؤشر السرعة"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "مجموع جميع الفترات الزمنية بين \"سرعة عرض المحتوى على الصفحة\" و\"وقت التفاعل\"، عندما تتجاوز مدة المهمة 50 مللي ثانية، معبرًا عنها بالمللي ثانية."
   },

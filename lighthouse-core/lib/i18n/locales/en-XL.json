@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Ŝṕêéd̂ Ín̂d́êx́ ŝh́ôẃŝ h́ôẃ q̂úîćk̂ĺŷ t́ĥé ĉón̂t́êńt̂ś ôf́ â ṕâǵê ár̂é v̂íŝíb̂ĺŷ ṕôṕûĺât́êd́. [L̂éâŕn̂ ḿôŕê](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Ŝṕêéd̂ Ín̂d́êx́"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Ŝúm̂ óf̂ ál̂ĺ t̂ím̂é p̂ér̂íôd́ŝ b́êt́ŵéêń F̂ĆP̂ án̂d́ T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê, ẃĥén̂ t́âśk̂ ĺêńĝt́ĥ éx̂ćêéd̂éd̂ 50ḿŝ, éx̂ṕr̂éŝśêd́ îń m̂íl̂ĺîśêćôńd̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/lighthouse-total-blocking-time)."
   },
@@ -1375,6 +1372,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} ŝ"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndex": {
+    "message": "Ŝṕêéd̂ Ín̂d́êx́"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Ŝt́ŷĺêśĥéêt́"

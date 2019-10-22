@@ -108,6 +108,8 @@ const UIStrings = {
   totalBlockingTime: 'Total Blocking Time',
   /** The name of the metric "Maximum Potential First Input Delay" that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   maxPotentialFID: 'Max Potential First Input Delay',
+  /** The name of the metric that summarizes how quickly the page looked visually complete. The name of this metric is largely abstract and can be loosely translated. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  speedIndex: 'Speed Index',
 };
 
 const formats = {

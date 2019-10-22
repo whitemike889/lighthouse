@@ -5241,7 +5241,7 @@
       "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": [
         "audits[load-fast-enough-for-pwa].description"
       ],
-      "lighthouse-core/audits/metrics/speed-index.js | title": [
+      "lighthouse-core/lib/i18n/i18n.js | speedIndex": [
         "audits[speed-index].title"
       ],
       "lighthouse-core/audits/metrics/speed-index.js | description": [

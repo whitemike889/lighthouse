@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Indexul de viteză arată cât de repede se completează vizibil conținutul unei pagini. [Află mai multe](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Index de viteză"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Suma tuturor perioadelor de timp dintre FCP și Timpul până la interactivitate, când lungimea activității a depășit 50 ms, exprimate în milisecunde."
   },

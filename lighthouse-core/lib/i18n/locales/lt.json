@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Greičio rodiklis parodo, kaip greitai pavaizduojamas puslapio turinys. [Sužinokite daugiau](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "Greičio rodiklis"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "Visų laikotarpių tarp PTŽ ir laiko iki sąveikos suma milisekundėmis, kai užduoties atlikimo laikas viršija 50 ms."
   },

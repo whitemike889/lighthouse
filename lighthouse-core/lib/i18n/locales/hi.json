@@ -797,9 +797,6 @@
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "स्पीड इंडेक्स से पता चलता है कि किसी पेज की सामग्री, विज़ुअल रूप से कितनी तेज़ी से डाली गई है. [ज़्यादा जानें](https://web.dev/speed-index)."
   },
-  "lighthouse-core/audits/metrics/speed-index.js | title": {
-    "message": "गति इंडेक्स"
-  },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
     "message": "टास्क में लगने वाले समय की अवधि 50 मि. से. से ज़्यादा होने पर एफ़सीपी और इंटरैक्टिव में लगने वाले समय के बीच के कुल समय. यह समय मिलिसेकंड इकाई में बताया जाता है."
   },
