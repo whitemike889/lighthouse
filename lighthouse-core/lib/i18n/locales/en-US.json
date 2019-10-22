@@ -1334,16 +1334,16 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatency": {
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
     "message": "Estimated Input Latency"
   },
-  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaint": {
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdle": {
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
     "message": "First CPU Idle"
   },
-  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaint": {
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "First Meaningful Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
@@ -1352,10 +1352,10 @@
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Image"
   },
-  "lighthouse-core/lib/i18n/i18n.js | interactive": {
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
-  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFID": {
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Max Potential First Input Delay"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
@@ -1373,7 +1373,7 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
-  "lighthouse-core/lib/i18n/i18n.js | speedIndex": {
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
     "message": "Speed Index"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
@@ -1382,7 +1382,7 @@
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Third-party"
   },
-  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTime": {
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "Total Blocking Time"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {

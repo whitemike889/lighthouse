@@ -24,7 +24,7 @@ class SpeedIndex extends Audit {
   static get meta() {
     return {
       id: 'speed-index',
-      title: str_(i18n.UIStrings.speedIndex),
+      title: str_(i18n.UIStrings.speedIndexMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],

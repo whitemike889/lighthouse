@@ -24,7 +24,7 @@ class FirstContentfulPaint extends Audit {
   static get meta() {
     return {
       id: 'first-contentful-paint',
-      title: str_(i18n.UIStrings.firstContentfulPaint),
+      title: str_(i18n.UIStrings.firstContentfulPaintMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],

@@ -1334,16 +1334,16 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "D̂óĉúm̂én̂t́"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatency": {
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
     "message": "Êśt̂ím̂át̂éd̂ Ín̂ṕût́ L̂át̂én̂ćŷ"
   },
-  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaint": {
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "F̂ír̂śt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́"
   },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdle": {
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
     "message": "F̂ír̂śt̂ ĆP̂Ú Îd́l̂é"
   },
-  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaint": {
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
     "message": "F̂ír̂śt̂ Ḿêán̂ín̂ǵf̂úl̂ Ṕâín̂t́"
   },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
@@ -1352,10 +1352,10 @@
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Îḿâǵê"
   },
-  "lighthouse-core/lib/i18n/i18n.js | interactive": {
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê"
   },
-  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFID": {
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "M̂áx̂ Ṕôt́êńt̂íâĺ F̂ír̂śt̂ Ín̂ṕût́ D̂él̂áŷ"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
@@ -1373,7 +1373,7 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} ŝ"
   },
-  "lighthouse-core/lib/i18n/i18n.js | speedIndex": {
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
     "message": "Ŝṕêéd̂ Ín̂d́êx́"
   },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
@@ -1382,7 +1382,7 @@
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "T̂h́îŕd̂-ṕâŕt̂ý"
   },
-  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTime": {
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
     "message": "T̂ót̂ál̂ B́l̂óĉḱîńĝ T́îḿê"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {

@@ -24,7 +24,7 @@ class FirstMeaningfulPaint extends Audit {
   static get meta() {
     return {
       id: 'first-meaningful-paint',
-      title: str_(i18n.UIStrings.firstMeaningfulPaint),
+      title: str_(i18n.UIStrings.firstMeaningfulPaintMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],

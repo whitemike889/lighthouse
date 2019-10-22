@@ -29,7 +29,7 @@ class MaxPotentialFID extends Audit {
   static get meta() {
     return {
       id: 'max-potential-fid',
-      title: str_(i18n.UIStrings.maxPotentialFID),
+      title: str_(i18n.UIStrings.maxPotentialFIDMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],

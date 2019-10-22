@@ -26,7 +26,7 @@ class EstimatedInputLatency extends Audit {
   static get meta() {
     return {
       id: 'estimated-input-latency',
-      title: str_(i18n.UIStrings.estimatedInputLatency),
+      title: str_(i18n.UIStrings.estimatedInputLatencyMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],

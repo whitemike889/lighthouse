@@ -24,7 +24,7 @@ class FirstCPUIdle extends Audit {
   static get meta() {
     return {
       id: 'first-cpu-idle',
-      title: str_(i18n.UIStrings.firstCPUIdle),
+      title: str_(i18n.UIStrings.firstCPUIdleMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],

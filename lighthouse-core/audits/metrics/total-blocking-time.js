@@ -24,7 +24,7 @@ class TotalBlockingTime extends Audit {
   static get meta() {
     return {
       id: 'total-blocking-time',
-      title: str_(i18n.UIStrings.totalBlockingTime),
+      title: str_(i18n.UIStrings.totalBlockingTimeMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],

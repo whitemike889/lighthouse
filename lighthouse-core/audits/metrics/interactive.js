@@ -30,7 +30,7 @@ class InteractiveMetric extends Audit {
   static get meta() {
     return {
       id: 'interactive',
-      title: str_(i18n.UIStrings.interactive),
+      title: str_(i18n.UIStrings.interactiveMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['traces', 'devtoolsLogs'],
