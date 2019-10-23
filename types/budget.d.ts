@@ -40,17 +40,8 @@ declare global {
         budget: number;
       }
 
-      /**
-       * This indicates how measurements taken over multiple runs should be interpretted; the default is 1.
-       * 'Median' mode fails if the median run fails.
-       * 'Optimistic' mode fails only if all runs fail. Put another way, this passes if any run passes.
-       * 'Pessimistic' mode fails if any of the runs fail. Put another way, this only passes if all runs pass.
-       *  This can be supplied if only 1 run is used, but it is superfluous because all strategies would yield the same result.
-       */
-      export type AggregationMethod = 'median' | 'optimistic' | 'pessimistic';
-
       /** Supported timing metrics. */
-      export type TimingMetric = 'first-contentful-paint' | 'first-cpu-idle' | 'interactive' | 'first-meaningful-paint' | 'max-potential-fid' | 'estimated-input-latency' | 'total-blocking-time';
+      export type TimingMetric = 'first-contentful-paint' | 'first-cpu-idle' | 'interactive' | 'first-meaningful-paint' | 'max-potential-fid' | 'estimated-input-latency' | 'total-blocking-time' | 'speed-index';
 
       /** Supported values for the resourceType property of a ResourceBudget. */
       export type ResourceType = 'stylesheet' | 'image' | 'media' | 'font' | 'script' | 'document' | 'other' | 'total' | 'third-party';
