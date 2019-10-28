@@ -133,6 +133,25 @@ class Budget {
   }
 
   /**
+   * Returns the budget that applies to a given URL.
+   * If multiple budgets match based on thier 'path' property,
+   * then the last-listed of those budgets is returned.
+   * @param {Array<LH.Budget>|null} budgets
+   * @param {string} url
+   * @return {LH.Budget | undefined} budget
+   */
+  static matchingBudget(budgets, url) {
+    // Clones budget so that the user-supplied version is not mutated.
+    /** @type {Array<LH.Budget>} */
+    const clonedBudgets = JSON.parse(JSON.stringify(budgets || []));
+
+    // Applies the LAST matching budget
+    return clonedBudgets ? clonedBudgets.reverse().find((b) => {
+      return Budget.urlMatchesPattern(url, b.path);
+    }) : undefined;
+  }
+
+  /**
    * Determines whether a URL matches against a robots.txt-style "path".
    * Pattern should use the robots.txt format. E.g. "/*-article.html" or "/". Reference:
    * https://developers.google.com/search/reference/robots_txt#url-matching-based-on-path-values

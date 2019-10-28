@@ -197,6 +197,54 @@ describe('Budget', () => {
     });
   });
 
+  describe('budget matching', () => {
+    const budgets = [{
+      path: '/',
+      resourceSizes: [
+        {
+          resourceType: 'script',
+          budget: 0,
+        },
+      ],
+    },
+    {
+      path: '/file.html',
+      resourceSizes: [
+        {
+          resourceType: 'image',
+          budget: 0,
+        },
+      ],
+    },
+    {
+      path: '/not-a-match',
+      resourceSizes: [
+        {
+          resourceType: 'document',
+          budget: 0,
+        },
+      ],
+    },
+    ];
+    it('returns the last matching budget', () => {
+      const budget = Budget.matchingBudget(budgets, 'http://example.com/file.html');
+      expect(budget).toEqual(budgets[1]);
+    });
+
+    it('does not mutate the budget config', async () => {
+      const configBefore = JSON.parse(JSON.stringify(budgets));
+      Budget.matchingBudget(configBefore, 'https://example.com');
+      const configAfter = JSON.parse(JSON.stringify(budgets));
+      expect(configBefore).toEqual(configAfter);
+    });
+
+    it('returns a copy of the matching budget', () => {
+      const budget = Budget.matchingBudget(budgets, 'https://example.com');
+      budgets[0].path = '/updated';
+      expect(budget.path).toEqual('/');
+    });
+  });
+
   describe('path validation', () => {
     it('recognizes valid budgets', () => {
       let budgets = [{path: '/'}];
