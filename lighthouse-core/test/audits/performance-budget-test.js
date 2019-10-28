@@ -131,33 +131,70 @@ describe('Performance: Resource budgets audit', () => {
     });
   });
 
-  describe('without a budget.json', () => {
-    beforeEach(() => {
-      context.settings.budgets = null;
+  describe('budget selection', () => {
+    describe('with a matching budget', () => {
+      it('applies the correct budget', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          resourceSizes: [
+            {
+              resourceType: 'script',
+              budget: 0,
+            },
+          ],
+        },
+        {
+          path: '/file.html',
+          resourceSizes: [
+            {
+              resourceType: 'image',
+              budget: 0,
+            },
+          ],
+        },
+        {
+          path: '/not-a-match',
+          resourceSizes: [
+            {
+              resourceType: 'document',
+              budget: 0,
+            },
+          ],
+        },
+        ];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].resourceType).toBe('image');
+      });
     });
 
-    it('audit does not apply', async () => {
-      const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details).toBeUndefined();
-      expect(result.notApplicable).toBe(true);
-    });
-  });
+    describe('without a budget.json', () => {
+      beforeEach(() => {
+        context.settings.budgets = null;
+      });
 
-  describe('with no matching budget', () => {
-    it('returns "audit does not apply"', async () => {
-      context.settings.budgets = [{
-        path: '/not-a-match',
-        resourceSizes: [
-          {
-            resourceType: 'script',
-            budget: 0,
-          },
-        ],
-      },
-      ];
-      const result = await ResourceBudgetAudit.audit(artifacts, context);
-      expect(result.details).toBeUndefined();
-      expect(result.notApplicable).toBe(true);
+      it('returns "audit does not apply"', async () => {
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details).toBeUndefined();
+        expect(result.notApplicable).toBe(true);
+      });
+    });
+
+    describe('without a matching budget', () => {
+      it('returns "audit does not apply"', async () => {
+        context.settings.budgets = [{
+          path: '/not-a-match',
+          resourceSizes: [
+            {
+              resourceType: 'script',
+              budget: 0,
+            },
+          ],
+        },
+        ];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details).toBeUndefined();
+        expect(result.notApplicable).toBe(true);
+      });
     });
   });
 });
