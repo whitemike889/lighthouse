@@ -124,7 +124,7 @@ class ResourceBudget extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
     const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
-    const budget = Budget.matchingBudget(context.settings.budgets, mainResource.url);
+    const budget = Budget.getMatchingBudget(context.settings.budgets, mainResource.url);
 
     if (!budget) {
       return {

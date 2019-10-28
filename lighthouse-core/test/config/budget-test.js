@@ -227,25 +227,25 @@ describe('Budget', () => {
     },
     ];
     it('returns the last matching budget', () => {
-      const budget = Budget.matchingBudget(budgets, 'http://example.com/file.html');
+      const budget = Budget.getMatchingBudget(budgets, 'http://example.com/file.html');
       expect(budget).toEqual(budgets[1]);
     });
 
     it('does not mutate the budget config', async () => {
       const configBefore = JSON.parse(JSON.stringify(budgets));
-      Budget.matchingBudget(configBefore, 'https://example.com');
+      Budget.getMatchingBudget(configBefore, 'https://example.com');
       const configAfter = JSON.parse(JSON.stringify(budgets));
       expect(configBefore).toEqual(configAfter);
     });
 
     it('returns a copy of the matching budget', () => {
-      const budget = Budget.matchingBudget(budgets, 'https://example.com');
+      const budget = Budget.getMatchingBudget(budgets, 'https://example.com');
       budgets[0].path = '/updated';
       expect(budget.path).toEqual('/');
     });
 
     it('returns "undefined" when there is no budget config', () => {
-      const budget = Budget.matchingBudget(null, 'https://example.com');
+      const budget = Budget.getMatchingBudget(null, 'https://example.com');
       expect(budget).toEqual(undefined);
     });
   });
