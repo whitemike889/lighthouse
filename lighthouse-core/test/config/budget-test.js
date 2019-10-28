@@ -243,6 +243,11 @@ describe('Budget', () => {
       budgets[0].path = '/updated';
       expect(budget.path).toEqual('/');
     });
+
+    it('returns "undefined" when there is no budget config', () => {
+      const budget = Budget.matchingBudget(null, 'https://example.com');
+      expect(budget).toEqual(undefined);
+    });
   });
 
   describe('path validation', () => {

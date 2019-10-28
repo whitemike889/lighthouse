@@ -146,9 +146,9 @@ class Budget {
     const clonedBudgets = JSON.parse(JSON.stringify(budgets || []));
 
     // Applies the LAST matching budget
-    return clonedBudgets ? clonedBudgets.reverse().find((b) => {
+    return clonedBudgets.reverse().find((b) => {
       return Budget.urlMatchesPattern(url, b.path);
-    }) : undefined;
+    });
   }
 
   /**
