@@ -141,13 +141,15 @@ class Budget {
    * @return {LH.Budget | undefined} budget
    */
   static getMatchingBudget(budgets, url) {
-    // Clones budget so that the user-supplied version is not mutated.
-    /** @type {Array<LH.Budget>} */
-    const clonedBudgets = JSON.parse(JSON.stringify(budgets || []));
-    // Applies the LAST matching budget
-    return clonedBudgets.reverse().find((b) => {
-      return Budget.urlMatchesPattern(url, b.path);
-    });
+    if (budgets === null) return;
+
+    // Applies the LAST matching budget.
+    for (let i = budgets.length - 1; i >= 0; i--) {
+      const budget = budgets[i];
+      if (this.urlMatchesPattern(url, budget.path)) {
+        return budget;
+      }
+    }
   }
 
   /**

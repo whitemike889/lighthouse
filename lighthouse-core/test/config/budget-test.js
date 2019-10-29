@@ -238,12 +238,6 @@ describe('Budget', () => {
       expect(configBefore).toEqual(configAfter);
     });
 
-    it('returns a copy of the matching budget', () => {
-      const budget = Budget.getMatchingBudget(budgets, 'https://example.com');
-      budgets[0].path = '/updated';
-      expect(budget.path).toEqual('/');
-    });
-
     it('returns "undefined" when there is no budget config', () => {
       const budget = Budget.getMatchingBudget(null, 'https://example.com');
       expect(budget).toEqual(undefined);
