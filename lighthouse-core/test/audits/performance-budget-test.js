@@ -167,18 +167,6 @@ describe('Performance: Resource budgets audit', () => {
       });
     });
 
-    describe('without a budget.json', () => {
-      beforeEach(() => {
-        context.settings.budgets = null;
-      });
-
-      it('returns "audit does not apply"', async () => {
-        const result = await ResourceBudgetAudit.audit(artifacts, context);
-        expect(result.details).toBeUndefined();
-        expect(result.notApplicable).toBe(true);
-      });
-    });
-
     describe('without a matching budget', () => {
       it('returns "audit does not apply"', async () => {
         context.settings.budgets = [{
@@ -191,6 +179,18 @@ describe('Performance: Resource budgets audit', () => {
           ],
         },
         ];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details).toBeUndefined();
+        expect(result.notApplicable).toBe(true);
+      });
+    });
+
+    describe('without a budget.json', () => {
+      beforeEach(() => {
+        context.settings.budgets = null;
+      });
+
+      it('returns "audit does not apply"', async () => {
         const result = await ResourceBudgetAudit.audit(artifacts, context);
         expect(result.details).toBeUndefined();
         expect(result.notApplicable).toBe(true);
