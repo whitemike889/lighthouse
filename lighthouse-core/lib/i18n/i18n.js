@@ -76,6 +76,10 @@ const UIStrings = {
   columnTransferSize: 'Transfer Size',
   /** Label for a column in a data table; entries will be the names of arbitrary objects, e.g. the name of a Javascript library, or the name of a user defined timing event. */
   columnName: 'Name',
+  /** Label for a column in data table; entries will be the duration, in milliseconds, of different timing measurements, e.g. the "Time to Interactive" or "First Contentful Paint". */
+  columnDuration: 'Duration',
+  /** Label for a column in data table; entries will be the amount (in time, quantity, or bytes) that a budget is exceeded by. */
+  columnOverBudget: 'Over Budget',
   /** Label for a row in a data table; entries will be the total number and byte size of all resources loaded by a web page. */
   totalResourceType: 'Total',
   /** Label for a row in a data table; entries will be the total number and byte size of all 'Document' resources loaded by a web page. */

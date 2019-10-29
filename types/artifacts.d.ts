@@ -569,6 +569,7 @@ declare global {
         speedIndexTs: number | undefined;
         estimatedInputLatency: number | undefined;
         estimatedInputLatencyTs: number | undefined;
+        maxPotentialFID: number | undefined;
         totalBlockingTime: number | undefined;
         observedNavigationStart: number | undefined;
         observedNavigationStartTs: number | undefined;
