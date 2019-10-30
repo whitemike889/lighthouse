@@ -1139,14 +1139,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Ŝér̂v́êŕ r̂éŝṕôńŝé t̂ím̂éŝ ár̂é l̂óŵ (T́T̂F́B̂)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "M̂éâśûŕêḿêńt̂"
+  },
   "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
-    "message": "T̂ím̂ín̂ǵ M̂ét̂ŕîć"
+    "message": "M̂ét̂ŕîć"
   },
   "lighthouse-core/audits/timing-budget.js | description": {
-    "message": "P̂ér̂f́ôŕm̂án̂t́ ŝít̂éŝ ĺôád̂ f́âśt̂ án̂d́ r̂éŝṕôńd̂ t́ô úŝér̂ ín̂ṕût́ êv́êńt̂ś q̂úîćk̂ĺŷ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+    "message": "Ŝét̂ á t̂ím̂ín̂ǵ b̂úd̂ǵêt́ t̂ó ĥél̂ṕ ŷóû ḱêép̂ án̂ éŷé ôń t̂h́ê ṕêŕf̂ór̂ḿâńĉé ôf́ ŷóûŕ ŝít̂é. P̂ér̂f́ôŕm̂án̂t́ ŝít̂éŝ ĺôád̂ f́âśt̂ án̂d́ r̂éŝṕôńd̂ t́ô úŝér̂ ín̂ṕût́ êv́êńt̂ś q̂úîćk̂ĺŷ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "T̂ím̂ín̂ǵ b̂úd̂ǵêt́"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "D̂úr̂át̂íôń"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Ŝt́âŕt̂ T́îḿê"
@@ -1360,9 +1366,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Ĉáĉh́ê T́T̂Ĺ"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
-    "message": "D̂úr̂át̂íôń"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "L̂óĉát̂íôń"

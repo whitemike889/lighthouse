@@ -1139,14 +1139,20 @@
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Server response times are low (TTFB)"
   },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Measurement"
+  },
   "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
-    "message": "Timing Metric"
+    "message": "Metric"
   },
   "lighthouse-core/audits/timing-budget.js | description": {
-    "message": "Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+    "message": "Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
   "lighthouse-core/audits/timing-budget.js | title": {
     "message": "Timing budget"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Duration"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Start Time"
@@ -1360,9 +1366,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Cache TTL"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
-    "message": "Duration"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Location"

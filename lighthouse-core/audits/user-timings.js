@@ -25,6 +25,8 @@ const UIStrings = {
   columnType: 'Type',
   /** Label for the Start Time column in the User Timing event data table. User Timing API entries are added by the developer of the web page. Start Times are the number of milliseconds since the page started loading, e.g. '380.26 ms' */
   columnStartTime: 'Start Time',
+  /** Label for the Duration column in the User Timing event data table. User Timing API entries are added by the developer of the web page. Durations are only provided for 'Measure' entries. Durations are the number of total number milliseconds from Start Time to their ending point. e.g. '2,020.64 ms' */
+  columnDuration: 'Duration',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -96,10 +98,7 @@ class UserTimings extends Audit {
         {key: 'timingType', itemType: 'text', text: str_(UIStrings.columnType)},
         {key: 'startTime', itemType: 'ms', granularity: 0.01,
           text: str_(UIStrings.columnStartTime)},
-        {
-          key: 'duration', itemType: 'ms', granularity: 0.01,
-          text: str_(i18n.UIStrings.columnDuration),
-        },
+        {key: 'duration', itemType: 'ms', granularity: 0.01, text: str_(UIStrings.columnDuration)},
       ];
 
       const details = Audit.makeTableDetails(headings, tableRows);

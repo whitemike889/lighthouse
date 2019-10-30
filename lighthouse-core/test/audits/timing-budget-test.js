@@ -51,8 +51,8 @@ describe('Performance: Timing budget audit', () => {
     it('table headers are correct', async () => {
       const result = await TimingBudgetAudit.audit(artifacts, context);
       const headers = result.details.headings;
-      expect(headers[0].text).toBeDisplayString('Timing Metric');
-      expect(headers[1].text).toBeDisplayString('Duration');
+      expect(headers[0].text).toBeDisplayString('Metric');
+      expect(headers[1].text).toBeDisplayString('Measurement');
       expect(headers[2].text).toBeDisplayString('Over Budget');
     });
 
@@ -91,7 +91,7 @@ describe('Performance: Timing budget audit', () => {
         'total-blocking-time',
         'speed-index',
       ];
-      metrics.forEach(async (metric) => {
+      await Promise.all(metrics.map(async (metric) => {
         context.settings.budgets = [{
           path: '/',
           timings: [
@@ -102,8 +102,8 @@ describe('Performance: Timing budget audit', () => {
           ],
         }];
         const result = await TimingBudgetAudit.audit(artifacts, context);
-        expect(result).toBeDefined();
-      });
+        expect(result.details.items).toHaveLength(1);
+      }));
     });
 
     it('sorts rows by descending budget overage', async () => {
