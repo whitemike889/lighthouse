@@ -127,6 +127,10 @@ class TimingBudget extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headers = [
       {key: 'label', itemType: 'text', text: str_(UIStrings.columnTimingMetric)},
+      /**
+       * Note: SpeedIndex, unlike other timing metrics, is not measured in milliseconds.
+       * The renderer applies the correct units to the 'measurement' & 'overBudget' columns for SpeedIndex.
+       */
       {key: 'measurement', itemType: 'ms', text: str_(UIStrings.columnMeasurement)},
       {key: 'overBudget', itemType: 'ms', text: str_(i18n.UIStrings.columnOverBudget)},
     ];
