@@ -65,7 +65,7 @@ class TimingBudget extends Audit {
    * @return {number|undefined}
    */
   static getMeasurement(timingMetric, summary) {
-    /** @type {Record<LH.Budget.TimingMetric,number|undefined>} */
+    /** @type {Record<LH.Budget.TimingMetric, number|undefined>} */
     const measurements = {
       'first-contentful-paint': summary.firstContentfulPaint,
       'first-cpu-idle': summary.firstCPUIdle,
