@@ -24,12 +24,12 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-/** @typedef {{metric: LH.Budget.TimingMetric, label: string, measurement: number | undefined, overBudget: number | undefined}} BudgetItem */
+/** @typedef {{metric: LH.Budget.TimingMetric, label: string, measurement?: number, overBudget?: number}} BudgetItem */
 
 class TimingBudget extends Audit {
   /**
-     * @return {LH.Audit.Meta}
-     */
+   * @return {LH.Audit.Meta}
+   */
   static get meta() {
     return {
       id: 'timing-budget',
@@ -45,7 +45,7 @@ class TimingBudget extends Audit {
    * @return {string}
    */
   static getRowLabel(timingMetric) {
-    /** @type {Record<LH.Budget.TimingMetric,string>} */
+    /** @type {Record<LH.Budget.TimingMetric, string>} */
     const strMappings = {
       'first-contentful-paint': i18n.UIStrings.firstContentfulPaintMetric,
       'first-cpu-idle': i18n.UIStrings.firstCPUIdleMetric,
@@ -56,7 +56,7 @@ class TimingBudget extends Audit {
       'total-blocking-time': i18n.UIStrings.totalBlockingTimeMetric,
       'speed-index': i18n.UIStrings.speedIndexMetric,
     };
-    return strMappings[timingMetric];
+    return str_(strMappings[timingMetric]);
   }
 
   /**
@@ -80,22 +80,22 @@ class TimingBudget extends Audit {
   }
 
   /**
-     * @param {LH.Budget} budget
-     * @param {LH.Artifacts.TimingSummary} summary
-     * @return {Array<BudgetItem>}
-     */
+   * @param {LH.Budget} budget
+   * @param {LH.Artifacts.TimingSummary} summary
+   * @return {Array<BudgetItem>}
+   */
   static tableItems(budget, summary) {
     if (!budget.timings) {
       return [];
     }
     return budget.timings.map((timingBudget) => {
-      const metric = timingBudget.metric;
-      const label = str_(this.getRowLabel(timingBudget.metric));
-      const measurement = this.getMeasurement(timingBudget.metric, summary);
+      const metricName = timingBudget.metric;
+      const label = this.getRowLabel(metricName);
+      const measurement = this.getMeasurement(metricName, summary);
       const overBudget = measurement && (measurement > timingBudget.budget)
         ? (measurement - timingBudget.budget) : undefined;
       return {
-        metric,
+        metric: metricName,
         label,
         measurement,
         overBudget,
