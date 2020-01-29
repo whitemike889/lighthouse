@@ -8,6 +8,7 @@ import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
 import _LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
 import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
 import speedline = require('speedline-core');
+import TextSourceMap = require('../lighthouse-core/lib/cdt/generated/SourceMap.js');
 
 type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
@@ -144,23 +145,30 @@ declare global {
       export type TaskNode = _TaskNode;
       export type MetaElement = LH.Artifacts['MetaElements'][0];
 
+      export interface RuleExecutionError {
+        name: string;
+        message: string;
+      }
+
+      export interface AxeResult {
+        id: string;
+        impact: string;
+        tags: Array<string>;
+        nodes: Array<{
+          path: string;
+          html: string;
+          snippet: string;
+          target: Array<string>;
+          failureSummary?: string;
+          nodeLabel?: string;
+        }>;
+        error?: RuleExecutionError;
+      }
+
       export interface Accessibility {
-        violations: {
-          id: string;
-          impact: string;
-          tags: string[];
-          nodes: {
-            path: string;
-            html: string;
-            snippet: string;
-            target: string[];
-            failureSummary?: string;
-            nodeLabel?: string;
-          }[];
-        }[];
-        notApplicable: {
-          id: string
-        }[];
+        violations: Array<AxeResult>;
+        notApplicable: Array<Pick<AxeResult, 'id'>>;
+        incomplete: Array<AxeResult>;
       }
 
       export interface CSSStyleSheetInfo {
@@ -259,6 +267,12 @@ declare global {
         mappings: string
         /** An optional name of the generated code (the bundled code that was the result of this build process) that this source map is associated with. */
         file?: string
+        /**
+         * An optional array of maps that are associated with an offset into the generated code. 
+         * `map` is optional because the spec defines that either `url` or `map` must be defined.
+         * We explicitly only support `map` here.
+        */
+        sections?: Array<{offset: {line: number, column: number}, map?: RawSourceMap}>
       }
 
       /**
@@ -283,12 +297,26 @@ declare global {
         map?: undefined;
       }
 
+      export interface Bundle {
+        rawMap: RawSourceMap;
+        script: ScriptElement;
+        map: TextSourceMap;
+        sizes: {
+          files: Record<string, number>;
+          unmappedBytes: number;
+          totalBytes: number;
+        };
+      }
+
       /** @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Attributes */
       export interface AnchorElement {
         rel: string
         href: string
         text: string
         target: string
+        devtoolsNodePath: string
+        selector: string
+        nodeLabel: string
         outerHTML: string
       }
 
@@ -307,7 +335,6 @@ declare global {
       export interface FontSize {
         totalTextLength: number;
         failingTextLength: number;
-        visitedTextLength: number;
         analyzedFailingTextLength: number;
         /** Elements that contain a text node that failed size criteria. */
         analyzedFailingNodesData: Array<{
@@ -365,6 +392,8 @@ declare global {
         resourceSize: number;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
+        /** The loading attribute of the image. */
+        loading?: string;
       }
 
       export interface OptimizedImage {
@@ -433,7 +462,7 @@ declare global {
         }
       }
 
-      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast192px'|'hasIconsAtLeast512px'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';
+      export type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast144px'|'hasIconsAtLeast512px'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength';
 
       export type ManifestValues = {
         isParseFailure: false;
@@ -519,6 +548,8 @@ declare global {
         mainThreadEvents: Array<TraceEvent>;
         /** IDs for the trace's main frame, process, and thread. */
         mainFrameIds: {pid: number, tid: number, frameId: string};
+        /** The list of frames committed in the trace. */
+        frames: Array<{frame: string, url: string}>;
         /** The trace event marking navigationStart. */
         navigationStartEvt: TraceEvent;
         /** The trace event marking firstPaint, if it was found. */
