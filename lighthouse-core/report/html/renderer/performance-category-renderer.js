@@ -166,8 +166,8 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Budgets
-    const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
-    let showBudgetsGroup;
+    /** @type {Array<Element>} */
+    const budgetTableEls = [];
     ['performance-budget', 'timing-budget'].forEach((id) => {
       const audit = category.auditRefs.find(audit => audit.id === id);
       if (audit && audit.result.details) {
@@ -175,12 +175,13 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
         if (table) {
           table.id = id;
           table.classList.add('lh-audit');
-          budgetsGroupEl.appendChild(table);
-          showBudgetsGroup = true;
+          budgetTableEls.push(table);
         }
       }
     });
-    if (showBudgetsGroup) {
+    if (budgetTableEls.length > 0) {
+      const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
+      budgetTableEls.forEach(table => budgetsGroupEl.appendChild(table));
       budgetsGroupEl.classList.add('lh-audit-group--budgets');
       element.appendChild(budgetsGroupEl);
     }
