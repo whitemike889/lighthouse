@@ -11,13 +11,6 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 
 /* eslint-env jest */
 
-function mockArtifacts(networkRecords) {
-  return {
-    devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
-    URL: {requestedUrl: networkRecords[0].url, finalUrl: networkRecords[0].url},
-  };
-}
-
 describe('Origin summary computed', () => {
   let artifacts;
   let context;
@@ -26,35 +19,37 @@ describe('Origin summary computed', () => {
   });
 
   it('computes statistics for the page overall', async () => {
-    artifacts = mockArtifacts([
+    artifacts = networkRecordsToDevtoolsLog([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
       {url: 'https://foo.bar.com/script.js', resourceType: 'Script', transferSize: 50},
-      {url: 'http://filez.com/file.jpg', resourceType: 'Image', transferSize: 70}
+      {url: 'http://filez.com/file.jpg', resourceType: 'Image', transferSize: 70},
     ]);
     const result = await ComputedOriginSummary.request(artifacts, context);
     assert.equal(result['total'].count, 3);
     assert.equal(result['total'].size, 150);
   });
 
-  /*
   it('computes statistics for each origin', async () => {
-    artifacts = mockArtifacts([
+    artifacts = networkRecordsToDevtoolsLog([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-      {url: 'https://foo.bar.com/script.js', resourceType: 'Script', transferSize: 50},
+      {url: 'http://foo.bar.com/script.js', resourceType: 'Script', transferSize: 50},
       {url: 'http://foo.bar.com/file.jpg', resourceType: 'Image', transferSize: 70},
+      {url: 'https://foo.bar.com/SECURE.jpg', resourceType: 'Image', transferSize: 7},
     ]);
     const result = await ComputedOriginSummary.request(artifacts, context);
     assert.equal(result['http://example.com'].count, 1);
     assert.equal(result['http://example.com'].size, 30);
 
-    assert.equal(result['http://cdn.example.com'].count, 200);
-    assert.equal(result['http://example.com'].size, 120);
-  });
-  */
+    // HTTP & HTTPS version of the same domain are two different origins
+    assert.equal(result['http://foo.bar.com'].count, 2);
+    assert.equal(result['http://foo.bar.com'].size, 120);
 
-  /*
+    assert.equal(result['https://foo.bar.com'].count, 1);
+    assert.equal(result['https://foo.bar.com'].size, 7);
+  });
+
   it('computes statistics per origin rather than per domain', async () => {
-    artifacts = mockArtifacts([
+    artifacts = networkRecordsToDevtoolsLog([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
       {url: 'https://example.com/file1.html', resourceType: 'Document', transferSize: 75},
       {url: 'http://subdomain.example.com/another-file.html', resourceType: 'Document', transferSize: 50},
@@ -70,25 +65,23 @@ describe('Origin summary computed', () => {
     assert.equal(result['http://subdomain.example.com'].count, 1);
     assert.equal(result['http://subdomain.example.com'].size, 50);
   });
-  */
 
   /**
-   * Although data URLs are often modeled as a separate request (e.g. in DevTools, this code)
-   * from the resource that contains them, both are loaded in same network request and
-   * the filesize of the "parent" will reflect the file size of the data URL.
-   * Thus, data URLs should be ignored to avoid double counting.
+   * Data URLs should be ignored to avoid double counting.
+   * The filesize of a data URL is reflected in the filesize of the resource that contains it.
+   * A data URL does not result in a separate network request.
    */
-  /*
-  it('does not double count data URLs', async () => {
-    artifacts = mockArtifacts([
+  it('ignores data URLs', async () => {
+    artifacts = networkRecordsToDevtoolsLog([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
       {url: 'data:image/png;base64,iVBORw0KGgoAA', resourceType: 'Image', transferSize: 10},
     ]);
 
     const result = await ComputedOriginSummary.request(artifacts, context);
+    assert.equal(result['http://example.com'].count, 1);
+    assert.equal(result['http://example.com'].size, 30);
 
-    assert.equal(result['http://subdomain.example.com'].count, 1);
-    assert.equal(result['http://subdomain.example.com'].size, 30);
+    assert.equal(result['total'].count, 1);
+    assert.equal(result['total'].size, 30);
   });
-  */
 });
