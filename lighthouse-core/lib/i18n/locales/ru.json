@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Атрибуты `[aria-*]` соответствуют своим ролям"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Программы чтения с экрана могут работать некорректно, если для элемента `<body>` в документе настроен атрибут `aria-hidden=\"true\"`. [Подробнее…](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "Элемент `<body>` в документе содержит атрибут `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "Элемент `<body>` в документе не содержит атрибут `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Если к родительскому элементу применен атрибут `[aria-hidden=\"true\"]`, то все его активные дочерние элементы станут недоступны для программ чтения с экрана. [Подробнее…](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Элементы, к которым применен атрибут `[aria-hidden=\"true\"]`, содержат активные дочерние элементы"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Элементы, к которым применен атрибут `[aria-hidden=\"true\"]`, не содержат активных дочерних элементов"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Если у поля ввода нет названия, доступного программам чтения с экрана, пользователи услышат слово \"поле ввода\", но не поймут, для чего оно нужно. [Подробнее…](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "У полей ввода ARIA нет доступных названий"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "У полей ввода ARIA есть доступные названия"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "К некоторым ролям ARIA требуется добавить атрибуты, описывающие состояние элемента для программ чтения с экрана. [Подробнее…](https://web.dev/aria-required-attr/)"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Недействительные значения атрибутов `[role]` отсутствуют"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Если у переключателя нет названия, доступного программам чтения с экрана, пользователи услышат слово \"переключатель\", но не поймут, для чего он нужен. [Подробнее…](https://web.dev/aria-toggle-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "У переключателей ARIA нет доступных названий"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "У переключателей ARIA есть доступные названия"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Программы чтения с экрана не могут распознавать атрибуты ARIA с недействительными значениями. [Подробнее…](https://web.dev/aria-valid-attr-value/)"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Документ содержит элемент `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Чтобы сервисы специальных возможностей могли считывать все активные элементы, их атрибуты `id` должны быть уникальными. [Подробнее…](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "У активных элементов есть неуникальные атрибуты `[id]`"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Атрибуты `[id]` у активных элементов уникальны"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Значение идентификатора ARIA должно быть уникальным, так как программы для людей с ограниченными возможностями могут игнорировать повторяющиеся идентификаторы. [Подробнее…](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Идентификаторы ARIA не уникальны"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Идентификаторы ARIA уникальны"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Когда программам чтения с экрана встречаются поля формы с несколькими ярлыками, они озвучивают только первый, последний или все ярлыки. Это может запутать пользователей. [Подробнее…](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "В форме есть поля с несколькими ярлыками"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "В форме нет полей с несколькими ярлыками"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Чтобы программы чтения с экрана могли описывать содержимое фреймов, для каждого из них должен быть указан атрибут title. [Подробнее…](https://web.dev/frame-title/)"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "У элементов `<frame>` и `<iframe>` есть атрибут title"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Когда заголовки расположены в правильном порядке и между их уровнями нет пропусков, они образуют семантическую структуру страницы. Благодаря этому навигация с помощью сервисов специальных возможностей становится проще и понятнее. [Подробнее…](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Элементы заголовков не расположены последовательно в порядке убывания"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Элементы заголовков расположены последовательно в порядке убывания"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Если для страницы не указан атрибут lang, программа чтения с экрана предполагает, что текст приведен на языке по умолчанию, выбранном пользователем при установке программы. Если текст написан на другом языке, он может озвучиваться некорректно. [Подробнее…](https://web.dev/html-has-lang/)"
@@ -390,7 +462,7 @@
     "message": "Удалите неиспользуемый код CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Чтобы сократить расход трафика, удалите неиспользуемый код JavaScript."
+    "message": "Чтобы сократить расход трафика, удалите неиспользуемый код JavaScript. [Подробнее…](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Удалите неиспользуемый код JavaScript"
@@ -450,7 +522,7 @@
     "message": "{itemCount,plural, =1{Найдена 1 цепочка}one{Найдена # цепочка}few{Найдено # цепочки}many{Найдено # цепочек}other{Найдено # цепочки}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Сократите глубину вложенности критических запросов"
+    "message": "Старайтесь не допускать создания цепочек критических запросов"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Прекращение поддержки / предупреждение"
@@ -513,7 +585,7 @@
     "message": "Значение"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Разработчики браузеров рекомендуют размещать на странице не более 1500 элементов DOM. Оптимальные показатели: глубина дерева – менее 32 элементов, количество дочерних и родительских элементов – менее 60. Сложная структура DOM может привести к использованию большего объема памяти, замедлить [вычисление стилей](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и увеличить затраты на [компоновку шаблонов](https://developers.google.com/speed/articles/reflow). [Подробнее…](https://web.dev/dom-size)"
+    "message": "Сложная структура DOM усилит использование памяти, замедлит [вычисление стилей](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и увеличит затраты на [компоновку шаблонов](https://developers.google.com/speed/articles/reflow). [Подробнее…](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 элемент}one{# элемент}few{# элемента}many{# элементов}other{# элемента}}"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Сокращение размера структуры DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Атрибут target"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Добавьте атрибут `rel=\"noopener\"` или `rel=\"noreferrer\"` ко всем внешним ссылкам, чтобы повысить производительность и избежать уязвимостей в защите. [Подробнее…](https://web.dev/external-anchors-use-rel-noopener)"
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Время загрузки для взаимодействия – это время, в течение которого страница становится полностью готова к взаимодействию с пользователем. [Подробнее…](https://web.dev/interactive)"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Отрисовка крупного контента – показатель, который определяет время, требуемое на полную отрисовку крупного текста или изображения. [Подробнее…](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Отрисовка крупного контента"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Максимальная потенциальная задержка после первого ввода показывает время выполнения самой длительной задачи в миллисекундах. [Подробнее…](https://developers.google.com/web/updates/2018/05/first-input-delay)"
+    "message": "Максимальная потенциальная задержка после первого ввода показывает время выполнения самой длительной задачи. [Подробнее…](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Индекс скорости загрузки показывает, как быстро на странице появляется контент. [Подробнее…](https://web.dev/speed-index)"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Общее время в миллисекундах между первой отрисовкой контента и временем загрузки для взаимодействия, когда скорость выполнения задач превышала 50 мс"
+    "message": "Сумма (в миллисекундах) всех периодов от первой отрисовки контента до загрузки для взаимодействия, когда скорость выполнения задач превышала 50 мс. [Подробнее…](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Время прохождения сигнала сети (RTT) напрямую влияет на производительность сайта. Высокое время прохождения сигнала означает, что серверы расположены слишком далеко от пользователя и сайт будет работать медленнее. [Подробнее…](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Service Worker обеспечивает надежную работу веб-приложения при нестабильных условиях работы сети. [Подробнее…](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "При загрузке {url} в Service Worker произошла ошибка {statusCode}."
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` не отправляет код 200 в офлайн-режиме"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Слишком мелкий текст. Настройте область просмотра для экранов мобильных устройств с помощью метатега viewport."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} текста набрано слишком мелким шрифтом (на основе образца размером {decimalProportionVisited, number, extendedPercent})."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "В документе используются шрифты слишком маленького размера"
@@ -1053,7 +1125,7 @@
     "message": "Уменьшите влияние стороннего кода"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Сторонний код"
+    "message": "Уменьшение использования стороннего кода"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Время до первого байта – показатель, который определяет интервал времени между отправкой запроса и ответом вашего сервера. [Подробнее…](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1138,21 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Короткое время ответа сервера (время до получения первого байта)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Единица измерения"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Показатель"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Указав предельное время загрузки страниц сайта, вы сможете отслеживать его производительность. Показателями хорошей производительности являются быстрые загрузка страниц и обработка событий ввода. [Подробнее…](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Время на загрузку"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Длительность"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Время начала"
@@ -1286,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Название"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Сверх бюджета"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Запросы"
   },
@@ -1319,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Приблизительное время задержки при вводе"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Время окончания работы ЦП"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Время загрузки первого контента"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Время загрузки достаточной части контента"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Шрифт"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Изображение"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Время загрузки для взаимодействия"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Макс. потенц. задержка после первого ввода"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Медиа"
@@ -1340,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} сек."
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Индекс скорости загрузки"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Таблица стилей"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Сторонний"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Общее время блокировки"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Всего"
@@ -1457,6 +1571,99 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Предупреждения: "
   },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "Если на странице есть анимированный контент, используйте [amp-anim](https://amp.dev/documentation/components/amp-anim/), чтобы уменьшить нагрузку на процессор, когда контент не отображается на экране."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Убедитесь, что вы используете правильные теги `amp-img` для изображений, которые автоматически загружаются не сразу, если находятся за пределами первой области просмотра. [Подробнее…](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Используйте инструменты, например [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), для [серверного рендеринга страниц AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Проверьте в [документации по AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), все ли ваши стили поддерживаются."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Атрибут `srcset` элемента `amp-img` определяет, какие изображения использовать исходя из размера экрана.  [Подробнее…](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Рекомендуем отображать все компоненты `amp-img` в форматах WebP и указывать соответствующий резервный атрибут для других браузеров. [Подробнее…](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Для рендеринга очень длинных списков рекомендуем использовать виртуальную прокрутку с помощью набора инструментов Component Dev Kit (CDK). [Подробнее…](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Примените [разделение кода на уровне маршрута](https://web.dev/route-level-code-splitting-in-angular/), чтобы уменьшить размер пакетов JavaScript. Рекомендуем также выполнять предварительное кеширование файлов с помощью скрипта [Angular service worker](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Если вы используете Angular CLI, создавайте сборки в рабочем режиме. [Подробнее…](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Если вы используете Angular CLI, включите в рабочую версию сборки карты исходного кода для проверки создаваемых пакетов. [Подробнее…](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Чтобы ускорить переход, выполняйте предзагрузку маршрутов. [Подробнее…](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Для управления контрольными точками изображений мы также рекомендуем использовать утилиту `BreakpointObserver` из набора инструментов Component Dev Kit (CDK). [Подробнее…](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Если вы не группируете файлы JavaScript, рекомендуем использовать [модуль пакетирования и предварительной загрузки](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Отключите встроенную функцию [группировки и минификации файлов JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) в Magento и используйте вместо нее [модуль пакетирования и предварительной загрузки](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Укажите свойство `@font-display` при [выборе специальных шрифтов](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Рекомендуем изменить шаблоны продукции и каталогов для использования функции [отложенной загрузки](https://web.dev/native-lazy-loading) на веб-платформе."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Используйте [модуль интеграции с Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) в Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "В настройках для разработчиков своего магазина включите параметр Minify CSS Files (Уменьшать размер файлов CSS). [Подробнее…](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Используйте [Terser](https://www.npmjs.com/package/terser), чтобы уменьшить размер всех файлов JavaScript, созданных при развертывании статического контента, и отключите встроенную функцию минификации."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Отключите встроенную функцию [группировки файлов JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) в Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "В [магазине Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) можно найти множество сторонних расширений для оптимизации изображений."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Ресурсные подсказки preconnect или dns-prefetch можно добавить, [изменив разметку темы](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Чтобы добавить теги `<link rel=preload>`, [измените разметку темы](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "В [магазине Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) можно найти множество сторонних расширений для использования новых графических форматов."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Рекомендуем использовать библиотеку для организации многоэкранного интерфейса, например `react-window`, чтобы уменьшить количество создаваемых узлов DOM, если на одной странице выполняется отрисовка множества повторяющихся элементов. [Подробнее…](https://web.dev/virtualize-long-lists-react-window/) Кроме того, исключайте ненужные повторные отрисовки с помощью [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) или [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) и [пропускайте эффекты](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) только до того, как будут изменены определенные зависимости, если для повышения скорости отрисовки используется хук-функция Effect."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Если вы используете React Router, максимально ограничьте применение компонента `<Redirect>` для [перехода по маршрутам](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Если вы применяете серверный рендеринг компонентов React, мы рекомендуем использовать методы `renderToNodeStream()` или `renderToStaticNodeStream()`. Это позволит отправлять разметку частями, а не целиком и воссоздавать ее на устройстве клиента. [Подробнее…](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Если ваша система сборки автоматически уменьшает размер файлов CSS, перед развертыванием приложения убедитесь, что вы используете рабочую версию сборки. Для этого установите расширение \"Инструменты разработчика React\". [Подробнее…](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Если ваша система сборки автоматически уменьшает размер файлов JS, перед развертыванием приложения убедитесь, что вы используете рабочую версию сборки. Для этого установите расширение \"Инструменты разработчика React\". [Подробнее…](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Если вы не применяете серверный рендеринг, используйте метод `React.lazy()` для [разделения пакетов JavaScript](https://web.dev/code-splitting-suspense/). Разделить код можно также с помощью сторонней библиотеки, например [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Используйте подключаемый модуль React DevTools, который с помощью API профилировщика может оценить скорость визуализации ваших компонентов. [Подробнее…](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
+  },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Используйте сервисы, которые позволяют встраивать GIF-файлы на страницы сайта в формате видео HTML5."
   },
@@ -1485,13 +1692,13 @@
     "message": "Рекомендуем заменить или удалить [плагины WordPress](https://wordpress.org/plugins/), которые загружают неиспользуемый код JavaScript на вашей странице. Чтобы найти такие плагины, запустите [анализ покрытия кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в инструментах разработчика Chrome. Определить нужный плагин или тему можно по URL скрипта. Обращайте внимание на плагины с большим количеством скриптов, в которых при анализе покрытия кода преобладает красный цвет. Скрипт должен попадать в очередь, только если он используется на странице."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Подробнее [о кешировании в браузере на платформе WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)…"
+    "message": "Подробнее [о кешировании в браузере на платформе WordPress](https://wordpress.org/support/article/optimization/#browser-caching)…"
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Чтобы сжимать изображения без потери качества, используйте [специальный плагин WordPress](https://wordpress.org/plugins/search/optimize+images/)."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Чтобы привести размеры ваших изображений в соответствие с требованиями, загрузите их в [библиотеку файлов](https://codex.wordpress.org/Media_Library_Screen). Затем вставьте их на сайт прямо из библиотеки или используйте виджет изображений. Таким образом вы сможете обеспечить оптимальный размер изображений (в том числе для контрольных точек адаптивного дизайна). Старайтесь не использовать для изображения значение `Full Size` без особой необходимости. [Подробнее…](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Чтобы привести размеры ваших изображений в соответствие с требованиями, загрузите их в [библиотеку файлов](https://wordpress.org/support/article/media-library-screen/). Затем вставьте их на сайт прямо из библиотеки или используйте виджет изображений. Таким образом вы сможете обеспечить оптимальный размер изображений (в том числе для контрольных точек адаптивного дизайна). Старайтесь не использовать для изображения значение `Full Size` без особой необходимости. [Подробнее…](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Включить сжатие текста можно в настройках веб-сервера."

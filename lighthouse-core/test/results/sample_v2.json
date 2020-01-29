@@ -78,6 +78,7 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.135,
+      "numericUnit": "millisecond",
       "displayValue": "4.0 s"
     },
     "first-meaningful-paint": {
@@ -87,7 +88,18 @@
       "score": 0.51,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.136,
+      "numericUnit": "millisecond",
       "displayValue": "4.0 s"
+    },
+    "largest-contentful-paint": {
+      "id": "largest-contentful-paint",
+      "title": "Largest Contentful Paint",
+      "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn More](https://web.dev/lighthouse-largest-contentful-paint)",
+      "score": 0.31,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 4927.278,
+      "numericUnit": "millisecond",
+      "displayValue": "4.9 s"
     },
     "load-fast-enough-for-pwa": {
       "id": "load-fast-enough-for-pwa",
@@ -95,7 +107,8 @@
       "description": "A fast page load over a cellular network ensures a good mobile user experience. [Learn more](https://web.dev/load-fast-enough-for-pwa).",
       "score": 1,
       "scoreDisplayMode": "binary",
-      "numericValue": 4927.278
+      "numericValue": 4927.278,
+      "numericUnit": "millisecond"
     },
     "speed-index": {
       "id": "speed-index",
@@ -104,6 +117,7 @@
       "score": 0.74,
       "scoreDisplayMode": "numeric",
       "numericValue": 4417,
+      "numericUnit": "millisecond",
       "displayValue": "4.4 s"
     },
     "screenshot-thumbnails": {
@@ -189,6 +203,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 16,
+      "numericUnit": "millisecond",
       "displayValue": "20 ms"
     },
     "total-blocking-time": {
@@ -198,15 +213,17 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 116.79800000000023,
+      "numericUnit": "millisecond",
       "displayValue": "120 ms"
     },
     "max-potential-fid": {
       "id": "max-potential-fid",
       "title": "Max Potential First Input Delay",
-      "description": "The maximum potential First Input Delay that your users could experience is the duration, in milliseconds, of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
+      "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
       "numericValue": 122.537,
+      "numericUnit": "millisecond",
       "displayValue": "120 ms"
     },
     "errors-in-console": {
@@ -215,7 +232,6 @@
       "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more](https://web.dev/errors-in-console)",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "numericValue": 5,
       "details": {
         "type": "table",
         "headings": [
@@ -266,6 +282,7 @@
       "score": 1,
       "scoreDisplayMode": "binary",
       "numericValue": 570.5630000000001,
+      "numericUnit": "millisecond",
       "displayValue": "Root document took 570 ms",
       "details": {
         "type": "opportunity",
@@ -281,6 +298,7 @@
       "score": 0.72,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "interactive": {
@@ -290,6 +308,7 @@
       "score": 0.78,
       "scoreDisplayMode": "numeric",
       "numericValue": 4927.278,
+      "numericUnit": "millisecond",
       "displayValue": "4.9 s"
     },
     "user-timings": {
@@ -457,6 +476,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -600,33 +620,34 @@
             "text": "Deprecation / Warning"
           },
           {
-            "key": "url",
-            "itemType": "url",
+            "key": "source",
+            "itemType": "source-location",
             "text": "URL"
-          },
-          {
-            "key": "lineNumber",
-            "itemType": "text",
-            "text": "Line"
           }
         ],
         "items": [
           {
             "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 322
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 322,
+              "column": 6
+            }
           },
           {
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "source": "deprecation",
-            "lineNumber": 325
+            "source": {
+              "type": "source-location",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+              "urlProvider": "network",
+              "line": 325,
+              "column": 9
+            }
           },
           {
-            "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details.",
-            "url": "",
-            "source": "deprecation"
+            "value": "/deep/ combinator is no longer supported in CSS dynamic profile.It is now effectively no-op, acting as if it were a descendant combinator. /deep/ combinator will be removed, and will be invalid at M65. You should remove it. See https://www.chromestatus.com/features/4964279606312960 for more details."
           }
         ]
       }
@@ -638,6 +659,7 @@
       "score": 0.96,
       "scoreDisplayMode": "numeric",
       "numericValue": 1548.5690000000002,
+      "numericUnit": "millisecond",
       "displayValue": "1.5 s",
       "details": {
         "type": "table",
@@ -699,7 +721,8 @@
       "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/bootup-time).",
       "score": 0.92,
       "scoreDisplayMode": "numeric",
-      "numericValue": 1150.573,
+      "numericValue": 1150.5310000000002,
+      "numericUnit": "millisecond",
       "displayValue": "1.2 s",
       "details": {
         "type": "table",
@@ -731,31 +754,31 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "total": 966.9800000000001,
-            "scripting": 957.494,
+            "total": 1044.3820000000003,
+            "scripting": 963.7010000000001,
             "scriptParseCompile": 2.777
           },
           {
-            "url": "Other",
-            "total": 391.76699999999977,
-            "scripting": 17.790999999999997,
+            "url": "Unattributable",
+            "total": 279.87100000000004,
+            "scripting": 9.61,
             "scriptParseCompile": 0.092
           },
           {
             "url": "http://localhost:10200/zone.js",
-            "total": 101.21099999999998,
-            "scripting": 89.50799999999998,
+            "total": 107.086,
+            "scripting": 90.81299999999999,
             "scriptParseCompile": 1.674
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "total": 82.741,
-            "scripting": 80.032,
+            "total": 90.363,
+            "scripting": 80.659,
             "scriptParseCompile": 1.205
           }
         ],
         "summary": {
-          "wastedMs": 1150.573
+          "wastedMs": 1150.5310000000002
         }
       }
     },
@@ -766,6 +789,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -781,6 +805,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -840,7 +865,6 @@
       "description": "Lists the network requests that were made during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 18,
       "details": {
         "type": "table",
         "headings": [
@@ -1082,6 +1106,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 1.7249999999999943,
+      "numericUnit": "millisecond",
       "displayValue": "0 ms",
       "details": {
         "type": "table",
@@ -1117,6 +1142,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 572.829,
+      "numericUnit": "millisecond",
       "displayValue": "570 ms",
       "details": {
         "type": "table",
@@ -1151,7 +1177,6 @@
       "description": "Lists the toplevel main thread tasks that executed during page load.",
       "score": null,
       "scoreDisplayMode": "informative",
-      "numericValue": 16,
       "details": {
         "type": "table",
         "headings": [
@@ -1243,6 +1268,7 @@
       "score": null,
       "scoreDisplayMode": "informative",
       "numericValue": 4927,
+      "numericUnit": "millisecond",
       "details": {
         "type": "debugdata",
         "items": [
@@ -1251,6 +1277,8 @@
             "firstContentfulPaintTs": 185607289047,
             "firstMeaningfulPaint": 3969,
             "firstMeaningfulPaintTs": 185607289048,
+            "largestContentfulPaint": 4927,
+            "largestContentfulPaintTs": 185608247190,
             "firstCPUIdle": 4927,
             "firstCPUIdleTs": 185608247190,
             "interactive": 4927,
@@ -1268,6 +1296,8 @@
             "observedFirstContentfulPaintTs": 185607289047,
             "observedFirstMeaningfulPaint": 3969,
             "observedFirstMeaningfulPaintTs": 185607289048,
+            "observedLargestContentfulPaint": 4927,
+            "observedLargestContentfulPaintTs": 185608247190,
             "observedTraceEnd": 10281,
             "observedTraceEndTs": 185613601189,
             "observedLoad": 4924,
@@ -1343,17 +1373,17 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738,
-            "countOverBudget": "8 requests",
-            "sizeOverBudget": 58338
+            "requestCount": 17,
+            "size": 160517,
+            "countOverBudget": "7 requests",
+            "sizeOverBudget": 58117
           },
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861,
-            "sizeOverBudget": 7741
+            "requestCount": 1,
+            "size": 12640,
+            "sizeOverBudget": 7520
           },
           {
             "resourceType": "third-party",
@@ -1464,7 +1494,7 @@
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "displayValue": "18 requests • 157 KB",
+      "displayValue": "17 requests • 157 KB",
       "details": {
         "type": "table",
         "headings": [
@@ -1488,8 +1518,8 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 18,
-            "size": 160738
+            "requestCount": 17,
+            "size": 160517
           },
           {
             "resourceType": "script",
@@ -1512,8 +1542,8 @@
           {
             "resourceType": "other",
             "label": "Other",
-            "requestCount": 2,
-            "size": 12861
+            "requestCount": 1,
+            "size": 12640
           },
           {
             "resourceType": "stylesheet",
@@ -1578,7 +1608,7 @@
               "url": "https://developers.google.com/speed/libraries/"
             },
             "transferSize": 30174,
-            "mainThreadTime": 82.74100000000001,
+            "mainThreadTime": 90.36300000000001,
             "blockingTime": 22.918000000000006
           }
         ],
@@ -1690,7 +1720,7 @@
     "aria-toggle-field-name": {
       "id": "aria-toggle-field-name",
       "title": "ARIA toggle fields have accessible names",
-      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-label/).",
+      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-toggle-field-name/).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -1846,13 +1876,8 @@
       "id": "form-field-multiple-labels",
       "title": "No form fields have multiple labels",
       "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "frame-title": {
       "id": "frame-title",
@@ -2316,6 +2341,7 @@
       "score": 0.58,
       "scoreDisplayMode": "numeric",
       "numericValue": 103455,
+      "numericUnit": "byte",
       "displayValue": "10 resources found",
       "details": {
         "type": "table",
@@ -2423,6 +2449,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 160738,
+      "numericUnit": "byte",
       "displayValue": "Total size was 157 KB",
       "details": {
         "type": "table",
@@ -2489,6 +2516,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2506,6 +2534,7 @@
       "score": 0.46,
       "scoreDisplayMode": "numeric",
       "numericValue": 1129,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 1,130 ms",
       "details": {
         "type": "opportunity",
@@ -2563,6 +2592,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2579,6 +2609,7 @@
       "score": 0.88,
       "scoreDisplayMode": "numeric",
       "numericValue": 150,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 30 KB",
       "warnings": [],
       "details": {
@@ -2619,6 +2650,24 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
+      }
+    },
+    "unused-javascript": {
+      "id": "unused-javascript",
+      "title": "Remove unused JavaScript",
+      "description": "Remove unused JavaScript to reduce bytes consumed by network activity. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting).",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2635,6 +2684,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 9 KB",
       "warnings": [],
       "details": {
@@ -2681,6 +2731,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2698,6 +2749,7 @@
       "score": 0.75,
       "scoreDisplayMode": "numeric",
       "numericValue": 300,
+      "numericUnit": "millisecond",
       "displayValue": "Potential savings of 63 KB",
       "details": {
         "type": "opportunity",
@@ -2741,6 +2793,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "warnings": [],
       "details": {
@@ -2758,6 +2811,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
+      "numericUnit": "millisecond",
       "displayValue": "",
       "details": {
         "type": "opportunity",
@@ -2789,6 +2843,7 @@
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 31,
+      "numericUnit": "element",
       "displayValue": "31 elements",
       "details": {
         "type": "table",
@@ -2847,35 +2902,46 @@
         "type": "table",
         "headings": [
           {
-            "key": "href",
-            "itemType": "url",
-            "text": "URL"
-          },
-          {
-            "key": "target",
-            "itemType": "text",
-            "text": "Target"
-          },
-          {
-            "key": "rel",
-            "itemType": "text",
-            "text": "Rel"
+            "key": "node",
+            "itemType": "node",
+            "text": "Failing Anchors"
           }
         ],
         "items": [
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
+            },
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "",
             "outerHTML": "<a href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
           },
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a target=\"blank\">Hello</a>"
+            },
             "href": "Unknown",
             "target": "_blank",
             "rel": "",
             "outerHTML": "<a target=\"blank\">Hello</a>"
           },
           {
+            "node": {
+              "type": "node",
+              "path": "",
+              "selector": "",
+              "nodeLabel": "",
+              "snippet": "<a rel=\"nofollow\" href=\"https://www.google.com/\" target=\"blank\">Hello</a>"
+            },
             "href": "https://www.google.com/",
             "target": "_blank",
             "rel": "nofollow",
@@ -3019,14 +3085,25 @@
             "npm": "jquery"
           },
           {
-            "name": "jQuery (Fast path)",
-            "npm": "jquery"
-          },
-          {
             "name": "WordPress"
           }
         ],
-        "summary": {}
+        "summary": {},
+        "debugData": {
+          "type": "debugdata",
+          "stacks": [
+            {
+              "id": "jquery",
+              "version": "2.1.1"
+            },
+            {
+              "id": "jquery-fast"
+            },
+            {
+              "id": "wordpress"
+            }
+          ]
+        }
       }
     },
     "notification-on-start": {
@@ -3235,7 +3312,7 @@
         "headings": [
           {
             "key": "source",
-            "itemType": "url",
+            "itemType": "source-location",
             "text": "Source"
           },
           {
@@ -3256,7 +3333,10 @@
         ],
         "items": [
           {
-            "source": "Legible text",
+            "source": {
+              "type": "code",
+              "value": "Legible text"
+            },
             "selector": "",
             "coverage": "100.00%",
             "fontSize": "≥ 12px"
@@ -3406,6 +3486,7 @@
     "gatherMode": false,
     "disableStorageReset": false,
     "emulatedFormFactor": "mobile",
+    "internalDisableDeviceScreenEmulation": false,
     "channel": "cli",
     "budgets": [
       {
@@ -3534,6 +3615,11 @@
           "group": "metrics"
         },
         {
+          "id": "largest-contentful-paint",
+          "weight": 0,
+          "group": "metrics"
+        },
+        {
           "id": "speed-index",
           "weight": 4,
           "group": "metrics"
@@ -3588,6 +3674,11 @@
         },
         {
           "id": "unused-css-rules",
+          "weight": 0,
+          "group": "load-opportunities"
+        },
+        {
+          "id": "unused-javascript",
           "weight": 0,
           "group": "load-opportunities"
         },
@@ -3839,7 +3930,7 @@
         },
         {
           "id": "form-field-multiple-labels",
-          "weight": 2,
+          "weight": 0,
           "group": "a11y-names-labels"
         },
         {
@@ -3984,7 +4075,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.66
+      "score": 0.65
     },
     "best-practices": {
       "title": "Best Practices",
@@ -4400,6 +4491,18 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:largest-contentful-paint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LargestContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:load-fast-enough-for-pwa",
         "duration": 100,
         "entryType": "measure"
@@ -4719,12 +4822,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:TimingSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LargestContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5120,6 +5217,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UnusedCSS",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:computed:FirstContentfulPaint",
         "duration": 100,
         "entryType": "measure"
@@ -5145,6 +5248,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:unused-css-rules",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:unused-javascript",
         "duration": 100,
         "entryType": "measure"
       },
@@ -5330,8 +5439,17 @@
       "auditGroupExpandTooltip": "Show audits",
       "crcInitialNavigation": "Initial Navigation",
       "crcLongestDurationLabel": "Maximum critical path latency:",
+      "dropdownCopyJSON": "Copy JSON",
+      "dropdownDarkTheme": "Toggle Dark Theme",
+      "dropdownPrintExpanded": "Print Expanded",
+      "dropdownPrintSummary": "Print Summary",
+      "dropdownSaveGist": "Save as Gist",
+      "dropdownSaveHTML": "Save as HTML",
+      "dropdownSaveJSON": "Save as JSON",
+      "dropdownViewer": "Open in Viewer",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
+      "footerIssue": "File an issue",
       "labDataTitle": "Lab Data",
       "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
@@ -5339,9 +5457,24 @@
       "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
       "passedAuditsGroupTitle": "Passed audits",
+      "runtimeDesktopEmulation": "Emulated Desktop",
+      "runtimeMobileEmulation": "Emulated Moto G4",
+      "runtimeNoEmulation": "No emulation",
+      "runtimeSettingsBenchmark": "CPU/Memory Power",
+      "runtimeSettingsChannel": "Channel",
+      "runtimeSettingsCPUThrottling": "CPU throttling",
+      "runtimeSettingsDevice": "Device",
+      "runtimeSettingsFetchTime": "Fetch Time",
+      "runtimeSettingsNetworkThrottling": "Network throttling",
+      "runtimeSettingsTitle": "Runtime Settings",
+      "runtimeSettingsUA": "User agent (host)",
+      "runtimeSettingsUANetwork": "User agent (network)",
+      "runtimeSettingsUrl": "URL",
+      "runtimeUnknown": "Unknown",
       "snippetCollapseButtonLabel": "Collapse snippet",
       "snippetExpandButtonLabel": "Expand snippet",
       "thirdPartyResourcesLabel": "Show 3rd-party resources",
+      "throttlingProvided": "Provided by environment",
       "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
       "varianceDisclaimer": "Values are estimated and may vary. The performance score is [based only on these metrics](https://github.com/GoogleChrome/lighthouse/blob/d2ec9ffbb21de9ad1a0f86ed24575eda32c796f0/docs/scoring.md#how-are-the-scores-weighted).",
       "warningAuditsGroupTitle": "Passed audits but with warnings",
@@ -5417,6 +5550,12 @@
         },
         {
           "values": {
+            "timeInMs": 4927.278
+          },
+          "path": "audits[largest-contentful-paint].displayValue"
+        },
+        {
+          "values": {
             "timeInMs": 4417
           },
           "path": "audits[speed-index].displayValue"
@@ -5441,7 +5580,7 @@
         },
         {
           "values": {
-            "timeInMs": 1150.573
+            "timeInMs": 1150.5310000000002
           },
           "path": "audits[bootup-time].displayValue"
         }
@@ -5452,6 +5591,12 @@
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
+      ],
+      "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": [
+        "audits[largest-contentful-paint].title"
+      ],
+      "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": [
+        "audits[largest-contentful-paint].description"
       ],
       "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": [
         "audits[load-fast-enough-for-pwa].title"
@@ -5535,7 +5680,6 @@
         "audits[unminified-javascript].details.headings[0].label",
         "audits[uses-webp-images].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
-        "audits[external-anchors-use-rel-noopener].details.headings[0].text",
         "audits[geolocation-on-start].details.headings[0].text",
         "audits[no-document-write].details.headings[0].text",
         "audits[notification-on-start].details.headings[0].text",
@@ -5658,9 +5802,6 @@
       "lighthouse-core/audits/deprecations.js | columnDeprecate": [
         "audits.deprecations.details.headings[0].text"
       ],
-      "lighthouse-core/audits/deprecations.js | columnLine": [
-        "audits.deprecations.details.headings[2].text"
-      ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | title": [
         "audits[mainthread-work-breakdown].title"
       ],
@@ -5761,7 +5902,7 @@
         },
         {
           "values": {
-            "count": 8
+            "count": 7
           },
           "path": "audits[performance-budget].details.items[1].countOverBudget"
         },
@@ -5837,8 +5978,8 @@
       "lighthouse-core/audits/resource-summary.js | displayValue": [
         {
           "values": {
-            "requestCount": 18,
-            "byteCount": 160738
+            "requestCount": 17,
+            "byteCount": 160517
           },
           "path": "audits[resource-summary].displayValue"
         }
@@ -6246,6 +6387,12 @@
       "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": [
         "audits[unused-css-rules].description"
       ],
+      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": [
+        "audits[unused-javascript].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": [
+        "audits[unused-javascript].description"
+      ],
       "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": [
         "audits[uses-webp-images].title"
       ],
@@ -6342,11 +6489,8 @@
           "path": "audits[external-anchors-use-rel-noopener].warnings[0]"
         }
       ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": [
-        "audits[external-anchors-use-rel-noopener].details.headings[1].text"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": [
-        "audits[external-anchors-use-rel-noopener].details.headings[2].text"
+      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": [
+        "audits[external-anchors-use-rel-noopener].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": [
         "audits[geolocation-on-start].title"
@@ -6718,10 +6862,10 @@
         "unminified-javascript": "A number of [WordPress plugins](https://wordpress.org/plugins/search/minify+javascript/) can speed up your site by concatenating, minifying, and compressing your scripts. You may also want to use a build process to do this minification up front if possible.",
         "efficient-animated-content": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.",
         "unused-javascript": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the script. Look out for plugins that have many scripts in the list which have a lot of red in code coverage. A plugin should only enqueue a script if it is actually used on the page.",
-        "uses-long-cache-ttl": "Read about [Browser Caching in WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching).",
+        "uses-long-cache-ttl": "Read about [Browser Caching in WordPress](https://wordpress.org/support/article/optimization/#browser-caching).",
         "uses-optimized-images": "Consider using an [image optimization WordPress plugin](https://wordpress.org/plugins/search/optimize+images/) that compresses your images while retaining quality.",
         "uses-text-compression": "You can enable text compression in your web server configuration.",
-        "uses-responsive-images": "Upload images directly through the [media library](https://codex.wordpress.org/Media_Library_Screen) to ensure that the required image sizes are available, and then insert them from the media library or use the image widget to ensure the optimal image sizes are used (including those for the responsive breakpoints). Avoid using `Full Size` images unless the dimensions are adequate for their usage. [Learn More](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size).",
+        "uses-responsive-images": "Upload images directly through the [media library](https://wordpress.org/support/article/media-library-screen/) to ensure that the required image sizes are available, and then insert them from the media library or use the image widget to ensure the optimal image sizes are used (including those for the responsive breakpoints). Avoid using `Full Size` images unless the dimensions are adequate for their usage. [Learn More](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/).",
         "time-to-first-byte": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
       }
     }

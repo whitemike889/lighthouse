@@ -291,7 +291,7 @@ function _formatIcuMessage(locale, icuMessageId, uiStringMessage, values = {}) {
 
     // Warn the user that the UIString message != the `en` message ∴ they should update the strings
     if (!LOCALES.en[icuMessageId] || localeMessage !== LOCALES.en[icuMessageId].message) {
-      log.warn('i18n', `Message "${icuMessageId}" does not match its 'en' counterpart. ` +
+      log.verbose('i18n', `Message "${icuMessageId}" does not match its 'en' counterpart. ` +
         `Run 'i18n' to update.`);
     }
   }
@@ -337,12 +337,13 @@ function getRendererFormattedStrings(locale) {
   if (!localeMessages) throw new Error(`Unsupported locale '${locale}'`);
 
   const icuMessageIds = Object.keys(localeMessages).filter(f => f.includes('core/report/html/'));
-  /** @type {LH.I18NRendererStrings} */
-  const strings = {};
+  const strings = /** @type {LH.I18NRendererStrings} */ ({});
   for (const icuMessageId of icuMessageIds) {
     const [filename, varName] = icuMessageId.split(' | ');
     if (!filename.endsWith('util.js')) throw new Error(`Unexpected message: ${icuMessageId}`);
-    strings[varName] = localeMessages[icuMessageId].message;
+
+    const key = /** @type {keyof LH.I18NRendererStrings} */ (varName);
+    strings[key] = localeMessages[icuMessageId].message;
   }
 
   return strings;

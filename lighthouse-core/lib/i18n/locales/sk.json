@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atribúty `[aria-*]` zodpovedajú svojim rolám"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Asistenčné technológie, ako sú čítačky obrazovky, nepracujú konzistentne, keď je v dokumente `<body>` nastavený atribút `aria-hidden=\"true\"`. [Ďalšie informácie](https://web.dev/aria-hidden-body/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "`[aria-hidden=\"true\"]` sa v dokumente `<body>` nachádza"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "`[aria-hidden=\"true\"]` sa v dokumente `<body>` nenachádza"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Označiteľné odvodené položky v rámci prvku `[aria-hidden=\"true\"]` zneprístupňujú tieto interaktívne prvky používateľom asistenčných technológií, napríklad čítačiek obrazovky. [Ďalšie informácie](https://web.dev/aria-hidden-focus/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Prvky `[aria-hidden=\"true\"]` obsahujú označiteľné odvodené prvky"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Prvky `[aria-hidden=\"true\"]` neobsahujú označiteľné odvodené položky"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Keď vstupné pole nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nanič. [Ďalšie informácie](https://web.dev/aria-input-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Vstupné polia ARIA nemajú dostupné názvy"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Vstupné polia ARIA majú dostupné názvy"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Niektoré roly ARIA majú povinné atribúty, ktoré čítačkám obrazovky opisujú stav prvku. [Ďalšie informácie](https://web.dev/aria-required-attr/)"
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Hodnoty `[role]` sú platné"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Keď pole prepínača nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nanič. [Ďalšie informácie](https://web.dev/aria-toggle-field-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Polia prepínačov ARIA nemajú dostupné názvy"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Polia prepínačov ARIA majú dostupné názvy"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Asistenčné technológie, ako sú čítačky obrazovky, nedokážu interpretovať atribúty ARIA s neplatnými hodnotami. [Ďalšie informácie](https://web.dev/aria-valid-attr-value/)"
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Dokument má prvok `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Všetky označiteľné prvky musia mať jedinečný atribút`id`, aby ich dokázali rozpoznať asistenčné technológie. [Ďalšie informácie](https://web.dev/duplicate-id-active/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Atribúty `[id]` aktívnych označiteľných prvkov nie sú jedinečné"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Atribúty `[id]` aktívnych označiteľných prvkov sú jedinečné"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Hodnota identifikátora ARIA musí byť jedinečná, aby asistenčné technológie neprehliadli ďalšie výskyty. [Ďalšie informácie](https://web.dev/duplicate-id-aria/)"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Identifikátory ARIA nie sú jedinečné"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Identifikátory ARIA nie sú jedinečné"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Asistenčné technológie, ako napríklad čítačky obrazovky, ktoré používajú buď prvý, posledný, alebo všetky štítky, môžu polia formulárov s viacerými štítkami ohlásiť nepresne. [Ďalšie informácie](https://web.dev/form-field-multiple-labels/)"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Polia formulára majú viacero štítkov"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Žiadne polia formulára nemajú viacero štítkov"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Používatelia čítačiek obrazovky zistia obsah rámcov pomocou ich názvov. [Ďalšie informácie](https://web.dev/frame-title/)"
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Prvok `<frame>` alebo `<iframe>` má názov"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Správne usporiadané nadpisy, ktoré nepreskakujú úrovne, udržiavajú sémantickú štruktúru stránky, vďaka čomu zjednodušujú navigáciu a porozumenie pri používaní asistenčných technológií. [Ďalšie informácie](https://web.dev/heading-order/)"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Prvky nadpisu sa nezobrazujú postupne v zostupnom poradí"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Prvky nadpisu sa zobrazujú postupne v zostupnom poradí"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Ak stránka neuvádza atribút lang, čítačka obrazovky predpokladá, že je v predvolenom jazyku vybranom používateľom pri nastavovaní čítačky obrazovky. Ak stránka v skutočnosti nie je v predvolenom jazyku, čítačka obrazovky nemusí jej text prečítať správne. [Ďalšie informácie](https://web.dev/html-has-lang/)"
@@ -390,7 +462,7 @@
     "message": "Odstráňte nepoužívané šablóny CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Odstráňte nepoužívaný JavaScript a znížte tak spotrebu bajtov sieťovou aktivitou."
+    "message": "Odstráňte nepoužívaný JavaScript a znížte tak spotrebu bajtov sieťovou aktivitou. [Ďalšie informácie](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Odstráňte nepoužívaný JavaScript"
@@ -450,7 +522,7 @@
     "message": "{itemCount,plural, =1{Našiel sa 1 reťazec}few{Našli sa # reťazce}many{# chains found}other{Našlo sa # reťazcov}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Minimalizujte hĺbku podstatných žiadostí"
+    "message": "Vyhýbajte sa reťazeniu podstatných žiadostí"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Ukončenie podpory / upozornenie"
@@ -513,7 +585,7 @@
     "message": "Hodnota"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Programátori prehliadača odporúčajú, aby stránky obsahovali menej ako ~1 500 prvkov DOM. Optimálna hodnota je hĺbka stromovej štruktúry menšia ako 32 prvkov a menej ako 60 podradených či nadradených prvkov. Veľký prvok DOM môže zvýšiť spotrebu pamäte, predĺžiť [výpočty štýlov](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) a spôsobiť nákladné [preformátovania rozložení](https://developers.google.com/speed/articles/reflow). [Ďalšie informácie](https://web.dev/dom-size)"
+    "message": "Rozsiahly model DOM zvýši spotrebu pamäte, predĺži [výpočty štýlov](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) a spôsobí nákladné [preformátovania rozloženia](https://developers.google.com/speed/articles/reflow). [Ďalšie informácie](https://web.dev/dom-size)"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 prvok}few{# prvky}many{# elements}other{# prvkov}}"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Zabráni použitiu nadmerne veľkého prvku DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Cieľ"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Ak chcete zlepšiť výkonnosť a zabrániť chybám zabezpečenia, pridajte k ľubovoľným externým odkazom prvok `rel=\"noopener\"` alebo `rel=\"noreferrer\"`. [Ďalšie informácie](https://web.dev/external-anchors-use-rel-noopener)"
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Čas do interaktivity je údaj o tom, koľko času prejde, kým bude stránka plne interaktívna. [Ďalšie informácie](https://web.dev/interactive)"
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "Najväčšie vykreslenie obsahu označuje čas, za ktorý sa vykreslí najväčší text alebo obrázok. [Ďalšie informácie](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Najväčšie vykreslenie obsahu"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Maximálne potenciálne oneskorenie prvého vstupu, ktoré sa u vašich používateľov môže vyskytnúť, je trvanie najdlhšej úlohy (v milisekundách). [Ďalšie informácie](https://developers.google.com/web/updates/2018/05/first-input-delay)"
+    "message": "Maximálne potenciálne oneskorenie prvého vstupu, ktoré sa u vašich používateľov môže vyskytnúť, je trvanie najdlhšej úlohy. [Ďalšie informácie](https://web.dev/lighthouse-max-potential-fid)"
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Index rýchlosti znázorňuje, za aký čas sa viditeľne doplní obsah stránky. [Ďalšie informácie](https://web.dev/speed-index)"
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Súčet všetkých časových období medzi prvým vykreslením obsahu a časom do interaktivity, kedy dĺžka úlohy presiahla 50 ms (vyjadrený v milisekundách)."
+    "message": "Súčet všetkých časových období medzi prvým vykreslením obsahu a časom do interaktivity, kedy dĺžka úlohy presiahla 50 ms (vyjadrený v milisekundách). [Ďalšie informácie](https://web.dev/lighthouse-total-blocking-time)"
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Časy vrátenia žiadostí v rámci siete majú veľký vplyv na výkonnosť. Ak je čas vrátenia žiadostí v rámci siete k pôvodnému zdroju vysoký, znamená to, že servery umiestnené bližšie k používateľovi by mohli zlepšiť výkonnosť. [Ďalšie informácie](https://hpbn.co/primer-on-latency-and-bandwidth/)"
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Obsluha umožňuje vašej webovej aplikácii spoľahlivo fungovať za nepredvídateľných podmienok siete. [Ďalšie informácie](https://web.dev/offline-start-url)"
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Pri načítaní {url} v obsluhe sa vyskytla chyba. Kód stavu: {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` nereaguje kódom 200, keď je offline"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Text nie je čitateľný, pretože neexistuje žiadna metaznačka oblasti zobrazenia optimalizovaná pre mobilné obrazovky."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "Určitá časť textu ({decimalProportion, number, extendedPercent}) je príliš malá (na základe vzorky {decimalProportionVisited, number, extendedPercent})."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "Dokument nepoužíva čitateľné veľkosti písma"
@@ -1053,7 +1125,7 @@
     "message": "Zníženie vplyvu kódu tretích strán"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Používanie tretími stranami"
+    "message": "Minimalizujte použitie riešení tretích strán"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Čas do prvého bajtu určuje čas, za ktorý váš server odošle odpoveď. [Ďalšie informácie](https://web.dev/time-to-first-byte)"
@@ -1066,6 +1138,21 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Časy odozvy servera sú krátke (TTFB)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Meranie"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Metrika"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Nastavte časový rozpočet, ktorý vám pomôže dohliadať na výkonnosť svojho webu. Výkonné stránky sa načítajú rýchlo a okamžite reagujú na udalosti vstupu používateľov. [Ďalšie informácie](https://developers.google.com/web/tools/lighthouse/audits/budgets)"
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Časový rozpočet"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Trvanie"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Čas začatia"
@@ -1286,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Názov"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Cez rozpočet"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Žiadosti"
   },
@@ -1319,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Odhadovaná latencia vstupu"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Prvá nečinnosť procesora"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Prvé obsahové vyfarbenie"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Prvé účelné vyfarbenie"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Písmo"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Obrázok"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Čas do interaktívneho vykreslenia"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Max. potenc. oneskorenie prvého vstupu"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Médiá"
@@ -1340,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} s"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Index rýchlosti"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Šablóna štýlu"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Tretia strana"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Celkový čas blokovania"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Celkovo"
@@ -1457,6 +1571,99 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Upozornenia: "
   },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "V prípade animovaného obsahu minimalizujete využitie procesora pomocou komponenta [amp-anim](https://amp.dev/documentation/components/amp-anim/), keď je tento obsah mimo obrazovky."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Zaistite používanie platných značiek `amp-img` pre obrázky, ktoré automaticky oneskorene načítavajú mimo prvej oblasti zobrazenia. [Ďalšie informácie](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Na [serverové vykresľovanie rozložení AMP](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) používajte nástroje, ako je [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Ak chcete zaistiť, aby všetky použité štýly boli podporované, prečítajte si [dokumentáciu pre stránky AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/)."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Prvok `amp-img` podporuje atribút `srcset` na určenie toho, ktoré obrázky použiť na základe veľkosti obrazovky.  [Ďalšie informácie](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Skúste zobraziť všetky komponenty `amp-img` vo formátoch WebP a zároveň nastaviť vhodné záložné riešenie pre ďalšie prehliadače. [Ďalšie informácie](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Ak vykresľujete veľmi dlhé zoznamy, môžete použiť virtuálne posúvanie pomocou súpravy Component Dev Kit (CDK). [Ďalšie informácie](https://web.dev/virtualize-lists-with-angular-cdk/)"
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Veľkosť balíkov súborov JavaScript minimalizujte [rozdelením kódu na úrovni smerovania](https://web.dev/route-level-code-splitting-in-angular/). Môžete tiež predbežne načítať prvky do vyrovnávacej pamäte pomocou [obsluhy Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Ak používate príkazový riadok Angular, zostavy by ste mali generovať v produkčnom režime. [Ďalšie informácie](https://angular.io/guide/deployment#enable-runtime-production-mode)"
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Ak používate príkazový riadok Angular, zahrňte zdrojové mapy do produkčnej zostavy na účely kontroly balíkov. [Ďalšie informácie](https://angular.io/guide/deployment#inspect-the-bundles)"
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Prednačítajte smerovanie vopred, aby ste urýchlili navigáciu. [Ďalšie informácie](https://web.dev/route-preloading-in-angular/)"
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "Na správu zlomových bodov obrázkov môžete použiť nástroj `BreakpointObserver` zo súpravy Component Dev Kit (CDK). [Ďalšie informácie](https://material.angular.io/cdk/layout/overview)"
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Ak prvky JavaScriptu nezoskupujete, zvážte použitie [funkcie baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Vypnite v platforme Magento vstavané funkcie [zoskupovania a minifikácie súborov JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) a zvážte namiesto toho použitie funkcie [baler](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Pri [definovaní vlastných písmen](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) nastavte parameter `@font-display`."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Ak chcete využiť funkciu [oneskoreného načítania](https://web.dev/native-lazy-loading) danej webovej platformy, upravte šablóny svojho produktu a katalógu."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Použite [integráciu Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) platformy Magento."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Povoľte možnosť Minifikovať súbory CSS v nastaveniach vášho obchodu pre vývojárov. [Ďalšie informácie](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Použite nástroj [Terser](https://www.npmjs.com/package/terser) na minifikáciu všetkých prvkov JavaScriptu zo statického obsahu a vypnite vstavanú funkciu minifikácie."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Vypnite vstavané [zoskupovanie súborov JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) v platforme Magento."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Na trhovisku [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) nájdete veľké množstvo rozšírení tretích strán určených na optimalizáciu obrázkov."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Indikátory zdrojov predbežného pripojenia alebo predbežného načítania DNS môžete pridať [úpravou rozloženia motívu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Značky `<link rel=preload>` je možné pridať [úpravou rozloženia motívu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Na trhovisku [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) nájdete veľké množstvo rozšírení tretích strán, ktoré podporujú nové formáty obrázkov."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Ak na stránke opakovane vykresľujete určité prvky, zvážte použitie „okennej“ knižnice, ako je `react-window`, ktorá vám pomôže minimalizovať počet vytvorených uzlov DOM. [Ďalšie informácie](https://web.dev/virtualize-long-lists-react-window/) Minimalizujte aj zbytočné opakované vykresľovanie. Môžete na to použiť funkciu [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) alebo [React.memo](https://reactjs.org/docs/react-api.html#reactmemo). [Efekty preskakujte](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) iba v prípade, ak sa zmenili určité závislosti a zlepšujete výkonnosť počas spustenia pomocou nástroja Effect Hook."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Ak používate React Router, minimalizujte používanie komponentu `<Redirect>` na [určenie smerovania](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Ak na strane servera vykresľujete komponenty knižnice React, zvážte použitie funkcie `renderToNodeStream()` alebo `renderToStaticNodeStream()`, aby ste klientovi umožnili prijať a spracovať rôzne časti značiek namiesto všetkých naraz. [Ďalšie informácie](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Ak vaša zostava automaticky minifikuje súbory CSS, mali by ste nasádzať produkčnú zostavu aplikácie. Môžete to skontrolovať pomocou rozšírenia React Developer Tools. [Ďalšie informácie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Ak váš systém zostavy automaticky minifikuje súbory JS, mali by ste nasadzovať produkčnú zostavu aplikácie. Môžete to skontrolovať pomocou rozšírenia React Developer Tools. [Ďalšie informácie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Ak nevykresľujete na strane servera, [rozdeľte balíky súborov JavaScript](https://web.dev/code-splitting-suspense/) pomocou funkcie `React.lazy()`. V opačnom prípade rozdeľte kód pomocou knižnice tretej strany, napríklad [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Na meranie výkonnosti vykresľovania svojich komponentov použite profilovač React DevTools Profiler, ktorý využíva rozhranie Profiler API. [Ďalšie informácie](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
+  },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Zvážte nahranie gifu do služby, ktorá umožní jeho vloženie v podobe videa HTML5."
   },
@@ -1485,13 +1692,13 @@
     "message": "Zvážte zníženie alebo prepnutie počtu [doplnkov WordPress](https://wordpress.org/plugins/) načítavajúcich nepoužívaný JavaScript na stránke. Doplnky pridávajúce externý JavaScript skúste identifikovať pomocou funkcie [zahrnutia v kóde](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) v nástroji Chrome DevTools. Príslušný motív alebo doplnok môžete identifikovať pomocou webovej adresy daného skriptu. Nájdite doplnky, ktoré majú v zozname mnoho skriptov s veľkým počtom červených hodnôt vo funkcii zahrnutia v kóde. Doplnok by nemal skript zaradiť do poradia, keď sa používa na stránke."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Prečítajte si o [ukladaní obsahu do vyrovnávacej pamäte prehliadača na webe WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Prečítajte si o [ukladaní obsahu do vyrovnávacej pamäte prehliadača na webe WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Zvážte použitie [doplnku WordPress na optimalizáciu obrázkov](https://wordpress.org/plugins/search/optimize+images/), ktorý skomprimuje obrázky, ale zachová ich kvalitu."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Nahrajte obrázky priamo prostredníctvom [knižnice médií](https://codex.wordpress.org/Media_Library_Screen), čím zaistíte dostupnosť ich požadovaných veľkostí. Potom ich vložte z knižnice médií alebo zaistite použitie optimálnych veľkostí obrázkov pomocou ich miniaplikácií (vrátane tých, ktoré sú určené pre responzívne zlomové body). Obrázky s veľkosťou `Full Size` použite iba vtedy, keď sú dané rozmery vhodné na použitie. [Ďalšie informácie](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)"
+    "message": "Nahrajte obrázky priamo prostredníctvom [knižnice médií](https://wordpress.org/support/article/media-library-screen/), čím zaistíte dostupnosť ich požadovaných veľkostí. Potom ich vložte z knižnice médií alebo zaistite použitie optimálnych veľkostí obrázkov pomocou ich miniaplikácií (vrátane tých, ktoré sú určené pre responzívne zlomové body). Obrázky s veľkosťou `Full Size` použite iba vtedy, keď sú dané rozmery vhodné na použitie. [Ďalšie informácie](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)"
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "V konfigurácii webového servera môžete povoliť kompresiu textu."

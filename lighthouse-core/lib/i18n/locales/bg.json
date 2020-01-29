@@ -17,6 +17,33 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Атрибутите `[aria-*]` съответстват на ролите си"
   },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
+    "message": "Помощните технологии, например екранни четци, работят непоследователно, когато за `<body>` за документа е зададено `aria-hidden=\"true\"`. [Научете повече](https://web.dev/aria-hidden-body/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
+    "message": "За `<body>` за документа е зададено `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-body.js | title": {
+    "message": "За `<body>` за документа не е зададено `[aria-hidden=\"true\"]`"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
+    "message": "Дъщерните елементи в елемент `[aria-hidden=\"true\"]`, които могат да получават фокуса, не позволяват тези елементи да бъдат достъпни за потребителите на помощни технологии, например екранни четци. [Научете повече](https://web.dev/aria-hidden-focus/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
+    "message": "Елементите `[aria-hidden=\"true\"]` съдържат дъщерни елементи, които могат да получат фокуса"
+  },
+  "lighthouse-core/audits/accessibility/aria-hidden-focus.js | title": {
+    "message": "Елементите `[aria-hidden=\"true\"]` не съдържат дъщерни елементи, които могат да получат фокуса"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
+    "message": "Когато дадено поле за въвеждане няма достъпно име, екранните четци ще произнасят за него общо име и то ще бъде неизползваемо за потребителите, разчитащи на тази технология. [Научете повече](https://web.dev/aria-input-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
+    "message": "Полетата за въвеждане за ARIA нямат достъпни имена"
+  },
+  "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
+    "message": "Полетата за въвеждане за ARIA са с достъпни имена"
+  },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Някои роли на ARIA имат задължителни атрибути, от които екранните четци получават описание на състоянието на съответния елемент. [Научете повече](https://web.dev/aria-required-attr/)."
   },
@@ -52,6 +79,15 @@
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "Стойностите на `[role]` са валидни"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
+    "message": "Когато дадено поле за превключване няма достъпно име, екранните четци ще произнасят за него общо име и то ще бъде неизползваемо за потребителите, разчитащи на тази технология. [Научете повече](https://web.dev/aria-toggle-field-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
+    "message": "Полетата за превключване за ARIA нямат достъпни имена"
+  },
+  "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
+    "message": "Полетата за превключване за ARIA са с достъпни имена"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Помощните технологии, като например екранни четци, не могат да интерпретират атрибути на ARIA с невалидни стойности. [Научете повече](https://web.dev/aria-valid-attr-value/)."
@@ -137,6 +173,33 @@
   "lighthouse-core/audits/accessibility/document-title.js | title": {
     "message": "Документът има елемент `<title>`"
   },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
+    "message": "Всички елементи, които могат да получат фокуса, трябва да са с уникален `id`, за да могат помощните технологии да работят с тях. [Научете повече](https://web.dev/duplicate-id-active/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
+    "message": "Атрибутите `[id]` на активните елементи, които могат да получат фокуса, не са уникални"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-active.js | title": {
+    "message": "Атрибутите `[id]` на активните елементи, които могат да получат фокуса, са уникални"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
+    "message": "Стойността на атрибута за ARIA трябва да е уникална, за да се предотврати пропускането на други екземпляри от страна на помощните технологии. [Научете повече](https://web.dev/duplicate-id-aria/)."
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
+    "message": "Идентификаторите за ARIA не са уникални"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
+    "message": "Идентификаторите за ARIA са уникални"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
+    "message": "Когато полетата във формуляри имат няколко етикета, е възможно да бъдат произнесени объркващо от помощните технологии, например екранни четци, които използват първия, последния или всички етикети. [Научете повече](https://web.dev/form-field-multiple-labels/)."
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
+    "message": "Полета във формуляр са с повече от един етикет"
+  },
+  "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
+    "message": "Нито едно поле във формуляр няма повече от един етикет"
+  },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Потребителите на екранни четци очакват заглавието на рамката да описва съдържанието й. [Научете повече](https://web.dev/frame-title/)."
   },
@@ -145,6 +208,15 @@
   },
   "lighthouse-core/audits/accessibility/frame-title.js | title": {
     "message": "Елементите `<frame>` или `<iframe>` имат заглавие"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | description": {
+    "message": "Правилно подредените заглавия без пропускане на нива предават семантичната структура на страницата и улесняват разбирането ѝ и навигацията в нея с помощни технологии. [Научете повече](https://web.dev/heading-order/)."
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
+    "message": "Заглавните елементи не са в последователен низходящ ред"
+  },
+  "lighthouse-core/audits/accessibility/heading-order.js | title": {
+    "message": "Заглавните елементи са в последователен низходящ ред"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
     "message": "Ако за дадена страница не е посочен атрибут lang, екранният четец приема, че тя е написана на стандартния език, който потребителят е избрал при настройването му. Ако страницата всъщност не е на стандартния език, екранният четец може да не прочете текста й правилно. [Научете повече](https://web.dev/html-has-lang/)."
@@ -390,7 +462,7 @@
     "message": "Премахнете неизползвания CSS код"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Премахнете неизползвания JavaScript, за да намалите преноса на данни при мрежовата активност."
+    "message": "Премахнете неизползвания JavaScript, за да намалите преноса на данни при мрежова активност. [Научете повече](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/code-splitting)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Премахнете неизползвания JavaScript"
@@ -450,7 +522,7 @@
     "message": "{itemCount,plural, =1{Намерена е 1 верига}other{Намерени са # вериги}}"
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
-    "message": "Намалете дълбочината на критичните заявки"
+    "message": "Избягвайте верижни последователности от критични заявки"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Оттегляне/предупреждение"
@@ -513,7 +585,7 @@
     "message": "Стойност"
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | description": {
-    "message": "Браузърните инженери препоръчват страниците да съдържат под 1500 елемента в DOM. Най-добре е йерархичната структура да не е по-дълбока от 32 нива и всеки родителски елемент да има по-малко от 60 дъщерни. Големият размер на DOM може да доведе до използване на повече памет, удължаване на [стиловите изчисления](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и забавяне поради [преоформяне](https://developers.google.com/speed/articles/reflow). [Научете повече](https://web.dev/dom-size)."
+    "message": "Големият размер на DOM води до използване на повече памет, удължаване на [стиловите изчисления](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations) и забавяне поради [преоформяне](https://developers.google.com/speed/articles/reflow). [Научете повече](https://web.dev/dom-size)."
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | displayValue": {
     "message": "{itemCount,plural, =1{1 елемент}other{# елемента}}"
@@ -532,12 +604,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Не се използва DOM с твърде голям размер"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnRel": {
-    "message": "Rel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnTarget": {
-    "message": "Target"
   },
   "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
     "message": "Добавете `rel=\"noopener\"` или `rel=\"noreferrer\"` към връзките към външни сайтове, за да подобрите ефективността и да избегнете уязвимости в сигурността. [Научете повече](https://web.dev/external-anchors-use-rel-noopener)."
@@ -782,14 +848,20 @@
   "lighthouse-core/audits/metrics/interactive.js | description": {
     "message": "Времето до интерактивност показва след колко време страницата става напълно интерактивна. [Научете повече](https://web.dev/interactive)."
   },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
+    "message": "„Изобразяване на най-голямото съдържание“ показва времето, когато се изобразяват най-големите текст или изображение. [Научете повече](https://web.dev/largest-contentful-paint)"
+  },
+  "lighthouse-core/audits/metrics/largest-contentful-paint.js | title": {
+    "message": "Изобразяване на най-голямото съдържание"
+  },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
-    "message": "Максималното потенциално забавяне при първото взаимодействие на потребителите е продължителността в милисекунди на най-времеемката задача. [Научете повече](https://developers.google.com/web/updates/2018/05/first-input-delay)."
+    "message": "Максималното потенциално забавяне при първото взаимодействие на потребителите е продължителността на най-времеемката задача. [Научете повече](https://web.dev/lighthouse-max-potential-fid)."
   },
   "lighthouse-core/audits/metrics/speed-index.js | description": {
     "message": "Индексът на скоростта показва колко бързо се постига визуална завършеност на страницата. [Научете повече](https://web.dev/speed-index)."
   },
   "lighthouse-core/audits/metrics/total-blocking-time.js | description": {
-    "message": "Сумата от всички интервали от време между FCP и „Време до интерактивност“, когато задачата е траела над 50 мсек, изразена в милисекунди."
+    "message": "Сумата в милисекунди от всички интервали от време между FCP и „Време до интерактивност“, когато задачата е траела над 50 мсек. [Научете повече](https://web.dev/lighthouse-total-blocking-time)."
   },
   "lighthouse-core/audits/network-rtt.js | description": {
     "message": "Времето за осъществяване на двупосочна комуникация в мрежата оказва голямо влияние върху ефективността. Ако двупосочната комуникация с източника отнема дълго време, това означава, че разположени по-близо до потребителя сървъри биха подобрили ефективността. [Научете повече](https://hpbn.co/primer-on-latency-and-bandwidth/)."
@@ -805,6 +877,9 @@
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Файлът service worker дава възможност на уеб приложението ви да работи надеждно при непредсказуеми условия в мрежата. [Научете повече](https://web.dev/offline-start-url)."
+  },
+  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
+    "message": "Грешка при зареждането на {url} в service worker. Получен код на състоянието: {statusCode}"
   },
   "lighthouse-core/audits/offline-start-url.js | failureTitle": {
     "message": "`start_url` не отговаря с код 200, когато е офлайн"
@@ -883,9 +958,6 @@
   },
   "lighthouse-core/audits/seo/font-size.js | explanationViewport": {
     "message": "Текстът не е четлив, тъй като няма мета маркер viewport, оптимизиран за мобилни екрани."
-  },
-  "lighthouse-core/audits/seo/font-size.js | explanationWithDisclaimer": {
-    "message": "{decimalProportion, number, extendedPercent} от текста е твърде малък (въз основа на извадка от {decimalProportionVisited, number, extendedPercent})."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
     "message": "В документа не се използва шрифт с четлив размер"
@@ -1053,7 +1125,7 @@
     "message": "Намалете влиянието на кода от трети страни"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
-    "message": "Използване на код от трети страни"
+    "message": "Сведете до минимум използването на код на трети страни"
   },
   "lighthouse-core/audits/time-to-first-byte.js | description": {
     "message": "Показателят „Време до първия байт“ указва след колко време сървърът изпраща отговор. [Научете повече](https://web.dev/time-to-first-byte)."
@@ -1066,6 +1138,21 @@
   },
   "lighthouse-core/audits/time-to-first-byte.js | title": {
     "message": "Сървърът отговаря бързо (време до първия байт)"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnMeasurement": {
+    "message": "Измерване"
+  },
+  "lighthouse-core/audits/timing-budget.js | columnTimingMetric": {
+    "message": "Показател"
+  },
+  "lighthouse-core/audits/timing-budget.js | description": {
+    "message": "Задайте времеви бюджет, за да наблюдавате ефективността на сайта си. Ефективните сайтове се зареждат за кратко време и бързо реагират на събития за въвеждане от страна на потребителя. [Научете повече](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
+  },
+  "lighthouse-core/audits/timing-budget.js | title": {
+    "message": "Времеви бюджет"
+  },
+  "lighthouse-core/audits/user-timings.js | columnDuration": {
+    "message": "Продължителност"
   },
   "lighthouse-core/audits/user-timings.js | columnStartTime": {
     "message": "Начален час"
@@ -1286,6 +1373,9 @@
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
     "message": "Име"
   },
+  "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
+    "message": "Надхвърля бюджета"
+  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Заявки"
   },
@@ -1319,11 +1409,29 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
+    "message": "Прогнозно забавяне при входящо действие"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
+    "message": "Първи момент на неактивност на процесора"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
+    "message": "Първо изобразяване на съдържание"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": {
+    "message": "Първо значимо изобразяване"
+  },
   "lighthouse-core/lib/i18n/i18n.js | fontResourceType": {
     "message": "Шрифт"
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Изображение"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
+    "message": "Време до интерактивност"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
+    "message": "Макс. потенц. забавяне при 1. взаимодействие"
   },
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Мултимедия"
@@ -1340,11 +1448,17 @@
   "lighthouse-core/lib/i18n/i18n.js | seconds": {
     "message": "{timeInMs, number, seconds} сек"
   },
+  "lighthouse-core/lib/i18n/i18n.js | speedIndexMetric": {
+    "message": "Индекс на скоростта"
+  },
   "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": {
     "message": "Стилов лист"
   },
   "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": {
     "message": "Трети страни"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": {
+    "message": "Общо време на блокиране"
   },
   "lighthouse-core/lib/i18n/i18n.js | totalResourceType": {
     "message": "Общо"
@@ -1457,6 +1571,99 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Предупреждения: "
   },
+  "stack-packs/packs/amp.js | efficient_animated_content": {
+    "message": "При анимирано съдържание използвайте [amp-anim](https://amp.dev/documentation/components/amp-anim/), за да намалите използването на процесора, докато съдържанието е извън екрана."
+  },
+  "stack-packs/packs/amp.js | offscreen_images": {
+    "message": "Проверете дали използвате валидни маркери `amp-img` за изображенията си, което автоматично води до отложено зареждане извън първия прозоречен изглед. [Научете повече](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+  },
+  "stack-packs/packs/amp.js | render_blocking_resources": {
+    "message": "Използвайте инструменти като [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), за да [рендерирате оформления за AMP върху сървъра](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
+  },
+  "stack-packs/packs/amp.js | unminified_css": {
+    "message": "Разгледайте [документацията на AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/), за да се уверите, че всичките ви стилове се поддържат."
+  },
+  "stack-packs/packs/amp.js | uses_responsive_images": {
+    "message": "Елементът `amp-img` поддържа атрибута `srcset`, за да се посочи кои графични активи да се използват в зависимост от размера на екрана.  [Научете повече](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
+  },
+  "stack-packs/packs/amp.js | uses_webp_images": {
+    "message": "Бихте могли да изобразявате всичките си компоненти от тип `amp-img` във формати WebP, като посочвате подходящи резервни варианти за другите браузъри. [Научете повече](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
+  "stack-packs/packs/angular.js | dom_size": {
+    "message": "Ако се рендерират много големи списъци, бихте могли да използвате виртуално превъртане с Component Dev Kit (CDK). [Научете повече](https://web.dev/virtualize-lists-with-angular-cdk/)."
+  },
+  "stack-packs/packs/angular.js | total_byte_weight": {
+    "message": "Приложете [разделяне на кода на ниво маршрут](https://web.dev/route-level-code-splitting-in-angular/), за да намалите размера на пакетите си с JavaScript. Също така бихте могли да кеширате предварително активи със [service worker на Angular](https://web.dev/precaching-with-the-angular-service-worker/)."
+  },
+  "stack-packs/packs/angular.js | unminified_warning": {
+    "message": "Ако използвате Angular CLI, компилациите трябва да бъдат генерирани в стандартен режим. [Научете повече](https://angular.io/guide/deployment#enable-runtime-production-mode)."
+  },
+  "stack-packs/packs/angular.js | unused_javascript": {
+    "message": "Ако използвате Angular CLI, включете в стандартната версия карти на изходния код, за да могат да се проверяват пакетите. [Научете повече](https://angular.io/guide/deployment#inspect-the-bundles)."
+  },
+  "stack-packs/packs/angular.js | uses_rel_preload": {
+    "message": "Зареждайте маршрутите предварително, за да ускорите навигацията. [Научете повече](https://web.dev/route-preloading-in-angular/)."
+  },
+  "stack-packs/packs/angular.js | uses_responsive_images": {
+    "message": "За да управлявате граничните точки за изображенията, бихте могли да използвате инструмента `BreakpointObserver` в Component Dev Kit (CDK). [Научете повече](https://material.angular.io/cdk/layout/overview)."
+  },
+  "stack-packs/packs/magento.js | critical_request_chains": {
+    "message": "Ако не пакетирате активите си на JavaScript, бихте могли да използвате [baler](https://github.com/magento/baler)."
+  },
+  "stack-packs/packs/magento.js | disable_bundling": {
+    "message": "Деактивирайте вградените в Magento функции за [пакетиране и минимизиране на JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html), като вместо тях бихте могли да използвате [baler](https://github.com/magento/baler/)."
+  },
+  "stack-packs/packs/magento.js | font_display": {
+    "message": "Посочете `@font-display`, когато [дефинирате персонализирани шрифтове](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
+  },
+  "stack-packs/packs/magento.js | offscreen_images": {
+    "message": "Бихте могли да промените шаблоните си за продукти и каталози, за да използват функцията за [отложено зареждане](https://web.dev/native-lazy-loading) в уеб платформата."
+  },
+  "stack-packs/packs/magento.js | time_to_first_byte": {
+    "message": "Използвайте [интегрирането на Magento с Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
+  },
+  "stack-packs/packs/magento.js | unminified_css": {
+    "message": "Активирайте опцията „Minify CSS Files“ в настройките за програмисти в магазина. [Научете повече](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+  },
+  "stack-packs/packs/magento.js | unminified_javascript": {
+    "message": "Използвайте [Terser](https://www.npmjs.com/package/terser) за минимизиране на всички активи на JavaScript от разполагането на статично съдържание и деактивирайте вградената функция за целта."
+  },
+  "stack-packs/packs/magento.js | unused_javascript": {
+    "message": "Деактивирайте вграденото в Magento [пакетиране на JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
+  },
+  "stack-packs/packs/magento.js | uses_optimized_images": {
+    "message": "Потърсете [пазара на Magento](https://marketplace.magento.com/catalogsearch/result/?q=optimize%20image) за разширения от трети страни за оптимизиране на изображения."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preconnect": {
+    "message": "Можете да добавите подсказки за ресурси preconnect или dns-prefetch, като [промените оформлението на дадената тема](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_rel_preload": {
+    "message": "Можете да добавите маркери `<link rel=preload>`, като [промените оформлението на дадената тема](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "stack-packs/packs/magento.js | uses_webp_images": {
+    "message": "Потърсете [пазара на Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) за разширения от трети страни, позволяващи работа с по-нови графични формати."
+  },
+  "stack-packs/packs/react.js | dom_size": {
+    "message": "Бихте могли да използвате библиотека за виртуализиране, като `react-window`, за да сведете до минимум броя създавани възли в DOM, ако на страницата се рендерират множество повтарящи се елементи. [Научете повече](https://web.dev/virtualize-long-lists-react-window/). Също така намалете ненужните повторни рендерирания чрез [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent) или [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) и [пропускайте ефектите](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects), докато не се променят определени зависимост, ако използвате обратното повикване Effect за повишаване на ефективността при изпълнение."
+  },
+  "stack-packs/packs/react.js | redirects": {
+    "message": "Ако използвате React Router, сведете до минимум употребата на компонента `<Redirect>` за [навигация по маршрути](https://reacttraining.com/react-router/web/api/Redirect)."
+  },
+  "stack-packs/packs/react.js | time_to_first_byte": {
+    "message": "Ако компоненти в React се рендерират върху сървъра, бихте могли да използвате `renderToNodeStream()` или `renderToStaticNodeStream()`, за да дадете възможност на клиентската програма да получава и хидратира различни части от кода за маркиране, вместо целия наведнъж. [Научете повече](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
+  "stack-packs/packs/react.js | unminified_css": {
+    "message": "Ако системата ви за компилация автоматично минимизира CSS файловете, уверете се, че внедрявате стандартната версия на приложението си. Можете да проверите това с разширението React Developer Tools. [Научете повече](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unminified_javascript": {
+    "message": "Ако системата ви за компилация автоматично минимизира JavaScript файловете, уверете се, че внедрявате стандартната версия на приложението си. Можете да проверите това с разширението React Developer Tools. [Научете повече](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+  },
+  "stack-packs/packs/react.js | unused_javascript": {
+    "message": "Ако не извършвате рендериране върху сървъра, [разделете пакетите си с JavaScript](https://web.dev/code-splitting-suspense/) с `React.lazy()`. В противен случай разделете кода чрез библиотека на трета страна, напр. [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
+  },
+  "stack-packs/packs/react.js | user_timings": {
+    "message": "Използвайте инструмента за анализ в React DevTools, който използва съответното API, за да измерите ефективността на компонентите си при рендериране. [Научете повече](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)."
+  },
   "stack-packs/packs/wordpress.js | efficient_animated_content": {
     "message": "Добре е да качите GIF файла си в услуга, която ще даде възможност да бъде вграден като видеоклип с HTML5."
   },
@@ -1485,13 +1692,13 @@
     "message": "Добре е да намалите броя на [приставките за WordPress](https://wordpress.org/plugins/), които зареждат неизползван JavaScript код в страницата ви, или да ги замените с други. За да откриете приставките, които добавят ненужен JS код, стартирайте инструмента за [покритие на кода](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) в Chrome DevTools. Можете да намерите проблемната тема/приставка в URL адреса на скрипта. Търсете приставки с много скриптове в списъка, за които преобладава червеният цвят в диаграмата на инструмента. Даден скрипт трябва да бъде поставен в опашката на приставка само ако действително се използва в страницата."
   },
   "stack-packs/packs/wordpress.js | uses_long_cache_ttl": {
-    "message": "Прочетете за [кеширането в браузъра при WordPress](https://codex.wordpress.org/WordPress_Optimization#Browser_Caching)."
+    "message": "Прочетете за [кеширането в браузъра при WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
   },
   "stack-packs/packs/wordpress.js | uses_optimized_images": {
     "message": "Добре е да използвате [приставка за WordPress за оптимизиране на изображенията](https://wordpress.org/plugins/search/optimize+images/), която компресира графичните ви файлове, като същевременно запазва качеството им."
   },
   "stack-packs/packs/wordpress.js | uses_responsive_images": {
-    "message": "Качвайте изображенията директно чрез [мултимедийната библиотека](https://codex.wordpress.org/Media_Library_Screen), за да разполагате с графични файлове с необходимите размери, и след това ги вмъквайте от библиотеката или използвайте приспособлението за изображения, така че да се използват файловете с оптимални размери (включително за адаптивните гранични точки). Избягвайте използването на пълноразмерни изображения (`Full Size`), освен ако размерите са подходящи за съответното предназначение. [Научете повече](https://codex.wordpress.org/Inserting_Images_into_Posts_and_Pages#Image_Size)."
+    "message": "Качвайте изображенията директно чрез [мултимедийната библиотека](https://wordpress.org/support/article/media-library-screen/), за да разполагате с графични файлове с необходимите размери, и след това ги вмъквайте от библиотеката или използвайте приспособлението за изображения, така че да се използват файловете с оптимални размери (включително за адаптивните гранични точки). Избягвайте използването на пълноразмерни изображения (`Full Size`), освен ако размерите са подходящи за съответното предназначение. [Научете повече](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/)."
   },
   "stack-packs/packs/wordpress.js | uses_text_compression": {
     "message": "Можете да активирате компресирането на текста в конфигурацията на уеб сървъра си."
