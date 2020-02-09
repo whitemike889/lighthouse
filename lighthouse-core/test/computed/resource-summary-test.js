@@ -33,7 +33,7 @@ describe('Resource summary computed', () => {
 
   it('includes all resource types, regardless of whether page contains them', async () => {
     const result = await ComputedResourceSummary.request(artifacts, context);
-    assert.equal(Object.keys(result).length, 9);
+    assert.equal(Object.keys(result).length, 8);
   });
 
   it('sets size and count correctly', async () => {
@@ -71,38 +71,13 @@ describe('Resource summary computed', () => {
     assert.equal(result.total.size, 30);
   });
 
-  describe('determining third-party resources', () => {
-    it('with a third-party resource', async () => {
-      artifacts = mockArtifacts([
-        {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-        {url: 'http://third-party.com/another-file.html', resourceType: 'Document', transferSize: 50},
-      ]);
+  it('does not compute first/third-party resources', async () => {
+    artifacts = mockArtifacts([
+      {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
+      {url: 'http://third-party.com/another-file.html', resourceType: 'Document', transferSize: 50},
+    ]);
 
-      const result = await ComputedResourceSummary.request(artifacts, context);
-      assert.equal(result['third-party'].count, 1);
-      assert.equal(result['third-party'].size, 50);
-    });
-
-    it('with a first-party resource', async () => {
-      artifacts = mockArtifacts([
-        {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-        {url: 'http://example.com/another-file.html', resourceType: 'Document', transferSize: 50},
-      ]);
-
-      const result = await ComputedResourceSummary.request(artifacts, context);
-      assert.equal(result['third-party'].count, 0);
-      assert.equal(result['third-party'].size, 0);
-    });
-
-    it('with a first-party resource loaded from a subdomain', async () => {
-      artifacts = mockArtifacts([
-        {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-        {url: 'http://blog.example.com/file.html', resourceType: 'Document', transferSize: 50},
-      ]);
-
-      const result = await ComputedResourceSummary.request(artifacts, context);
-      assert.equal(result['third-party'].count, 0);
-      assert.equal(result['third-party'].size, 0);
-    });
+    const result = await ComputedResourceSummary.request(artifacts, context);
+    assert.equal(result['third-party'], undefined);
   });
 });

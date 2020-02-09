@@ -7,8 +7,6 @@
 
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRecords = require('./network-records.js');
-const MainResource = require('./main-resource.js');
-const URL = require('../lib/url-shim.js');
 
 /** @typedef {{count: number, size: number}} ResourceEntry */
 class ResourceSummary {
@@ -32,11 +30,9 @@ class ResourceSummary {
 
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @param {string} mainResourceURL
-   * @return {Record<LH.Budget.ResourceType,ResourceEntry>}
+   * @return {Record<Exclude<LH.Budget.ResourceType, 'third-party'>, ResourceEntry>}
    */
-  static summarize(networkRecords, mainResourceURL) {
-    /** @type {Record<LH.Budget.ResourceType,ResourceEntry>} */
+  static summarize(networkRecords) {
     const resourceSummary = {
       'stylesheet': {count: 0, size: 0},
       'image': {count: 0, size: 0},
@@ -46,11 +42,11 @@ class ResourceSummary {
       'document': {count: 0, size: 0},
       'other': {count: 0, size: 0},
       'total': {count: 0, size: 0},
-      'third-party': {count: 0, size: 0},
     };
 
     for (const record of networkRecords) {
-      const type = this.determineResourceType(record);
+      const type = /** @type {Exclude<LH.Budget.ResourceType, 'third-party'>} **/
+        (this.determineResourceType(record));
       if (type === 'other' && record.url.endsWith('/favicon.ico')) {
         // Headless Chrome does not request /favicon.ico, so don't consider this request.
         // Makes resource summary consistent across LR / other channels.
@@ -62,12 +58,6 @@ class ResourceSummary {
 
       resourceSummary.total.count++;
       resourceSummary.total.size += record.transferSize;
-
-      // Ignores subdomains: i.e. blog.example.com & example.com would match
-      if (!URL.rootDomainsMatch(record.url, mainResourceURL)) {
-        resourceSummary['third-party'].count++;
-        resourceSummary['third-party'].size += record.transferSize;
-      }
     }
     return resourceSummary;
   }
@@ -75,15 +65,11 @@ class ResourceSummary {
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Audit.Context} context
-   * @return {Promise<Record<LH.Budget.ResourceType,ResourceEntry>>}
+   * @return {Promise<Record<Exclude<LH.Budget.ResourceType, 'third-party'>, ResourceEntry>>}
    */
   static async compute_(data, context) {
-    const [networkRecords, mainResource] = await Promise.all([
-      NetworkRecords.request(data.devtoolsLog, context),
-      MainResource.request(data, context),
-    ]);
-
-    return ResourceSummary.summarize(networkRecords, mainResource.url);
+    const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
+    return ResourceSummary.summarize(networkRecords);
   }
 }
 

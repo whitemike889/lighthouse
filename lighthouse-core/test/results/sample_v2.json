@@ -1388,9 +1388,8 @@
           {
             "resourceType": "third-party",
             "label": "Third-party",
-            "requestCount": 2,
+            "requestCount": 1,
             "size": 30174,
-            "countOverBudget": "1 request",
             "sizeOverBudget": 4574
           },
           {
@@ -1528,6 +1527,12 @@
             "size": 103675
           },
           {
+            "resourceType": "third-party",
+            "label": "Third-party",
+            "requestCount": 1,
+            "size": 30174
+          },
+          {
             "resourceType": "image",
             "label": "Image",
             "requestCount": 2,
@@ -1566,7 +1571,7 @@
           {
             "resourceType": "third-party",
             "label": "Third-party",
-            "requestCount": 2,
+            "requestCount": 1,
             "size": 30174
           }
         ]
@@ -4857,6 +4862,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:ThirdPartySummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:timing-budget",
         "duration": 100,
         "entryType": "measure"
@@ -5920,12 +5931,6 @@
         },
         {
           "values": {
-            "count": 1
-          },
-          "path": "audits[performance-budget].details.items[3].countOverBudget"
-        },
-        {
-          "values": {
             "count": 5
           },
           "path": "audits[performance-budget].details.items[4].countOverBudget"
@@ -5943,31 +5948,32 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | otherResourceType": [
         "audits[performance-budget].details.items[2].label",
-        "audits[resource-summary].details.items[4].label"
+        "audits[resource-summary].details.items[5].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": [
         "audits[performance-budget].details.items[3].label",
-        "audits[resource-summary].details.items[8].label"
+        "audits[resource-summary].details.items[2].label",
+        "audits[resource-summary].details.items[9].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": [
         "audits[performance-budget].details.items[4].label",
-        "audits[resource-summary].details.items[5].label"
+        "audits[resource-summary].details.items[6].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | imageResourceType": [
         "audits[performance-budget].details.items[5].label",
-        "audits[resource-summary].details.items[2].label"
+        "audits[resource-summary].details.items[3].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": [
         "audits[performance-budget].details.items[6].label",
-        "audits[resource-summary].details.items[6].label"
+        "audits[resource-summary].details.items[7].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | fontResourceType": [
         "audits[performance-budget].details.items[7].label",
-        "audits[resource-summary].details.items[7].label"
+        "audits[resource-summary].details.items[8].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | documentResourceType": [
         "audits[performance-budget].details.items[8].label",
-        "audits[resource-summary].details.items[3].label"
+        "audits[resource-summary].details.items[4].label"
       ],
       "lighthouse-core/audits/timing-budget.js | title": [
         "audits[timing-budget].title"

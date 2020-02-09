@@ -7,6 +7,7 @@
 
 const Audit = require('./audit.js');
 const ResourceSummary = require('../computed/resource-summary.js');
+const ThirdPartySummary = require('../computed/third-party-summary.js');
 const MainResource = require('../computed/main-resource.js');
 const Budget = require('../config/budget.js');
 const i18n = require('../lib/i18n/i18n.js');
@@ -65,11 +66,14 @@ class ResourceBudget extends Audit {
 
   /**
    * @param {LH.Budget} budget
-   * @param {Record<LH.Budget.ResourceType,ResourceEntry>} summary
+   * @param {Record<Exclude<LH.Budget.ResourceType, 'third-party'>, ResourceEntry>} resourceSummary
+   * @param {{count: number, size: number}} thirdPartySummary
    * @return {Array<BudgetItem>}
    */
-  static tableItems(budget, summary) {
+  static tableItems(budget, resourceSummary, thirdPartySummary) {
+    const summary = Object.assign(resourceSummary, {'third-party': thirdPartySummary});
     const resourceTypes = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
+
     return resourceTypes.map((resourceType) => {
       const label = str_(this.getRowLabel(resourceType));
       const requestCount = summary[resourceType].count;
@@ -120,7 +124,10 @@ class ResourceBudget extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
+    const resources = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
+    const thirdParties = await ThirdPartySummary
+      .request({devtoolsLog, URL: artifacts.URL}, context);
+
     const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
     const budget = Budget.getMatchingBudget(context.settings.budgets, mainResource.url);
 
@@ -141,7 +148,8 @@ class ResourceBudget extends Audit {
     ];
 
     return {
-      details: Audit.makeTableDetails(headers, this.tableItems(budget, summary)),
+      details: Audit.makeTableDetails(headers,
+        this.tableItems(budget, resources, thirdParties)),
       score: 1,
     };
   }
