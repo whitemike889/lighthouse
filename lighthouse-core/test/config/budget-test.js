@@ -14,6 +14,9 @@ describe('Budget', () => {
   beforeEach(() => {
     budgets = [
       {
+        options: {
+          firstPartyOrigins: ['https://example.com'],
+        },
         resourceSizes: [
           {
             resourceType: 'script',
@@ -60,6 +63,9 @@ describe('Budget', () => {
   it('initializes correctly', () => {
     const result = Budget.initializeBudget(budgets);
     assert.equal(result.length, 2);
+
+    // Sets options correctly
+    assert.equal(result[0].options.firstPartyOrigins[0], 'https://example.com');
 
     // Missing paths are not overwritten
     assert.equal(result[0].path, undefined);
@@ -130,6 +136,45 @@ describe('Budget', () => {
       budgets[1].timings = false;
       assert.throws(_ => Budget.initializeBudget(budgets),
         /^Error: Invalid timings entry in budget at index 1$/);
+    });
+
+    it('throws when budget contains an invalid options entry', () => {
+      budgets[0].options = 'Turtles';
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /^Error: Invalid options property in budget at index 0$/);
+    });
+  });
+
+  describe('firstPartyOrigin validation', () => {
+    it('with valid inputs', () => {
+      const validOrigins = [
+        'https://yolo.com',
+        'https://www.go.com:8888',
+        'http://127.0.0.1',
+        'http://localhost:8080',
+      ];
+      budgets[0].options = {firstPartyOrigins: validOrigins};
+
+      const result = Budget.initializeBudget(budgets);
+      expect(result[0].options.firstPartyOrigins).toEqual(validOrigins);
+    });
+
+    it('validates that input includes protocol', () => {
+      budgets[0].options = {firstPartyOrigins: ['yolo.com']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /yolo.com is not a valid URL./);
+    });
+
+    it('validates that input does not include path', () => {
+      budgets[0].options = {firstPartyOrigins: ['https://dogs.com/fido']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /Invalid origin: https:\/\/dogs.com\/fido. Did you mean https:\/\/dogs.com?/);
+    });
+
+    it('validates that origin does not include trailing /', () => {
+      budgets[0].options = {firstPartyOrigins: ['https://cool.com/']};
+      assert.throws(_ => Budget.initializeBudget(budgets),
+        /Invalid origin: https:\/\/cool.com\/. Origin should not contain a trailing '\/'./);
     });
   });
 

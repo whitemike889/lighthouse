@@ -11,6 +11,8 @@ declare global {
      * More info: https://github.com/GoogleChrome/budget.json
      */
     export interface Budget {
+      /** Budget options */
+      options?: Budget.Options;
       /**
        * Indicates which pages a budget applies to. Uses the robots.txt format.
        * If it is not supplied, the budget applies to all pages.
@@ -38,6 +40,14 @@ declare global {
         metric: TimingMetric;
         /** Budget for timing measurement, in milliseconds. */
         budget: number;
+      }
+
+      export interface Options {
+        /**
+         * Origins that should be considered first-party.
+         * If not supplied, only the origin of the main resource will be considered first-party.
+         */
+        firstPartyOrigins?: Array<string>;
       }
 
       /** Supported timing metrics. */

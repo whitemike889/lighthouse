@@ -241,6 +241,38 @@ class Budget {
   }
 
   /**
+   * @param {string} origin
+   * @return {string}
+   */
+  static validateOrigin(origin) {
+    if (origin.endsWith(`/`)) {
+      throw new Error(`Invalid origin: ${origin}. Origin should not contain a trailing '/'.`);
+    }
+    let verifiedOrigin;
+    try {
+      verifiedOrigin = new URL(origin).origin;
+    } catch (err) {
+      throw new Error(`${origin} is not a valid URL.`);
+    }
+    if (origin !== verifiedOrigin) {
+      throw new Error(`Invalid origin: ${origin}. Did you mean ${verifiedOrigin}?`);
+    }
+    return origin;
+  }
+
+  /**
+   * @param {unknown} origins
+   * @return {undefined|Array<string>}
+   */
+  static validateFirstPartyOrigins(origins) {
+    if (Array.isArray(origins) && origins.every(origin => typeof origin === 'string')) {
+      return origins.map(this.validateOrigin);
+    } else if (origins !== undefined) {
+      throw new Error(`firstPartyOrigins should be defined as an array of strings.`);
+    }
+  }
+
+  /**
    * More info on the Budget format:
    * https://github.com/GoogleChrome/lighthouse/issues/6053#issuecomment-428385930
    * @param {unknown} budgetJson
@@ -257,10 +289,19 @@ class Budget {
       /** @type {LH.Budget} */
       const budget = {};
 
-      const {path, resourceSizes, resourceCounts, timings, ...invalidRest} = b;
+      const {path, options, resourceSizes, resourceCounts, timings, ...invalidRest} = b;
       Budget.assertNoExcessProperties(invalidRest, 'Budget');
 
       budget.path = Budget.validatePath(path);
+
+      if (isObjectOfUnknownProperties(options)) {
+        const {firstPartyOrigins, ...invalidRest} = options;
+        Budget.assertNoExcessProperties(invalidRest, 'Options property');
+        budget.options = {};
+        budget.options.firstPartyOrigins = this.validateFirstPartyOrigins(firstPartyOrigins);
+      } else if (options !== undefined) {
+        throw new Error(`Invalid options property in budget at index ${index}`);
+      }
 
       if (isArrayOfUnknownObjects(resourceSizes)) {
         budget.resourceSizes = resourceSizes.map(Budget.validateResourceBudget);
