@@ -46,6 +46,7 @@ declare global {
         /**
          * Origins that should be considered first-party.
          * If not supplied, only the origin of the main resource will be considered first-party.
+         * A valid origin contains: a protocol (e.g. 'http'), hostname, and (optional) port.
          */
         firstPartyOrigins?: Array<string>;
       }
