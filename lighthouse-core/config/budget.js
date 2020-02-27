@@ -269,7 +269,7 @@ class Budget {
    */
   static validateHostnames(hostnames) {
     if (Array.isArray(hostnames) && hostnames.every(host => typeof host === 'string')) {
-      return hostnames.map(this.validateHostname);
+      return hostnames.map(Budget.validateHostname);
     } else if (hostnames !== undefined) {
       throw new Error(`firstPartyHostnames should be defined as an array of strings.`);
     }
@@ -301,7 +301,7 @@ class Budget {
         const {firstPartyHostnames, ...invalidRest} = options;
         Budget.assertNoExcessProperties(invalidRest, 'Options property');
         budget.options = {};
-        budget.options.firstPartyHostnames = this.validateHostnames(firstPartyHostnames);
+        budget.options.firstPartyHostnames = Budget.validateHostnames(firstPartyHostnames);
       } else if (options !== undefined) {
         throw new Error(`Invalid options property in budget at index ${index}`);
       }

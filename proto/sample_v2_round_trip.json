@@ -2233,9 +2233,8 @@
                         "sizeOverBudget": 7520.0
                     },
                     {
-                        "countOverBudget": "1 request",
                         "label": "Third-party",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "third-party",
                         "size": 30174.0,
                         "sizeOverBudget": 4574.0
@@ -2428,6 +2427,12 @@
                         "size": 103675.0
                     },
                     {
+                        "label": "Third-party",
+                        "requestCount": 1.0,
+                        "resourceType": "third-party",
+                        "size": 30174.0
+                    },
+                    {
                         "label": "Image",
                         "requestCount": 2.0,
                         "resourceType": "image",
@@ -2465,7 +2470,7 @@
                     },
                     {
                         "label": "Third-party",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "third-party",
                         "size": 30174.0
                     }
@@ -4768,6 +4773,12 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:ResourceSummary",
+                "startTime": 0.0
+            },
+            {
+                "duration": 100.0,
+                "entryType": "measure",
+                "name": "lh:computed:ThirdPartySummary",
                 "startTime": 0.0
             },
             {

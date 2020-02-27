@@ -34,16 +34,17 @@ class ThirdPartySummary {
     let count = 0;
     let size = 0;
     networkRecords.forEach((record) => {
-      const hostname = new URL(record.url).hostname;
-      // Ignore data URLs
-      if (hostname === '') {
-        return false;
+      const url = new URL(record.url);
+      // Removes trailing ":" from protocol
+      const protocol = url.protocol.slice(0, -1);
+      if (URL.NON_NETWORK_PROTOCOLS.includes(protocol)) {
+        return;
       }
-      const isFirstParty = firstPartyHosts.find((hostExp) => {
+      const isFirstParty = firstPartyHosts.some((hostExp) => {
         if (hostExp.startsWith('*.')) {
-          return hostname.endsWith(hostExp.slice(2));
+          return url.hostname.endsWith(hostExp.slice(2));
         }
-        return hostname === hostExp;
+        return url.hostname === hostExp;
       });
       if (!isFirstParty) {
         count += 1;

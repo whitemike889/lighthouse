@@ -142,12 +142,7 @@ describe('Third Party Summary computed', () => {
       expect(result.count).toBe(0);
     });
 
-    /**
-     * Data URLs should be ignored to avoid double counting.
-     * The filesize of a data URL is reflected in the filesize of the resource that contains it.
-     * A data URL does not result in a separate network request.
-     */
-    it('ignores data URLs', async () => {
+    it('ignores records with non-network protocols', async () => {
       context.settings.budgets = [{
         path: '/',
         options: {
@@ -158,6 +153,8 @@ describe('Third Party Summary computed', () => {
       artifacts = mockArtifacts([
         {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
         {url: 'data:image/png;base64,iVBORw0KGgoAA', resourceType: 'Image', transferSize: 10},
+        {url: 'blob:http://www.example.com/dflskdfjlkj', resourceType: 'Other', transferSize: 99},
+        {url: 'intent://example.com', resourceType: 'Other', transferSize: 1},
       ]);
 
       const result = await ComputedThirdPartySummary.request(artifacts, context);
