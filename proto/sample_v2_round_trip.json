@@ -2218,9 +2218,9 @@
                         "sizeOverBudget": 72955.0
                     },
                     {
-                        "countOverBudget": "7 requests",
+                        "countOverBudget": "6 requests",
                         "label": "Total",
-                        "requestCount": 17.0,
+                        "requestCount": 16.0,
                         "resourceType": "total",
                         "size": 160517.0,
                         "sizeOverBudget": 58117.0
@@ -2249,7 +2249,7 @@
                     },
                     {
                         "label": "Image",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "image",
                         "size": 24741.0
                     },
@@ -2416,7 +2416,7 @@
                 "items": [
                     {
                         "label": "Total",
-                        "requestCount": 17.0,
+                        "requestCount": 16.0,
                         "resourceType": "total",
                         "size": 160517.0
                     },
@@ -2427,14 +2427,8 @@
                         "size": 103675.0
                     },
                     {
-                        "label": "Third-party",
-                        "requestCount": 1.0,
-                        "resourceType": "third-party",
-                        "size": 30174.0
-                    },
-                    {
                         "label": "Image",
-                        "requestCount": 2.0,
+                        "requestCount": 1.0,
                         "resourceType": "image",
                         "size": 24741.0
                     },
@@ -2477,7 +2471,7 @@
                 ],
                 "type": "table"
             },
-            "displayValue": "17 requests \u2022 157 KB",
+            "displayValue": "16 requests \u2022 157 KB",
             "id": "resource-summary",
             "score": null,
             "scoreDisplayMode": "informative",
@@ -4773,12 +4767,6 @@
                 "duration": 100.0,
                 "entryType": "measure",
                 "name": "lh:computed:ResourceSummary",
-                "startTime": 0.0
-            },
-            {
-                "duration": 100.0,
-                "entryType": "measure",
-                "name": "lh:computed:ThirdPartySummary",
                 "startTime": 0.0
             },
             {

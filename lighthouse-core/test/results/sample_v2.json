@@ -1373,9 +1373,9 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 17,
+            "requestCount": 16,
             "size": 160517,
-            "countOverBudget": "7 requests",
+            "countOverBudget": "6 requests",
             "sizeOverBudget": 58117
           },
           {
@@ -1403,7 +1403,7 @@
           {
             "resourceType": "image",
             "label": "Image",
-            "requestCount": 2,
+            "requestCount": 1,
             "size": 24741
           },
           {
@@ -1493,7 +1493,7 @@
       "description": "To set budgets for the quantity and size of page resources, add a budget.json file. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).",
       "score": null,
       "scoreDisplayMode": "informative",
-      "displayValue": "17 requests • 157 KB",
+      "displayValue": "16 requests • 157 KB",
       "details": {
         "type": "table",
         "headings": [
@@ -1517,7 +1517,7 @@
           {
             "resourceType": "total",
             "label": "Total",
-            "requestCount": 17,
+            "requestCount": 16,
             "size": 160517
           },
           {
@@ -1527,15 +1527,9 @@
             "size": 103675
           },
           {
-            "resourceType": "third-party",
-            "label": "Third-party",
-            "requestCount": 1,
-            "size": 30174
-          },
-          {
             "resourceType": "image",
             "label": "Image",
-            "requestCount": 2,
+            "requestCount": 1,
             "size": 24741
           },
           {
@@ -4862,12 +4856,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:ThirdPartySummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:timing-budget",
         "duration": 100,
         "entryType": "measure"
@@ -5925,7 +5913,7 @@
         },
         {
           "values": {
-            "count": 7
+            "count": 6
           },
           "path": "audits[performance-budget].details.items[1].countOverBudget"
         },
@@ -5948,32 +5936,31 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | otherResourceType": [
         "audits[performance-budget].details.items[2].label",
-        "audits[resource-summary].details.items[5].label"
+        "audits[resource-summary].details.items[4].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | thirdPartyResourceType": [
         "audits[performance-budget].details.items[3].label",
-        "audits[resource-summary].details.items[2].label",
-        "audits[resource-summary].details.items[9].label"
+        "audits[resource-summary].details.items[8].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | stylesheetResourceType": [
         "audits[performance-budget].details.items[4].label",
-        "audits[resource-summary].details.items[6].label"
+        "audits[resource-summary].details.items[5].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | imageResourceType": [
         "audits[performance-budget].details.items[5].label",
-        "audits[resource-summary].details.items[3].label"
+        "audits[resource-summary].details.items[2].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": [
         "audits[performance-budget].details.items[6].label",
-        "audits[resource-summary].details.items[7].label"
+        "audits[resource-summary].details.items[6].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | fontResourceType": [
         "audits[performance-budget].details.items[7].label",
-        "audits[resource-summary].details.items[8].label"
+        "audits[resource-summary].details.items[7].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | documentResourceType": [
         "audits[performance-budget].details.items[8].label",
-        "audits[resource-summary].details.items[4].label"
+        "audits[resource-summary].details.items[3].label"
       ],
       "lighthouse-core/audits/timing-budget.js | title": [
         "audits[timing-budget].title"
@@ -5996,7 +5983,7 @@
       "lighthouse-core/audits/resource-summary.js | displayValue": [
         {
           "values": {
-            "requestCount": 17,
+            "requestCount": 16,
             "byteCount": 160517
           },
           "path": "audits[resource-summary].displayValue"

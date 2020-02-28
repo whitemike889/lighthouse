@@ -44,10 +44,10 @@ declare global {
 
       export interface Options {
         /**
-         * List of hostnames to be used to classify resources as 1st or 3rd party.
+         * List of hostnames used to classify resources as 1st or 3rd party.
          * Wildcards can optionally be used to match a hostname and all of its subdomains.
          * For example e.g.: "*.news.gov.uk" matches both "news.gov.uk" and "en.news.gov.uk"
-         * If this property is not configured, the root domain and all its subdomains are considered first party.
+         * If this property is not set, the root domain and all its subdomains are considered first party.
          */
         firstPartyHostnames?: Array<string>;
       }

@@ -7,7 +7,6 @@
 
 const Audit = require('./audit.js');
 const ComputedResourceSummary = require('../computed/resource-summary.js');
-const ThirdPartySummary = require('../computed/third-party-summary.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -47,8 +46,6 @@ class ResourceSummary extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const summary = await ComputedResourceSummary
       .request({devtoolsLog, URL: artifacts.URL}, context);
-    const thirdPartySummary = await ThirdPartySummary
-      .request({devtoolsLog, URL: artifacts.URL}, context);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
@@ -71,31 +68,24 @@ class ResourceSummary extends Audit {
       'third-party': str_(i18n.UIStrings.thirdPartyResourceType),
     };
 
-    const types = /** @type {Array<Exclude<LH.Budget.ResourceType, 'third-party'>>} */
-      (Object.keys(summary));
+    const types = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
     const rows = types.map(type => {
       return {
         // ResourceType is included as an "id" for ease of use.
         // It does not appear directly in the table.
-        resourceType: /** @type {LH.Budget.ResourceType} */ (type),
+        resourceType: type,
         label: strMappings[type],
         requestCount: summary[type].count,
         size: summary[type].size,
       };
-    // Sort by descending size
-    }).sort((a, b) => {
-      return b.size - a.size;
     });
-
-    const thirdPartyRow = {
-      resourceType: /** @type {LH.Budget.ResourceType} */ ('third-party'),
-      label: strMappings['third-party'],
-      requestCount: thirdPartySummary.count,
-      size: thirdPartySummary.size,
-    };
-
-    // Force third-party to be last,
-    const tableItems = rows.concat(thirdPartyRow);
+    // Force third-party to be last, descending by size otherwise
+    const thirdPartyRow = rows.find(r => r.resourceType === 'third-party') || [];
+    const otherRows = rows.filter(r => r.resourceType !== 'third-party')
+      .sort((a, b) => {
+        return b.size - a.size;
+      });
+    const tableItems = otherRows.concat(thirdPartyRow);
 
     const tableDetails = Audit.makeTableDetails(headings, tableItems);
 

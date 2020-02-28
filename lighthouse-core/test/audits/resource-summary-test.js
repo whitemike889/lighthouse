@@ -65,30 +65,26 @@ describe('Performance: Resource summary audit', () => {
     expect(fontItem.size).toBe(0);
   });
   describe('third-party resource identification', () => {
-    describe('default behavior', () => {
-      it('classifies resources based on the hostname of the root domain', async () => {
-        const result = await ResourceSummaryAudit.audit(artifacts, context);
-        const thirdParty = result.details.items
-          .find(item => item.resourceType === 'third-party');
-        expect(thirdParty.size).toBe(145);
-        expect(thirdParty.requestCount).toBe(3);
-      });
+    it('is based on root domain if firstPartyHostnames is NOT set', async () => {
+      const result = await ResourceSummaryAudit.audit(artifacts, context);
+      const thirdParty = result.details.items
+        .find(item => item.resourceType === 'third-party');
+      expect(thirdParty.size).toBe(145);
+      expect(thirdParty.requestCount).toBe(3);
     });
 
-    describe('with a budget & firstPartyHostnames is set', () => {
-      it('calculates third-party resources correctly', async () => {
-        context.settings.budgets = [{
-          path: '/',
-          options: {
-            firstPartyHostnames: ['example.com', 'my-cdn.com'],
-          },
-        }];
-        const result = await ResourceSummaryAudit.audit(artifacts, context);
-        const thirdParty = result.details.items
-          .find(item => item.resourceType === 'third-party');
-        expect(thirdParty.size).toBe(120);
-        expect(thirdParty.requestCount).toBe(2);
-      });
+    it('uses firstPartyHostnames if provided', async () => {
+      context.settings.budgets = [{
+        path: '/',
+        options: {
+          firstPartyHostnames: ['example.com', 'my-cdn.com'],
+        },
+      }];
+      const result = await ResourceSummaryAudit.audit(artifacts, context);
+      const thirdParty = result.details.items
+        .find(item => item.resourceType === 'third-party');
+      expect(thirdParty.size).toBe(120);
+      expect(thirdParty.requestCount).toBe(2);
     });
   });
 

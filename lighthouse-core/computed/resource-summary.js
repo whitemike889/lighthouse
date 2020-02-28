@@ -7,6 +7,10 @@
 
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRecords = require('./network-records.js');
+const URL = require('../lib/url-shim.js');
+const MainResource = require('./main-resource.js');
+const Budget = require('../config/budget.js');
+const Util = require('../report/html/renderer/util.js');
 
 /** @typedef {{count: number, size: number}} ResourceEntry */
 class ResourceSummary {
@@ -30,9 +34,11 @@ class ResourceSummary {
 
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {Record<Exclude<LH.Budget.ResourceType, 'third-party'>, ResourceEntry>}
+   * @param {string} mainResourceURL
+   * @param {LH.Audit.Context} context
+   * @return {Record<LH.Budget.ResourceType, ResourceEntry>}
    */
-  static summarize(networkRecords) {
+  static summarize(networkRecords, mainResourceURL, context) {
     const resourceSummary = {
       'stylesheet': {count: 0, size: 0},
       'image': {count: 0, size: 0},
@@ -42,34 +48,67 @@ class ResourceSummary {
       'document': {count: 0, size: 0},
       'other': {count: 0, size: 0},
       'total': {count: 0, size: 0},
+      'third-party': {count: 0, size: 0},
     };
+    const budget = Budget.getMatchingBudget(context.settings.budgets, mainResourceURL);
+    let firstPartyHosts = /** @type {Array<string>} */ ([]);
+    if (budget && budget.options && budget.options.firstPartyHostnames) {
+      firstPartyHosts = budget.options.firstPartyHostnames;
+    } else {
+      const rootDomain = Util.getRootDomain(mainResourceURL);
+      firstPartyHosts = [`*.${rootDomain}`];
+    }
 
-    for (const record of networkRecords) {
-      const type = /** @type {Exclude<LH.Budget.ResourceType, 'third-party'>} **/
-        (this.determineResourceType(record));
+    networkRecords.filter(record => {
+      // Ignore favicon.co
+      // Headless Chrome does not request /favicon.ico, so don't consider this request.
+      // Makes resource summary consistent across LR / other channels.
+      const type = this.determineResourceType(record);
       if (type === 'other' && record.url.endsWith('/favicon.ico')) {
-        // Headless Chrome does not request /favicon.ico, so don't consider this request.
-        // Makes resource summary consistent across LR / other channels.
-        continue;
+        return false;
       }
-
+      // Ignore non-network protocols
+      const url = new URL(record.url);
+      const protocol = url.protocol.slice(0, -1); // Removes trailing ":" from protocol
+      if (URL.NON_NETWORK_PROTOCOLS.includes(protocol)) {
+        return false;
+      }
+      return true;
+    }).forEach((record) => {
+      const type = this.determineResourceType(record);
       resourceSummary[type].count++;
       resourceSummary[type].size += record.transferSize;
 
       resourceSummary.total.count++;
       resourceSummary.total.size += record.transferSize;
-    }
+
+      const isFirstParty = firstPartyHosts.some((hostExp) => {
+        const url = new URL(record.url);
+        if (hostExp.startsWith('*.')) {
+          return url.hostname.endsWith(hostExp.slice(2));
+        }
+        return url.hostname === hostExp;
+      });
+
+      if (!isFirstParty) {
+        resourceSummary['third-party'].count++;
+        resourceSummary['third-party'].size += record.transferSize;
+      }
+    });
     return resourceSummary;
   }
 
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Audit.Context} context
-   * @return {Promise<Record<Exclude<LH.Budget.ResourceType, 'third-party'>, ResourceEntry>>}
+   * @return {Promise<Record<LH.Budget.ResourceType,ResourceEntry>>}
    */
   static async compute_(data, context) {
-    const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
-    return ResourceSummary.summarize(networkRecords);
+    const [networkRecords, mainResource] = await Promise.all([
+      NetworkRecords.request(data.devtoolsLog, context),
+      MainResource.request(data, context),
+    ]);
+    return ResourceSummary.summarize(networkRecords, mainResource.url, context);
   }
 }
 

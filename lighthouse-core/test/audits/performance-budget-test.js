@@ -102,53 +102,49 @@ describe('Performance: Resource budgets audit', () => {
     });
 
     describe('third-party resource identification', () => {
-      describe('when firstPartyHostnames property is not set', () => {
-        it('classifies resources based on the hostname of the root domain', async () => {
-          context.settings.budgets = [{
-            path: '/',
-            resourceSizes: [
-              {
-                resourceType: 'third-party',
-                budget: 0,
-              },
-            ],
-            resourceCounts: [
-              {
-                resourceType: 'third-party',
-                budget: 0,
-              },
-            ],
-          }];
-          const result = await ResourceBudgetAudit.audit(artifacts, context);
-          expect(result.details.items[0].size).toBe(145);
-          expect(result.details.items[0].requestCount).toBe(3);
-        });
+      it('guesses root domain if firstPartyHostnames is not provided', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          resourceSizes: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+          resourceCounts: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+        }];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].size).toBe(145);
+        expect(result.details.items[0].requestCount).toBe(3);
       });
 
-      describe('when firstPartyHostnames property is set', () => {
-        it('calculates third-party resources correctly', async () => {
-          context.settings.budgets = [{
-            path: '/',
-            options: {
-              firstPartyHostnames: ['example.com', 'my-cdn.com'],
+      it('uses firstPartyHostnames when provided', async () => {
+        context.settings.budgets = [{
+          path: '/',
+          options: {
+            firstPartyHostnames: ['example.com', 'my-cdn.com'],
+          },
+          resourceSizes: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
             },
-            resourceSizes: [
-              {
-                resourceType: 'third-party',
-                budget: 0,
-              },
-            ],
-            resourceCounts: [
-              {
-                resourceType: 'third-party',
-                budget: 0,
-              },
-            ],
-          }];
-          const result = await ResourceBudgetAudit.audit(artifacts, context);
-          expect(result.details.items[0].size).toBe(120);
-          expect(result.details.items[0].requestCount).toBe(2);
-        });
+          ],
+          resourceCounts: [
+            {
+              resourceType: 'third-party',
+              budget: 0,
+            },
+          ],
+        }];
+        const result = await ResourceBudgetAudit.audit(artifacts, context);
+        expect(result.details.items[0].size).toBe(120);
+        expect(result.details.items[0].requestCount).toBe(2);
       });
     });
 

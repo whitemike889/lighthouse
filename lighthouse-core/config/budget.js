@@ -83,9 +83,9 @@ class Budget {
       'third-party',
     ];
     // Assume resourceType is an allowed string, throw if not.
-    if (!validResourceTypes.includes(/** @type {LH.Budget.ResourceType} */(resourceType))) {
+    if (!validResourceTypes.includes(/** @type {LH.Budget.ResourceType} */ (resourceType))) {
       throw new Error(`Invalid resource type: ${resourceType}. \n` +
-        `Valid resource types are: ${validResourceTypes.join(', ')}`);
+        `Valid resource types are: ${validResourceTypes.join(', ') }`);
     }
     if (!isNumber(budget)) {
       throw new Error(`Invalid budget: ${budget}`);
@@ -227,7 +227,7 @@ class Budget {
       'total-blocking-time',
     ];
     // Assume metric is an allowed string, throw if not.
-    if (!validTimingMetrics.includes(/** @type {LH.Budget.TimingMetric} */(metric))) {
+    if (!validTimingMetrics.includes(/** @type {LH.Budget.TimingMetric} */ (metric))) {
       throw new Error(`Invalid timing metric: ${metric}. \n` +
         `Valid timing metrics are: ${validTimingMetrics.join(', ')}`);
     }

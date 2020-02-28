@@ -7,7 +7,6 @@
 
 const Audit = require('./audit.js');
 const ResourceSummary = require('../computed/resource-summary.js');
-const ThirdPartySummary = require('../computed/third-party-summary.js');
 const MainResource = require('../computed/main-resource.js');
 const Budget = require('../config/budget.js');
 const i18n = require('../lib/i18n/i18n.js');
@@ -66,14 +65,11 @@ class ResourceBudget extends Audit {
 
   /**
    * @param {LH.Budget} budget
-   * @param {Record<Exclude<LH.Budget.ResourceType, 'third-party'>, ResourceEntry>} resourceSummary
-   * @param {{count: number, size: number}} thirdPartySummary
+   * @param {Record<LH.Budget.ResourceType,ResourceEntry>} summary
    * @return {Array<BudgetItem>}
    */
-  static tableItems(budget, resourceSummary, thirdPartySummary) {
-    const summary = Object.assign(resourceSummary, {'third-party': thirdPartySummary});
+  static tableItems(budget, summary) {
     const resourceTypes = /** @type {Array<LH.Budget.ResourceType>} */ (Object.keys(summary));
-
     return resourceTypes.map((resourceType) => {
       const label = str_(this.getRowLabel(resourceType));
       const requestCount = summary[resourceType].count;
@@ -124,10 +120,7 @@ class ResourceBudget extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const resources = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
-    const thirdParties = await ThirdPartySummary
-      .request({devtoolsLog, URL: artifacts.URL}, context);
-
+    const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
     const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
     const budget = Budget.getMatchingBudget(context.settings.budgets, mainResource.url);
 
@@ -149,7 +142,7 @@ class ResourceBudget extends Audit {
 
     return {
       details: Audit.makeTableDetails(headers,
-        this.tableItems(budget, resources, thirdParties)),
+        this.tableItems(budget, summary)),
       score: 1,
     };
   }
