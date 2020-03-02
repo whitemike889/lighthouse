@@ -170,7 +170,7 @@ describe('Budget', () => {
     it('validates that input does not include ports', () => {
       budgets[0].options = {firstPartyHostnames: ['yolo.com:8080']};
       assert.throws(_ => Budget.initializeBudget(budgets),
-        /https:\/\/yolo.com:8080 is not a valid hostname./);
+        /yolo.com:8080 is not a valid hostname./);
     });
 
     it('validates that input does not include path', () => {
