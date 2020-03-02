@@ -313,6 +313,10 @@
   display: none !important;
 }
 
+.lh-root pre {
+  margin: 0;
+}
+
 .lh-root details > summary {
   cursor: pointer;
 }
@@ -1409,6 +1413,9 @@
 .lh-sub-rows:not(:first-child) .lh-sub-row {
   margin-left: 20px;
   color: var(--color-gray-700);
+}
+.lh-sub-row {
+  margin-bottom: 0;
 }
 
 /* Chevron

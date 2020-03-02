@@ -55,6 +55,8 @@ declare global {
       description: string;
       /** A list of the members of LH.Artifacts that must be present for the audit to execute. */
       requiredArtifacts: Array<keyof Artifacts>;
+      /** A list of the members of LH.Artifacts that augment the audit, but aren't necessary. For internal use only with experimental-config. */
+      __internalOptionalArtifacts?: Array<keyof Artifacts>;
       /** A string identifying how the score should be interpreted for display. */
       scoreDisplayMode?: Audit.ScoreDisplayMode;
     }
@@ -95,7 +97,7 @@ declare global {
       /** A numeric value that has a meaning specific to the audit, e.g. the number of nodes in the DOM or the timestamp of a specific load event. More information can be found in the audit details, if present. */
       numericValue: number;
       /** The unit of `numericValue`, used when the consumer wishes to convert numericValue to a display string. A superset of https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier */
-      numericUnit: 'byte'|'millisecond'|'element';
+      numericUnit: 'byte'|'millisecond'|'element'|'unitless';
     }
 
     /** Type returned by Audit.audit(). Only score is required.  */
