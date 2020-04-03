@@ -1,12 +1,19 @@
 # Performance Budgets (budget.json)
 
-Use a performance budget to prevent site performance from regressing over time.
+Use a performance budget to assert thresholds for performance metrics. `budget.json` supports three types of budgets:
+- Timing budgets: Assert thresholds for time-based performance metrics like First Contentful Paint, Maximum First Input Delay, and Speed Index.
+- Resource counts: Assert thresholds for the quantity of resources on a page. These thresholds can be defined per resource type or for the page overall.
+- Resource sizes: Assert thresholds for the transfer size of resources on a page. These thresholds can be defined per resource type or for the page overall.
+
+If performance budgets have been configured, the Lighthouse report will include a "Performance Budgets" section.
+
+To make performance budgets a part of your CI process, refer to [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci).
 
 ## Usage
 
 Performance budgets are supported in the CLI version of lighthouse. To use:
 1. Create a `budget.json` file.
-2. When running Lighthouse from the command line, pass the `--budget-path` (or `--budgetPath`) flag followed by the path to budget file in order to calculate whenever a category is over budget.
+2. When running Lighthouse from the command line, pass the `--budget-path` flag followed by the path to budget file in order to calculate whenever a category is over budget.
 ```
 lighthouse https://youtube.com --budget-path=budget.json
 ```
@@ -139,17 +146,20 @@ If a page's URL path matches the `path` property of more than one budget in `bud
 
 Examples:
 
-Match all URL paths.
+```
+"path": "/"
+```
+Result: Matches all URL paths. This is equivalent to writing `"path": "/*"`
 
-`"path": "/"` (This is equivalent to writing `"path": "/*"`)
+```
+"path": "/articles"
+```
+Result: Matches all URL paths starting with `/articles`. For example, `/articles` and `/articles/jun_02_2019.html`
 
-Match all URL paths starting with `/articles`.
-
-`"path": "/articles"`
-
-Match URL paths within the `uk/` directory and ending with `shopping-cart`.
-
-`"path": "/uk/*/shopping-cart$"`
+```
+"path": "/store/*/details$"
+```
+Result: Matches `/store/clothes/item123/details` but does not match `/store/details`.
 
 ### Identification of third-party resources
 
